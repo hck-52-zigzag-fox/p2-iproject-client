@@ -1,13 +1,17 @@
 <script>
+import NavBar from './components/NavBar.vue';
+
+export default {
+  name: "App",
+  components: {
+    NavBar
+  }
+}
 </script>
 
 <template>
   <header>
-    <nav>
-      <RouterLink to="/">Home</RouterLink>
-      <RouterLink to="/register">Register</RouterLink>
-      <RouterLink to="/login">Login</RouterLink>
-    </nav>
+    <NavBar />
   </header>
 
   <RouterView />
