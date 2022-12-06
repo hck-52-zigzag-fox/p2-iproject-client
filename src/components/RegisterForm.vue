@@ -1,4 +1,7 @@
 <script>
+import { mapActions, mapState } from 'pinia';
+import { useStore } from '../stores/store';
+
 
 export default {
   name: "RegisterForm",
@@ -13,11 +16,20 @@ export default {
       }
     };
   },
+  computed: {
+    ...mapState(useStore, ["registered"])
+  },
+  methods: {
+    ...mapActions(useStore, ["register"]),
+    handleRegister() {
+      this.register(this.registerData)
+    }
+  }
 }
 </script>
 
 <template>
-  <form class="mx-1 mx-md-4">
+  <form @submit.prevent="handleRegister" class="mx-1 mx-md-4">
 
     <div class="d-flex flex-row align-items-center mb-4">
       <i class="fas fa-user fa-lg me-3 fa-fw"></i>
