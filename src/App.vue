@@ -22,10 +22,6 @@ export default {
       margin-bottom: 50px;
     "
   >
-    <div class="row">
-      <div class="col">
-        <RouterView />
-      </div>
-    </div>
+    <RouterView />
   </div>
 </template>
