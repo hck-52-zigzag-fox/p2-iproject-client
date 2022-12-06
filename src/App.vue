@@ -1,15 +1,26 @@
 <script>
-import { RouterLink, RouterView } from "vue-router";
+import { RouterView } from "vue-router";
+import Navbar from "./components/Navbar.vue";
+
+export default {
+  name: "App",
+  components: {
+    Navbar,
+  },
+};
 </script>
 
 <template>
-  <nav>
-    <RouterLink to="/">Home</RouterLink>
-    <RouterLink to="/about">About</RouterLink>
-  </nav>
+  <Navbar />
   <div
     class="container"
-    style="background-color: #1b2838; color: #ffffff; margin-top: 80px; margin-bottom: 50px;"
+    style="
+      background-color: #1b2838;
+      color: #ffffff;
+      min-height: 80vh;
+      margin-top: 80px;
+      margin-bottom: 50px;
+    "
   >
     <div class="row">
       <div class="col">
