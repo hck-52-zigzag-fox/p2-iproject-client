@@ -15,7 +15,7 @@ export default {
     ...mapActions(useCounterStore, ["fetchMovie"]),
   },
   created() {
-    this.fetchMovie();
+    // this.fetchMovie();
   },
 };
 </script>
