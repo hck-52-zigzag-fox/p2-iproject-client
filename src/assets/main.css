@@ -1,7 +1,15 @@
 body {
-    background-image: url("./God Gaben.jpg");
-    background-size: 100vw;
-    position: center;
-    background-attachment: fixed;
-    background-repeat: no-repeat;
-  }
+  background-image: url("./God Gaben.jpg");
+  background-size: 100vw;
+  position: center;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+}
+
+.zoom {
+  transition: transform 0.2s;
+}
+
+.zoom:hover {
+  transform: scale(1.1);
+}
