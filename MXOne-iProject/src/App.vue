@@ -23,7 +23,7 @@ export default {
 <template>
   <Navbar />
   <RouterView />
-  <!-- <Hero /> -->
+  <!-- <Hero /> test -->
   <div class="parent">
     <Footervue />
   </div>
