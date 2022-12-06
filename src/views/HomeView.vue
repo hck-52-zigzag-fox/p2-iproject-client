@@ -1,35 +1,5 @@
 <script></script>
 
 <template>
-  <h1>a</h1>
-  <h1>a</h1>
-  <h1>a</h1>
-  <h1>a</h1>
-  <h1>a</h1>
-  <h1>a</h1>
-  <h1>a</h1>
-  <h1>a</h1>
-  <h1>a</h1>
-  <h1>a</h1>
-  <h1>a</h1>
-  <h1>a</h1>
-  <h1>a</h1>
-  <h1>a</h1>
-  <h1>a</h1>
-  <h1>a</h1>
-  <h1>a</h1>
-  <h1>a</h1>
-  <h1>a</h1>
-  <h1>a</h1>
-  <h1>a</h1>
-  <h1>a</h1>
-  <h1>a</h1>
-  <h1>a</h1>
-  <h1>a</h1>
-  <h1>a</h1>
-  <h1>a</h1>
-  <h1>a</h1>
-  <h1>a</h1>
-  <h1>a</h1>
-  <h1>a</h1>
+  <h1>This is a home page</h1>
 </template>
