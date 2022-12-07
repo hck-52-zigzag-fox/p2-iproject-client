@@ -193,5 +193,23 @@ export const useDataStore = defineStore("dataStore", {
         console.log(error);
       }
     },
+    async handleAddPost(value) {
+      try {
+        const formData = new FormData();
+        formData.append("imgUrl", value.imgUrl);
+        formData.append("content", value.content);
+        const { data } = await axios({
+          method: "POST",
+          url: `${baseUrl}/posts`,
+          headers: {
+            access_token: localStorage.getItem("access_token"),
+          },
+          data: formData,
+        });
+        this.handleAllPost();
+      } catch (error) {
+        console.log(error);
+      }
+    },
   },
 });
