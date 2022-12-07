@@ -43,23 +43,12 @@ export const useCounterStore = defineStore("counter", {
         this.isLoading = true;
         const dataGame = await axios({
           method: "GET",
-          url: `https://steam2.p.rapidapi.com/appDetail/${id.split("-")[0]}`,
-          headers: {
-            "X-RapidAPI-Key":
-              "01c1cc98d4msh9755372740f5ff8p1eada9jsn461d565bc0fe",
-            "X-RapidAPI-Host": "steam2.p.rapidapi.com",
-          },
+          url: `${baseUrl}/games/steam/${id.split("-")[0]}`,
         });
         this.game = dataGame.data;
         const dataPrice = await axios({
           method: "GET",
-          url: "https://cheapshark-game-deals.p.rapidapi.com/games",
-          params: { id: id.split("-")[1] },
-          headers: {
-            "X-RapidAPI-Key":
-              "01c1cc98d4msh9755372740f5ff8p1eada9jsn461d565bc0fe",
-            "X-RapidAPI-Host": "cheapshark-game-deals.p.rapidapi.com",
-          },
+          url: `${baseUrl}/games/cheapshark/${id.split("-")[1]}`,
         });
         dataPrice.data.deals.forEach((el) => {
           if (el.storeID == 1) {
@@ -68,7 +57,7 @@ export const useCounterStore = defineStore("counter", {
         });
         this.isLoading = false;
       } catch (err) {
-        console.log(err);
+        toast.error(err.response.data.message);
         this.isLoading = false;
       }
     },
