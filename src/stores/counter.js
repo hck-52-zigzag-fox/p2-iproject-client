@@ -166,7 +166,60 @@ export const useStore = defineStore("counter", {
           icon: "success",
           text: data.message,
         });
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    async patchById(id) {
+      try {
+        const { data } = await axios({
+          url: baseUrl + `orders/${id}`,
+          method: "PATCH",
+          headers: {
+            access_token: localStorage.getItem("access_token"),
+          },
+          data,
+        });
       } catch (error) {}
+    },
+    async midtrans() {
+      try {
+        // console.log("kesini");
+        const { data } = await axios({
+          method: "POST",
+          url: baseUrl + `orders/midtrans`,
+          headers: {
+            access_token: localStorage.getItem("access_token"),
+          },
+        });
+        window.snap.pay(data.token, {
+          onSuccess: async function (result) {
+            //   const { data } = await axios({
+            //     url: baseUrl + `orders/${id}`,
+            //     method: "PATCH",
+            //     headers: {
+            //       access_token: localStorage.getItem("access_token"),
+            //     },
+            //     data,
+            //   });
+            console.log(result);
+          },
+          onPending: function (result) {
+            /* You may add your own implementation here /
+            alert("wating your payment!");
+          },
+          onError: function (result) {
+            / You may add your own implementation here /
+            alert("payment failed!");
+          },
+          onClose: function () {
+            / You may add your own implementation here */
+            alert("you closed the popup without finishing the payment");
+          },
+        });
+      } catch (error) {
+        console.log(error);
+      }
     },
   },
 });
