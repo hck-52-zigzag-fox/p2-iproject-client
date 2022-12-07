@@ -1,5 +1,5 @@
 <script>
-import { mapState } from "pinia";
+import { mapState, mapWritableState } from "pinia";
 import { useCounterStore } from "./stores/counter";
 import { RouterView } from "vue-router";
 import Navbar from "./components/Navbar.vue";
@@ -9,8 +9,14 @@ export default {
   components: {
     Navbar,
   },
+  created() {
+    if (localStorage.access_token) {
+      this.isLogin = true;
+    }
+  },
   computed: {
     ...mapState(useCounterStore, ["isLoading"]),
+    ...mapWritableState(useCounterStore, ["isLogin"]),
   },
 };
 </script>

@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
 import HomeView from "../views/HomeView.vue";
-import GamesView from "../views/GamesView.vue";
+import MyGamesView from "../views/MyGamesView.vue";
 import LoginView from "../views/LoginView.vue";
 import RegisterView from "../views/RegisterView.vue";
 import GameDetailView from "../views/GameDetailView.vue";
@@ -14,9 +14,9 @@ const router = createRouter({
       component: HomeView,
     },
     {
-      path: "/games",
-      name: "games",
-      component: GamesView,
+      path: "/mygames",
+      name: "mygames",
+      component: MyGamesView,
     },
     {
       path: "/login",
@@ -37,7 +37,7 @@ const router = createRouter({
 });
 
 router.beforeEach(async (to, from) => {
-  if (!localStorage.access_token && to.name === "games") {
+  if (!localStorage.access_token && to.name === "mygames") {
     return { name: "login" };
   } else if (
     (localStorage.access_token && to.name === "login") ||
