@@ -104,7 +104,7 @@ export const useStore = defineStore("counter", {
         console.log(error);
       }
     },
-    async addOrderById() {
+    async addOrderById(id) {
       try {
         const { data } = await axios({});
       } catch (error) {}
@@ -119,6 +119,18 @@ export const useStore = defineStore("counter", {
           },
         });
         this.orders = data;
+      } catch (error) {}
+    },
+    async deleteOrder(id) {
+      try {
+        const { data } = await axios({
+          url: baseUrl + `orders/${id}`,
+          headers: {
+            access_token: localStorage.getItem("access_token"),
+          },
+        });
+        this.fetchProduct();
+        this.route.push("/");
       } catch (error) {}
     },
   },

@@ -1,7 +1,13 @@
 <script>
+import { mapActions } from 'pinia';
+import { useStore } from '../stores/counter';
+
 export default {
     name: "TableRowProduct",
-    props: ["order", "i"]
+    props: ["order", "i"],
+    methods: {
+        ...mapActions(useStore, ["deleteOrder"])
+    },
 }
 </script>
 
@@ -14,6 +20,6 @@ export default {
         <td scope="col">{{ order.Product.price }}</td>
         <td scope="col">{{ order.status }}</td>
         <td scope="col">Xendit</td>
-        <td scope="col"><i class="bi bi-trash text-danger"></i></td>
+        <td scope="col"><i @click.prevent="deleteOrder(order.id)" class="bi bi-trash text-danger"></i></td>
     </tr>
 </template>
