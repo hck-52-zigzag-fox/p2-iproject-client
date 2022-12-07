@@ -7,14 +7,14 @@ export default {
     components: {
         ObjectCardVue
     },
-    props: ['object', "mainObjects"]
+    props: [ "objects"]
 }
 </script>
 
 <template>
     <div class="container mx-auto mt-4">
         <div class="row">
-            <ObjectCardVue v-for="object in mainObjects" :key="object.id" :object="object" />
+            <ObjectCardVue v-for="object in objects" :key="object.id" :object="object" />
         </div><!-- /.row -->
     </div>
 

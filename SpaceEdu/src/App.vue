@@ -1,11 +1,21 @@
 <script>
+import { mapWritableState } from "pinia";
 import { RouterLink, RouterView } from "vue-router";
 import Navbar from "./components/Navbar.vue";
+import { useCounterStore } from "./stores/counter";
 
 export default {
   name:"app",
   components:{
     Navbar
+  },
+  computed:{
+    ...mapWritableState(useCounterStore,['isLogin'])
+  },
+  created(){
+    if(localStorage.getItem("access_token")){
+      this.isLogin = true
+    }
   }
 }
 </script>
@@ -22,7 +32,9 @@ export default {
 </template>
 
 <style >
-
+:root {
+  --gradient: linear-gradient(to left top, #DD2476 10%, #FF512F 90%) !important;
+}
 
 body{
   background-image: url('./assets/background-images/background-stars-blue.jpg');

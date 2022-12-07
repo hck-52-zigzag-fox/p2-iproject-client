@@ -37,7 +37,7 @@ export default {
 <!-- <a href="https://ibb.co/2KqmSg6"><img src="https://i.ibb.co/w6y37ML/moon.png" alt="moon" border="0"></a> -->
 
 
-<SolarSystemList :object="object" :mainObjects="mainObjects"/>
+<SolarSystemList  :objects="mainObjects"/>
 
 
 <!-- START THE FEATURETTES -->
