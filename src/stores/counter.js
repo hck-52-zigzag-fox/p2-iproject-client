@@ -7,37 +7,50 @@ const toast = useToast();
 export const useCounterStore = defineStore("counter", {
   state: () => ({
     isLogin: false,
+    isLoading: true,
     games: [],
+    gamePrice: 0,
+    game: {},
   }),
   actions: {
+    convertCurrency(price) {
+      return +price * 15000;
+    },
     formatPrice(price) {
-      price = +price * 15000;
       return new Intl.NumberFormat("id-ID", {
         style: "currency",
         currency: "IDR",
-      }).format(price);
+      }).format(this.convertCurrency(price));
     },
-    async fetchGamesList() {
+    async fetchGamesList(query) {
       try {
+        this.isLoading = true;
+        let params = {
+          lowerPrice: "0",
+          steamRating: "0",
+          desc: "0",
+          output: "json",
+          steamworks: "true",
+          sortBy: "Deal Rating",
+          AAA: "0",
+          pageSize: "8",
+          exact: "0",
+          upperPrice: "50",
+          pageNumber: "0",
+          onSale: "0",
+          metacritic: "0",
+          "storeID[0]": "1",
+        };
+        if (query.page) {
+          params.pageNumber = query.page - 1;
+        }
+        if (query.search) {
+          params.title = query.search;
+        }
         const { data } = await axios({
           method: "GET",
           url: "https://cheapshark-game-deals.p.rapidapi.com/deals",
-          params: {
-            lowerPrice: "0",
-            steamRating: "0",
-            desc: "0",
-            output: "json",
-            steamworks: "true",
-            sortBy: "Deal Rating",
-            AAA: "0",
-            pageSize: "8",
-            exact: "0",
-            upperPrice: "50",
-            pageNumber: "0",
-            onSale: "0",
-            metacritic: "0",
-            "storeID[0]": "1",
-          },
+          params,
           headers: {
             "X-RapidAPI-Key":
               "01c1cc98d4msh9755372740f5ff8p1eada9jsn461d565bc0fe",
@@ -45,9 +58,44 @@ export const useCounterStore = defineStore("counter", {
           },
         });
         this.games = data;
+        this.isLoading = false;
       } catch (err) {
-        // toast.error(err.response.data.message);
-        toast.error(err.response.data);
+        console.log(err);
+        this.isLoading = false;
+      }
+    },
+    async fetchOneGame(id) {
+      try {
+        this.isLoading = true;
+        const dataGame = await axios({
+          method: "GET",
+          url: `https://steam2.p.rapidapi.com/appDetail/${id.split("-")[0]}`,
+          headers: {
+            "X-RapidAPI-Key":
+              "01c1cc98d4msh9755372740f5ff8p1eada9jsn461d565bc0fe",
+            "X-RapidAPI-Host": "steam2.p.rapidapi.com",
+          },
+        });
+        this.game = dataGame.data;
+        const dataPrice = await axios({
+          method: "GET",
+          url: "https://cheapshark-game-deals.p.rapidapi.com/games",
+          params: { id: id.split("-")[1] },
+          headers: {
+            "X-RapidAPI-Key":
+              "01c1cc98d4msh9755372740f5ff8p1eada9jsn461d565bc0fe",
+            "X-RapidAPI-Host": "cheapshark-game-deals.p.rapidapi.com",
+          },
+        });
+        dataPrice.data.deals.forEach((el) => {
+          if (el.storeID == 1) {
+            this.gamePrice = this.formatPrice(el.price);
+          }
+        });
+        this.isLoading = false;
+      } catch (err) {
+        console.log(err);
+        this.isLoading = false;
       }
     },
   },

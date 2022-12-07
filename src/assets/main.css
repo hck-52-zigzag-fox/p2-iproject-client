@@ -13,3 +13,90 @@ body {
 .zoom:hover {
   transform: scale(1.1);
 }
+
+.ben:before {
+  content: "Hey Guys";
+  position: absolute;
+  background: #e9eada;
+  text-align: center;
+  inset: auto 80% 56% auto;
+  font-size: 22px;
+  padding: 10px 15px;
+  font-family: monospace;
+  font-weight: bold;
+  width: 160px;
+  border-radius: 10px;
+  animation: t 20s linear infinite;
+}
+.ben:after {
+  content: "";
+  position: absolute;
+  background: #e9eada;
+  inset: auto 75% 40% auto;
+  width: 30px;
+  height: 40px;
+  clip-path: polygon(0 0, 100% 0, 100% 100%);
+  transform-origin: bottom;
+  transform: skewX(27deg);
+  animation: t1 20s linear infinite;
+}
+@keyframes t {
+  0%,
+  8% {
+    content: "Hey Guys";
+  }
+  8.1%,
+  25% {
+    content: "It's loading...";
+  }
+  25.1%,
+  37.5% {
+    content: "Yes, still loading...";
+  }
+  37.6%,
+  50% {
+    content: "Guys, why is it too slow?";
+  }
+  50.1%,
+  62.5% {
+    content: "I will fire the developer!!";
+    background: #e9eada;
+    font-size: 22px;
+  }
+  62.6%,
+  75% {
+    content: "You are the developer...";
+    background: lightblue;
+    font-size: 18px;
+  }
+  75.1%,
+  100% {
+    content: "...";
+    background: #e9eada;
+    font-size: 22px;
+  }
+}
+@keyframes t1 {
+  0%,
+  62.5%,
+  75.1%,
+  100% {
+    background: #e9eada;
+    inset: auto 75% 40% auto;
+    transform: skewX(27deg);
+  }
+  62.6%,
+  75% {
+    transform: skewX(-50deg);
+    inset: auto calc(100% + 120px) 40% auto;
+    background: lightblue;
+  }
+}
+
+.ben {
+  width: 220px;
+  height: 220px;
+  margin: auto;
+  position: fixed;
+  inset: 0;
+}

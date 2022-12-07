@@ -1,4 +1,6 @@
 <script>
+import { mapState } from "pinia";
+import { useCounterStore } from "./stores/counter";
 import { RouterView } from "vue-router";
 import Navbar from "./components/Navbar.vue";
 
@@ -7,12 +9,17 @@ export default {
   components: {
     Navbar,
   },
+  computed: {
+    ...mapState(useCounterStore, ["isLoading"]),
+  },
 };
 </script>
 
 <template>
   <Navbar />
+  <div class="ben" v-show="isLoading"></div>
   <div
+    v-show="!isLoading"
     class="container"
     style="
       background-color: #1b2838;
