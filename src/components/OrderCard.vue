@@ -20,7 +20,7 @@ export default {
     },
   },
   methods: {
-    ...mapActions(useStore, ["deleteOrder"]),
+    ...mapActions(useStore, ["deleteOrder", "checkOrder", "changeStatus"]),
   },
 };
 </script>
@@ -44,10 +44,35 @@ export default {
       <h1 class="title">{{ order.Item.name }}</h1>
       <h3 class="subtitle">{{ order.Item.description }}</h3>
     </div>
-    <div class="status ms-5">{{ order.status }}</div>
-    <div class="prices ms-5">
+    <div class="ms-5">
+      <a
+        @click.prevent="changeStatus(order.id)"
+        class="btn btn-outline-secondary"
+        v-if="order.status === 'Unpaid' && currentUser.role === 'Admin'"
+        >{{ order.status }}</a
+      >
+      <a
+        @click.prevent="changeStatus(order.id)"
+        class="btn"
+        v-if="order.status === 'Paid' && currentUser.role === 'Admin'"
+        >{{ order.status }}</a
+      >
+      <span
+        @click.prevent=""
+        class="btn btn-outline-secondary disabled"
+        v-if="currentUser.role === 'Customer'"
+        >{{ order.status }}</span
+      >
+    </div>
+    <div class="prices ms-5" style="width: 100px">
       <div class="amount">{{ getTotalPrice }}</div>
-      <div class="save"><u>Detail</u></div>
+      <!-- <div
+        class="save"
+        @click="checkOrder(order.id)"
+        v-if="currentUser.role === 'Admin'"
+      >
+        <u>Edit</u>
+      </div> -->
       <div
         class="remove"
         @click="deleteOrder(order.id)"
@@ -95,10 +120,9 @@ export default {
 }
 .prices {
   height: 100%;
-  text-align: right;
 }
 .amount {
-  padding-top: 20px;
+  /* padding-top: 20px; */
   font-size: 26px;
   font-weight: 800;
   color: #202020;

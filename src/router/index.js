@@ -3,6 +3,7 @@ import HomePage from "../views/HomePage.vue";
 import LoginPage from "../views/LoginPage.vue";
 import AddOrderPage from "../views/AddOrderPage.vue";
 import OrderPage from "../views/OrderPage.vue";
+import NotFoundPage from "../views/NotFoundPage.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -23,18 +24,30 @@ const router = createRouter({
       component: OrderPage,
     },
     {
-      path: "/orders/:id",
+      path: "/items/:id",
       name: "addOrder",
       component: AddOrderPage,
+    },
+
+    {
+      path: "/:pathMatch(.*)*",
+      name: "notFound",
+      component: NotFoundPage,
     },
   ],
 });
 
 router.beforeEach((to, from, next) => {
   const isAuthenticated = localStorage.getItem("access_token");
-  if (isAuthenticated && (to.name === "login")) {
+  if (isAuthenticated && to.name === "login") {
     next({ name: "home" });
-  } else if (!isAuthenticated && (to.name === "home" || to.name === "order" || to.name === "addOrder")) {
+  } else if (
+    !isAuthenticated &&
+    (to.name === "home" ||
+      to.name === "order" ||
+      to.name === "addOrder" ||
+      to.name === "orderDetail")
+  ) {
     next({ name: "login" });
   } else next();
 });

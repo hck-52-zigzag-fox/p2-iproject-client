@@ -104,19 +104,47 @@ export const useStore = defineStore("store", {
           data: input,
         });
 
-        console.log(data)
-        this.router.push('/orders')
+        this.router.push("/orders");
       } catch (err) {
         Swal.fire(err.response.data.message || "Internal server error");
       }
     },
-    async editOrder(input){
+    checkOrder(id) {
+      this.router.push(`/orders/${id}`);
+    },
+    async editOrder(input) {
       try {
-        
+        const { data } = await axios({
+          method: "PUT",
+          url: baseUrl + `/orders/${id}`,
+          headers: {
+            access_token: localStorage.access_token,
+          },
+          data: input,
+        });
+
+        console.log(data);
       } catch (err) {
-        
+        Swal.fire(err.response.data.message || "Internal server error");
       }
-    }
+    },
+
+    async changeStatus(id) {
+      try {
+        const { data } = await axios({
+          method: "PATCH",
+          url: baseUrl + `/orders/${id}`,
+          headers: {
+            access_token: localStorage.access_token,
+          },
+        });
+
+        console.log(data);
+        this.fetchOrders()
+      } catch (err) {
+        Swal.fire(err.response.data.message || "Internal server error");
+      }
+    },
   },
   getters: {
     username() {

@@ -23,6 +23,6 @@ export default {
         {{ item.description }}
       </p>
     </div>
-    <p><RouterLink v-if="currentUser.role === 'Customer'" to="/orders/1" class="w3-button w3-light-grey w3-block">Order</RouterLink></p>
+    <p><RouterLink v-if="currentUser.role === 'Customer'" :to="`/items/${item.id}`" class="w3-button w3-light-grey w3-block">Order</RouterLink></p>
   </div>
 </template>
