@@ -87,7 +87,7 @@ export default {
 </script>
 
 <template>
-  <div class="row justify-content-center pt-2 pb-2">
+  <div class="row justify-content-center pt-3">
     <div class="col-3">
       <form @submit.prevent="searchTitle">
         <div class="input-group mt-2">
@@ -113,30 +113,32 @@ export default {
       </form>
     </div>
   </div>
-  <div class="row justify-content-center pt-2 pb-2">
-    <div class="col">
-      <table
-        v-if="games.length > 0"
-        class="table table-dark table-striped table-hover align-middle"
-      >
-        <thead>
-          <tr>
-            <th></th>
-            <th>Title</th>
-            <th>Price</th>
-          </tr>
-        </thead>
-        <tbody>
-          <GameTableRow
-            v-for="game in games"
-            :key="game.steamAppID"
-            :game="game"
-          />
-        </tbody>
-      </table>
+  <div class="container">
+    <div class="row justify-content-center p-4">
+      <div class="col">
+        <table
+          v-if="games.length > 0"
+          class="table table-dark table-striped table-hover align-middle"
+        >
+          <thead>
+            <tr>
+              <th></th>
+              <th>Title</th>
+              <th>Price</th>
+            </tr>
+          </thead>
+          <tbody>
+            <GameTableRow
+              v-for="game in games"
+              :key="game.steamAppID"
+              :game="game"
+            />
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
-  <div class="row justify-content-center pt-2 pb-2">
+  <div class="row justify-content-center pb-2">
     <div class="col-3">
       <nav>
         <ul class="pagination justify-content-center">
