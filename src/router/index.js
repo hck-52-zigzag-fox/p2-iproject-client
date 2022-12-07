@@ -3,7 +3,6 @@ import HomePage from "../views/HomePage.vue";
 import RegisterPage from "../views/RegisterPage.vue";
 import LoginPage from "../views/LoginPage.vue";
 import ProductsPage from "../views/ProductsPage.vue";
-import ProductDetailPage from "../views/ProductDetailPage.vue";
 import NotFoundPage from "../views/NotFoundPage.vue";
 
 const router = createRouter({
@@ -28,11 +27,6 @@ const router = createRouter({
       path: "/products",
       name: "products",
       component: ProductsPage,
-    },
-    {
-      path: "/products/:productCode",
-      name: "productDetail",
-      component: ProductDetailPage,
     },
     {
       path: "/:pathMatch(.*)*",
