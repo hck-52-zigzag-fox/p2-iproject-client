@@ -25,13 +25,13 @@ export default {
 
 
 <template>
-    <div class="d-flex justify-content-center"
+    <div class="d-flex justify-content-center align-items-center"
         style="background-image: url(https://wallpaperaccess.com/full/1231744.jpg);background-size: cover;min-height: 100vh;">
-        <div class="card mb-3" style="max-width: 1000px;max-height: max-content;">
+        <div class="card mb-3 " style="max-width: 1000px;max-height: max-content;">
             <div class="row g-0">
                 <div class="col-md-4">
-                    <img :src="product.imageUrl" class="img-fluid rounded-start" alt="...">
-                    <div class="d-flex justify-content-center mb-2 mt-4">
+                    <img :src="product.imageUrl" class="img-fluid rounded-start mt-5" alt="...">
+                    <div class="d-flex justify-content-center mb-2 mt-1 mb-5">
                         <RouterLink :to="`/addorders/${product.id}`" type="submit" class="btn btn-primary mt-2">Add to
                             cart
                         </RouterLink>

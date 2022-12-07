@@ -125,12 +125,16 @@ export const useStore = defineStore("counter", {
       try {
         const { data } = await axios({
           url: baseUrl + `orders/${id}`,
+          method: "DELETE",
           headers: {
             access_token: localStorage.getItem("access_token"),
           },
         });
-        this.fetchProduct();
-        this.route.push("/");
+        this.getOrderById();
+        Swal.fire({
+          icon: "success",
+          text: data.message,
+        });
       } catch (error) {}
     },
   },

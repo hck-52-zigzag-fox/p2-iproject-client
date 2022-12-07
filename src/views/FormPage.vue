@@ -29,9 +29,9 @@ export default {
 <template>
     <!-- {{ product }} -->
 
-    <section class="col-md-6 offset-md-3">
+    <section class="col-md-8 offset-md-3">
         <div class="row">
-            <div class="col-md-6 offset-md-3">
+            <div class="col-md-8 offset-md-3">
                 <div class="card flex-row my-5 border-0 shadow rounded-3 overflow-hidden">
                     <div class="card-body cardbody-color p-lg-5">
                         <div class="text-center">
@@ -51,7 +51,7 @@ export default {
 
                             </div>
                             <div class="d-flex justify-content-end me-5">
-                                <form>
+                                <div>
                                     <fieldset disabled>
                                         <legend>Pengiriman</legend>
                                         <div class="mb-3">
@@ -96,7 +96,7 @@ export default {
                                             </button>
                                         </div>
                                     </div>
-                                </form>
+                                </div>
                             </div>
                         </form>
                     </div>
