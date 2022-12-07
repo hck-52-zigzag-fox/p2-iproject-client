@@ -19,7 +19,7 @@ export default {
     ...mapActions(useCustomerOrderStore, ["addOrder",'handlePayment']),
     async payHandle() {
       console.log("bisa diklik");
-      this.handlePayment(this.token.token)
+      this.handlePayment(this.token)
     },
     trigger() {
       console.log("triger di klik");

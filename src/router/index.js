@@ -1,27 +1,39 @@
-import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
-import PaymentView from "../views/PaymentView.vue"
-import RoomChat from '../views/RoomChat.vue'
+import { createRouter, createWebHistory } from "vue-router";
+import HomeView from "../views/HomeView.vue";
+import PaymentView from "../views/PaymentView.vue";
+import LoginView from "../views/LoginView.vue";
+import RegisterView from "../views/RegisterView.vue";
+import Chat from '../views/Chat.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
-      path: '/',
-      name: 'home',
-      component: HomeView
+      path: "/",
+      name: "home",
+      component: HomeView,
     },
     {
-      path: '/payment',
-      name:'payment',
-      component : PaymentView
+      path: "/login",
+      name: "login",
+      component: LoginView,
     },
     {
-      path:'/chat',
-      name:'roomChat',
-      component : RoomChat
-    }
-  ]
-})
+      path: "/register",
+      name: "register",
+      component: RegisterView,
+    },
+    {
+      path: "/chats/:id",
+      name: "chat",
+      component: Chat,
+    },
+    {
+      path: "/payment/:id",
+      name: "payment",
+      component: PaymentView,
+    },
+  ],
+});
 
-export default router
+export default router;
