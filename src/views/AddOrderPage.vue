@@ -1,36 +1,83 @@
 <script>
-import { mapState } from "pinia";
+import { mapActions, mapState } from "pinia";
 import { useStore } from "../stores";
+import NotFoundPage from "../views/NotFoundPage.vue";
 
 export default {
   name: "AddOrderPage",
+  components: {
+    NotFoundPage,
+  },
+  data() {
+    return {
+      input: {
+        addPrice: 0,
+        addDetail: "",
+      },
+      item: {},
+    };
+  },
+  watch: {
+    items(newVal, oldVal) {
+      newVal.forEach((el) => {
+        if (el.id == this.$route.params.id) {
+          this.item = el;
+        }
+      });
+    },
+  },
   computed: {
-    ...mapState(useStore, ["currentUser"]),
+    ...mapState(useStore, ["currentUser", "items"]),
+  },
+  methods: {
+    ...mapActions(useStore, ["addOrder", "fetchItems"]),
+    inputDetail(event) {
+      this.input.addDetail = event.target.value;
+    },
+    getOrder() {
+      let input = {
+        additionalPrice: this.input.addPrice,
+        additionalDetail: this.input.addDetail,
+        ItemId: this.$route.params.id,
+      };
+      // this.addOrder(input);
+      this.addOrder(input)
+    },
+  },
+  created() {
+    this.fetchItems();
   },
 };
 </script>
 
 <template>
-  <div style="min-height: calc(100vh - 50px - 52.5px)">
+  <NotFoundPage v-if="!item.name" :type="'Item'" />
+
+  <div v-if="item.name" style="min-height: calc(100vh - 50px - 52.5px)">
     <section class="payment-form dark">
       <div class="container">
         <div class="block-heading">
-          <h2>Order Form</h2>
+          <h2 v-if="currentUser.role === 'Customer'">Request Form</h2>
+          <h2 v-if="currentUser.role === 'Admin'">Order Form</h2>
         </div>
-        <form>
+        <form @submit.prevent="getOrder">
           <div class="products">
-            <h3 class="title">Checkout</h3>
+            <h3 class="title">Estimated price</h3>
             <div class="item">
-              <span class="price">$200</span>
-              <p class="item-name">Product</p>
-              <p class="item-description">Lorem ipsum dolor sit amet</p>
+              <span class="price"
+                >Rp {{ item.price.toLocaleString("id-ID") }},-</span
+              >
+              <p class="item-name">{{ item.name }}</p>
+              <p class="item-description">{{ item.description }}</p>
             </div>
-            <div class="item">
+            <div class="item" v-if="currentUser.role === 'Admin'">
               <span class="price">$120</span>
               <p class="item-name">Additional Price</p>
               <p class="item-description">Lorem ipsum dolor sit amet</p>
             </div>
-            <div class="total">Total<span class="price">$320</span></div>
+            <div class="total" v-if="currentUser.role === 'Admin'">
+              Total<span class="price">$320</span>
+            </div>
           </div>
           <div class="card-details">
             <h3 class="title">Order detail</h3>
@@ -46,6 +93,7 @@ export default {
                     placeholder="Card Holder"
                     aria-label="Card Holder"
                     aria-describedby="basic-addon1"
+                    v-model="addPrice"
                   />
                 </div>
                 <!-- Customer -->
@@ -55,18 +103,16 @@ export default {
                     id="card-holder"
                     type="text"
                     class="form-control"
-                    placeholder="Card Holder"
+                    placeholder="Describe your request here ..."
                     aria-label="Card Holder"
                     aria-describedby="basic-addon1"
+                    @input="inputDetail"
                   ></textarea>
                 </div>
               </div>
-
-              <div class="form-group col-sm-12">
-                <button type="button" class="btn btn-secondary btn-block">
-                  Proceed
-                </button>
-              </div>
+              <button type="submit" class="btn btn-secondary btn-block">
+                Proceed
+              </button>
             </div>
           </div>
         </form>

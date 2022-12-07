@@ -23,10 +23,11 @@ export default {
   <div class="background p-5">
     <div class="Cart-Container">
       <div class="Header">
-        <h3 class="Heading mt-4">Orders</h3>
+        <h3 class="Heading mt-4" v-if="orders.length">Orders</h3>
+        <h3 class="Heading mt-4" v-if="!orders.length">No orders found</h3>
       </div>
       <!-- card order -->
-      <OrderCard v-for="order in orders" :key="order.id" :order="order" />
+      <OrderCard v-if="orders.length" v-for="order in orders" :key="order.id" :order="order" />
     </div>
   </div>
 </template>

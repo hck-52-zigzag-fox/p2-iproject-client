@@ -43,19 +43,7 @@ export default {
     conversation.setParticipant(me);
     conversation.setParticipant(other);
 
-    const popup = talkSession.createPopup();
-    popup.select(conversation);
-    popup.mount({ show: false });
-
-    const button = document.getElementById("btn-getInTouch");
-    button.addEventListener("click", (event) => {
-      event.preventDefault();
-      popup.show();
-    });
-
-    // const chatbox = talkSession.createChatbox();
-    // chatbox.select(conversation);
-    // chatbox.mount(document.getElementById("talkjs-container"));
+    
   },
 };
 </script>

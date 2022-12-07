@@ -88,11 +88,35 @@ export const useStore = defineStore("store", {
         });
 
         Swal.fire(data.message);
-        this.fetchOrders()
+        this.fetchOrders();
       } catch (err) {
         Swal.fire(err.response.data.message || "Internal server error");
       }
     },
+    async addOrder(input) {
+      try {
+        const { data } = await axios({
+          method: "POST",
+          url: baseUrl + "/orders",
+          headers: {
+            access_token: localStorage.access_token,
+          },
+          data: input,
+        });
+
+        console.log(data)
+        this.router.push('/orders')
+      } catch (err) {
+        Swal.fire(err.response.data.message || "Internal server error");
+      }
+    },
+    async editOrder(input){
+      try {
+        
+      } catch (err) {
+        
+      }
+    }
   },
   getters: {
     username() {
