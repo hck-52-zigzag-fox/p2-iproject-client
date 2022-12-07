@@ -15,6 +15,7 @@ body {
 }
 
 .ben:before {
+  margin-bottom: 70px;
   content: "Hey Guys";
   position: absolute;
   background: #e9eada;
@@ -29,6 +30,7 @@ body {
   animation: t 20s linear infinite;
 }
 .ben:after {
+  margin-bottom: 70px;
   content: "";
   position: absolute;
   background: #e9eada;
