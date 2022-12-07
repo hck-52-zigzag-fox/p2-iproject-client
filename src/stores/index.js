@@ -9,7 +9,6 @@ export const useStore = defineStore("store", {
   state: () => ({
     isLogin: false,
     currentUser: {},
-
     items: [],
   }),
   actions: {
@@ -26,7 +25,7 @@ export const useStore = defineStore("store", {
         localStorage.setItem("role", data.role);
         localStorage.setItem("id", data.id);
         this.isLogin = true;
-        Swal.fire("Login success");
+        Swal.fire(`Welcome ${this.username}`);
       } catch (err) {
         Swal.fire(err.response.data.message || "Internal server error");
       }
@@ -61,6 +60,11 @@ export const useStore = defineStore("store", {
       } catch (err) {
         Swal.fire(err.response.data.message || "Internal server error");
       }
+    },
+  },
+  getters: {
+    username() {
+      return localStorage.email ? localStorage.email.split("@")[0] : "";
     },
   },
 });

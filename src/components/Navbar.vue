@@ -17,7 +17,7 @@ export default {
 <template>
   <nav class="navbar navbar-expand-lg bg-light">
     <div class="container-fluid mx-md-5">
-      <a class="navbar-brand" href="#">
+      <span class="navbar-brand" href="#">
         <img
           src="https://www.onlygfx.com/wp-content/uploads/2016/03/hand-drawn-pencil-icon-264x300.png"
           alt="Logo"
@@ -27,7 +27,7 @@ export default {
           class="d-inline-block align-text-top"
         />
         Commission Art
-      </a>
+      </span>
 
       <button
         class="navbar-toggler"
@@ -56,7 +56,7 @@ export default {
           </li>
           <li class="nav-item">
             <RouterLink
-              to="/"
+              to="/orders"
               class="nav-link"
               href="#"
               v-if="isLogin"

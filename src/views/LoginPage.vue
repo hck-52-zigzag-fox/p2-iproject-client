@@ -28,7 +28,10 @@ export default {
 </script>
 
 <template>
-  <section class="d-flex align-items-center" style="background-color: lightgray; min-height: calc(100vh - 52.5px)">
+  <section
+    class="d-flex align-items-center"
+    style="background-color: lightgray; min-height: calc(100vh - 52.5px)"
+  >
     <div class="container h-100">
       <div
         class="row d-flex justify-content-center align-items-center h-100 mt-3"
@@ -41,7 +44,13 @@ export default {
                   src="https://i.pinimg.com/564x/5d/3d/16/5d3d16eb863c4cbdb3d23b30ee8e866f.jpg"
                   alt="login form"
                   class="img-fluid"
-                  style="border-radius: 1rem 0 0 1rem"
+                  style="
+                    border-radius: 1rem 0 0 1rem;
+                    flex-shrink: 0;
+                    min-width: 100%;
+                    min-height: 100%;
+                    object-fit: cover;
+                  "
                 />
               </div>
               <div class="col-md-6 col-lg-7 d-flex align-items-center">
@@ -91,8 +100,7 @@ export default {
                   <div
                     class="d-flex justify-content-end align-items-center gap-2"
                   >
-                    <label class="form-label">Or sign in with: </label>
-                    
+                    <!-- put twitter here -->
                   </div>
                 </div>
               </div>

@@ -52,10 +52,14 @@ export default {
       event.preventDefault();
       popup.show();
     });
+
+    // const chatbox = talkSession.createChatbox();
+    // chatbox.select(conversation);
+    // chatbox.mount(document.getElementById("talkjs-container"));
   },
 };
 </script>
 
 <template>
-  <div ref="talkjs" style="width: 90%; height: calc(100vh - 56px)"></div>
+  <div ref="talkjs" style="width: 90%"></div>
 </template>

@@ -1,12 +1,12 @@
 <script>
 import { mapWritableState } from "pinia";
 import { RouterView } from "vue-router";
-import Inbox from "./components/Inbox.vue";
 import Navbar from "./components/Navbar.vue";
+import Footer from "./components/Footer.vue";
 import { useStore } from "./stores";
 export default {
   name: "App",
-  components: { Navbar, Inbox },
+  components: { Navbar, Footer },
   computed: {
     ...mapWritableState(useStore, ["isLogin"]),
   },
@@ -25,4 +25,6 @@ export default {
   <Navbar />
 
   <RouterView />
+
+  <Footer />
 </template>
