@@ -32,27 +32,58 @@ export default {
       me: me,
     });
 
-    const other = new Talk.User({
-      id: this.otherUser.id,
-      name: this.otherUser.name,
-      email: this.otherUser.email,
-      photoUrl:
-        "https://www.clipartmax.com/png/middle/434-4349876_profile-icon-vector-png.png",
-      welcomeMessage: "Hi! may i help you?",
-      role: this.otherUser.role,
-    });
+    if (this.currentUser.role === "Customer") {
+      const other = new Talk.User({
+        id: 2,
+        name: "admin",
+        email: "admin@gmail.com",
+        photoUrl:
+          "https://www.clipartmax.com/png/middle/434-4349876_profile-icon-vector-png.png",
+        welcomeMessage: "Hi! may i help you?",
+        role: "Admin",
+      });
 
-    const conversation = talkSession.getOrCreateConversation(
-      Talk.oneOnOneId(me, other)
-    );
+      const conversation = talkSession.getOrCreateConversation(
+        Talk.oneOnOneId(me, other)
+      );
 
-    conversation.setParticipant(me);
-    conversation.setParticipant(other);
+      conversation.setParticipant(me);
+      conversation.setParticipant(other);
 
-    var inbox = talkSession.createInbox();
-    inbox.select(conversation);
+      const chatbox = talkSession.createChatbox();
+      chatbox.select(conversation);
+      // chatbox.mount(document.getElementById("talkjs-container"));
 
-    inbox.mount(this.$refs.talkjs);
+      // var inbox = talkSession.createInbox();
+      // inbox.select(conversation);
+
+      chatbox.mount(this.$refs.talkjs);
+    } else {
+      const other = new Talk.User({
+        id: this.otherUser.id,
+        name: this.otherUser.name,
+        email: this.otherUser.email,
+        photoUrl:
+          "https://www.clipartmax.com/png/middle/434-4349876_profile-icon-vector-png.png",
+        welcomeMessage: "Hi! may i help you?",
+        role: this.otherUser.role,
+      });
+      const conversation = talkSession.getOrCreateConversation(
+        Talk.oneOnOneId(me, other)
+      );
+
+      conversation.setParticipant(me);
+      conversation.setParticipant(other);
+
+      const chatbox = talkSession.createChatbox();
+      chatbox.select(conversation);
+      // chatbox.mount(document.getElementById("talkjs-container"));
+
+      // var inbox = talkSession.createInbox();
+      // inbox.select(conversation);
+
+      chatbox.mount(this.$refs.talkjs);
+    }
   },
 };
 </script>

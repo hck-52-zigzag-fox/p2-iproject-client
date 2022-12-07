@@ -24,5 +24,5 @@ export default {
 </script>
 
 <template>
-  <Inbox :currentUser="currentUser" :otherUser="otherUser" />
+  <Inbox :currentUser="currentUser" :otherUser="otherUser ?? otherUser" />
 </template>

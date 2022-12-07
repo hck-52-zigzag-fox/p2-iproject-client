@@ -140,7 +140,6 @@ export const useStore = defineStore("store", {
           data: input,
         });
 
-        console.log(data);
       } catch (err) {
         Swal.fire(err.response.data.message || "Internal server error");
       }
@@ -156,7 +155,6 @@ export const useStore = defineStore("store", {
           },
         });
 
-        console.log(data);
         this.fetchOrders();
       } catch (err) {
         Swal.fire(err.response.data.message || "Internal server error");

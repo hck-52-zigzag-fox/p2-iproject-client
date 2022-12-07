@@ -6,10 +6,10 @@ import { useStore } from "../stores/index";
 export default {
   name: "OrderCard",
   props: ["order"],
-  data(){
+  data() {
     return {
-        user: {}
-    }
+      user: {},
+    };
   },
   computed: {
     ...mapState(useStore, ["currentUser"]),
