@@ -1,39 +1,15 @@
 <script>
 export default {
   name: "RecomendationCard",
+  props: ["recomendatin"],
 };
 </script>
 <template>
-  <div class="py-20 mb-20 font-mono">
-    <h1 class="text-3xl font-bold">Recomendation</h1>
-  </div>
-  <div class="flex place-items-stretch grid grid-cols-4 gap-4 px-96 gap-1">
-    <img
-      src="https://creativereview.imgix.net/content/uploads/2019/12/joker_full.jpg?auto=compress,format&q=60&w=1012&h=1500"
-      alt="pic"
-      class="h-72 w-56 rounded-md shadow-2xl transform -translate-y-4 border-4 border-gray-300 shadow-lg"
-    />
-    <img
-      src="https://creativereview.imgix.net/content/uploads/2019/12/joker_full.jpg?auto=compress,format&q=60&w=1012&h=1500"
-      alt="pic"
-      class="h-72 w-56 rounded-md shadow-2xl transform -translate-y-4 border-4 border-gray-300 shadow-lg"
-    />
-    <img
-      src="https://creativereview.imgix.net/content/uploads/2019/12/joker_full.jpg?auto=compress,format&q=60&w=1012&h=1500"
-      alt="pic"
-      class="h-72 w-56 rounded-md shadow-2xl transform -translate-y-4 border-4 border-gray-300 shadow-lg"
-    />
-    <img
-      src="https://creativereview.imgix.net/content/uploads/2019/12/joker_full.jpg?auto=compress,format&q=60&w=1012&h=1500"
-      alt="pic"
-      class="h-72 w-56 rounded-md shadow-2xl transform -translate-y-4 border-4 border-gray-300 shadow-lg"
-    />
-    <img
-      src="https://creativereview.imgix.net/content/uploads/2019/12/joker_full.jpg?auto=compress,format&q=60&w=1012&h=1500"
-      alt="pic"
-      class="h-72 w-56 rounded-md shadow-2xl transform -translate-y-4 border-4 border-gray-300 shadow-lg"
-    />
-  </div>
+  <img
+    :src="`https://image.tmdb.org/t/p/w400${recomendatin.poster_path}`"
+    alt="pic"
+    class="h-72 w-56 rounded-md shadow-2xl transform -translate-y-4 border-4 border-gray-300 shadow-lg"
+  />
 </template>
 
 <style>

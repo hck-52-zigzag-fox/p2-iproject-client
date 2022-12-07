@@ -3,6 +3,7 @@ import HomeView from '../views/HomeView.vue'
 import MovieDetailVue from '../views/MovieDetailView.vue'
 import LoginPage from '../views/LoginPage.vue'
 import Register from '../views/Register.vue'
+import CartPage from '../views/CartPage.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -26,6 +27,11 @@ const router = createRouter({
       path: '/register',
       name: 'Register',
       component: Register
+    },
+    {
+      path: '/cart',
+      name: 'CartPage',
+      component: CartPage
     }
   ]
 })

@@ -5,15 +5,21 @@ import { useCounterStore } from "../stores/counter";
 export default {
   name: "MovieDetailView",
   computed: {
-    ...mapState(useCounterStore, ["movie"]),
+    ...mapState(useCounterStore, ["movie", "recomendations"]),
   },
   methods: {
-    ...mapActions(useCounterStore, ["movieDetail", "addCart"]),
+    ...mapActions(useCounterStore, [
+      "movieDetail",
+      "addCart",
+      "fetchRecomendation",
+      "fetchRecomendation",
+    ]),
   },
   created() {
     this.movieDetail(this.$route.params.id);
+    this.fetchRecomendation(`?recomendation=${this.$route.params.id}`);
     // console.log(this.movie.videos.results[0].key);
-    console.log(this.movie);
+    console.log(this.recomendations);
   },
   components: { RecomendationCard },
 };
@@ -95,7 +101,7 @@ export default {
       <!-- HERO DETAILS -->
 
       <div class="hero__details">
-        <h1 class="hero__title">{{ movie.name }}</h1>
+        <h1 class="hero__title">{{ movie.title }}</h1>
         <h4 v-if="movie.tagline" class="hero__tagline">
           "{{ movie.tagline }}"
         </h4>
@@ -116,8 +122,16 @@ export default {
       ></iframe>
     </div>
   </div>
-
-  <RecomendationCard />
+  <div class="py-20 mb-20 font-mono">
+    <h1 class="text-3xl font-bold">Recomendation</h1>
+  </div>
+  <div class="flex place-items-stretch grid grid-cols-4 gap-4 px-96 gap-1">
+    <RecomendationCard
+      v-for="recomendatin in recomendations"
+      :recomendatin="recomendatin"
+      :key="recomendatin.id"
+    />
+  </div>
 </template>
 
 <style lang="scss" scoped>

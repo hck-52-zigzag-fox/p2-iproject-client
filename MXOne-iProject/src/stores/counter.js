@@ -8,7 +8,9 @@ export const useCounterStore = defineStore('counter', {
     movies: [],
     movie: {},
     checkRoute: false,
-    genres: []
+    genres: [],
+    recomendations: [],
+    carts: []
 
 
   }),
@@ -17,6 +19,7 @@ export const useCounterStore = defineStore('counter', {
       console.log(page)
       let link = ''
       if (page) link = page
+      else link = ''
       try {
         let { data } = await axios({
           url: baseUrl + 'movies' + link,
@@ -25,7 +28,7 @@ export const useCounterStore = defineStore('counter', {
             access_token: localStorage.getItem("access_token")
           }
         })
-        console.log(data.items)
+        // console.log(data.items)
         this.movies = data.movies
       } catch (error) {
         console.log(error)
@@ -115,5 +118,38 @@ export const useCounterStore = defineStore('counter', {
         console.log(error)
       }
     },
+
+    async fetchRecomendation(query) {
+      try {
+        let link = ''
+        if (query) link += query
+        let { data } = await axios({
+          url: baseUrl + `movies/recomendation` + link,
+          method: "GET",
+          headers: {
+            access_token: localStorage.getItem("access_token")
+          }
+        })
+        console.log(data)
+        this.recomendations = data.results
+      } catch (error) {
+        console.log(error)
+      }
+    },
+    async fetchCart() {
+      try {
+        let { data } = await axios({
+          url: baseUrl + `movies/cart`,
+          method: "GET",
+          headers: {
+            access_token: localStorage.getItem("access_token")
+          }
+        })
+        console.log(data.cart)
+        this.carts = data.cart
+      } catch (error) {
+        console.log(error)
+      }
+    }
   }
 })
