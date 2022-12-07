@@ -1,6 +1,9 @@
 <script>
+import YouTube from "vue3-youtube";
+
 export default {
   name: "Home",
+  components: { YouTube },
 };
 </script>
 
@@ -8,15 +11,11 @@ export default {
   <section>
     <div class="position-absolute top-50 start-50 translate-middle">
       <div style="padding-left: 15vh">
-        <iframe
-          width="560"
-          height="315"
+        <YouTube
           src="https://www.youtube.com/embed/eqs8wOiBLhc"
-          title="YouTube video player"
-          frameborder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowfullscreen
-        ></iframe>
+          @ready="onReady"
+          ref="youtube"
+        />
       </div>
       <p style="color: white; font-size: 20px; text-align: center">
         Bola basket adalah olahraga bola berkelompok yang terdiri atas dua tim

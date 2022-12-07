@@ -3,6 +3,10 @@ import { createPinia } from 'pinia'
 
 import App from './App.vue'
 import router from './router'
+import Vue from 'vue'
+import YouTube from 'vue3-youtube'
+
+Vue.component('YouTube', YouTube)
 
 const app = createApp(App)
 const pinia = createPinia()
