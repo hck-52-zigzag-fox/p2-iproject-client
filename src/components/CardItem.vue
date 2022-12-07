@@ -1,10 +1,15 @@
 <script>
+import { mapState } from 'pinia';
 import { RouterLink } from 'vue-router';
+import { useStore } from '../stores';
 
 
 export default {
     name: "CardItem",
     props: ["item"],
+    computed:{
+      ...mapState(useStore, ['currentUser'])
+    }
 };
 </script>
 
@@ -18,6 +23,6 @@ export default {
         {{ item.description }}
       </p>
     </div>
-    <p><RouterLink to="/orders/1" class="w3-button w3-light-grey w3-block">Order</RouterLink></p>
+    <p><RouterLink v-if="currentUser.role === 'Customer'" to="/orders/1" class="w3-button w3-light-grey w3-block">Order</RouterLink></p>
   </div>
 </template>

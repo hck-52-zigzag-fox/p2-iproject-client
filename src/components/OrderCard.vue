@@ -1,24 +1,32 @@
 <script>
+import { mapActions, mapState } from "pinia";
+import { useStore } from "../stores/index";
+
 export default {
   name: "OrderCard",
   props: ["order"],
   computed: {
+    ...mapState(useStore, ["currentUser"]),
     getTotalPrice() {
       let price = (this.order.additionalPrice + this.order.Item.price)
         .toLocaleString("id-ID")
         .split(".");
-        if(price.length === 2){
-            price = price[0] + 'K'
-        } else if (price.length === 3){
-            price = price[0] + 'M'
-        }
+      if (price.length === 2) {
+        price = price[0] + "K";
+      } else if (price.length === 3) {
+        price = price[0] + "M";
+      }
       return price;
     },
+  },
+  methods: {
+    ...mapActions(useStore, ["deleteOrder"]),
   },
 };
 </script>
 
 <template>
+  <!-- {{order}} -->
   <div class="Cart-Items">
     <div class="image-box">
       <img
@@ -40,7 +48,13 @@ export default {
     <div class="prices ms-5">
       <div class="amount">{{ getTotalPrice }}</div>
       <div class="save"><u>Detail</u></div>
-      <div class="remove"><u>Remove</u></div>
+      <div
+        class="remove"
+        @click="deleteOrder(order.id)"
+        v-if="currentUser.role === 'Admin'"
+      >
+        <u>Remove</u>
+      </div>
     </div>
     <div class="ms-5">
       <i class="bi bi-chat-dots-fill fs-4"></i>

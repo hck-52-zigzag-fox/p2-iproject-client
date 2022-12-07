@@ -38,7 +38,7 @@ export default {
       <h3 class="w3-border-bottom w3-border-light-grey w3-padding-16 fw-bold">
         Commission type
       </h3>
-      <p class="text-center h5 fw-light fst-italic mt-4">
+      <p v-if="currentUser.role === 'Customer'" class="text-center h5 fw-light fst-italic mt-4">
         Please note that these are the base prices for non-commercial
         commissions! Complex character designs/backgrounds/compositions would
         increase the price.

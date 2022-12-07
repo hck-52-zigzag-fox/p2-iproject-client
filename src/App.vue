@@ -1,5 +1,5 @@
 <script>
-import { mapWritableState } from "pinia";
+import { mapActions, mapWritableState } from "pinia";
 import { RouterView } from "vue-router";
 import Navbar from "./components/Navbar.vue";
 import Footer from "./components/Footer.vue";
@@ -10,9 +10,13 @@ export default {
   computed: {
     ...mapWritableState(useStore, ["isLogin"]),
   },
+  methods: {
+    ...mapActions(useStore, ["getCurrentUser"]),
+  },
   created() {
     if (localStorage.access_token) {
       this.isLogin = true;
+      this.getCurrentUser()
     } else {
       this.isLogin = false;
       this.$router.push("/login");

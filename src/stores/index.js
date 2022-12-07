@@ -77,6 +77,22 @@ export const useStore = defineStore("store", {
         Swal.fire(err.response.data.message || "Internal server error");
       }
     },
+    async deleteOrder(id) {
+      try {
+        const { data } = await axios({
+          method: "DELETE",
+          url: baseUrl + `/orders/${id}`,
+          headers: {
+            access_token: localStorage.access_token,
+          },
+        });
+
+        Swal.fire(data.message);
+        this.fetchOrders()
+      } catch (err) {
+        Swal.fire(err.response.data.message || "Internal server error");
+      }
+    },
   },
   getters: {
     username() {
