@@ -43,6 +43,9 @@ export default {
               <li class="scroll-to-section">
                 <RouterLink to="/products">Products</RouterLink>
               </li>
+              <li class="scroll-to-section">
+                <RouterLink to="/cart">Shopping Cart</RouterLink>
+              </li>
               <li v-if="!isLogin" class="scroll-to-section">
                 <RouterLink to="/login">Login</RouterLink>
               </li>

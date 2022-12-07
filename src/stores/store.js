@@ -129,6 +129,43 @@ export const useStore = defineStore("index", {
         });
       }
     },
+    async addOrder(id, input) {
+      try {
+        const { data } = await axios.post(
+          `${baseUrl}/orders/cost`,
+          {
+            origin: 445,
+            destination: input.destination,
+            weight: 1000,
+            courier: "jnt",
+          },
+          {
+            headers: {
+              access_token: localStorage.getItem("access_token"),
+            },
+          }
+        );
+
+        await axios.post(
+          `${baseUrl}/orders/${id}`,
+          {
+            destination: data.destination,
+            price: data.price,
+          },
+          {
+            headers: {
+              access_token: localStorage.getItem("access_token"),
+            },
+          }
+        );
+      } catch (err) {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: err.response.data.msg,
+        });
+      }
+    },
   },
   getters: {},
 });
