@@ -2,7 +2,8 @@ import { defineStore } from "pinia";
 import axios from "axios";
 import Swal from "sweetalert2";
 
-const baseUrl = "https://hexashop-production.up.railway.app";
+// const baseUrl = "https://hexashop-production.up.railway.app";
+const baseUrl = "http://localhost:3000";
 
 export const useStore = defineStore("index", {
   state() {
@@ -117,19 +118,15 @@ export const useStore = defineStore("index", {
     },
     async handleQuotes() {
       try {
-        const { data } = await axios.get(
-          `https://api.api-ninjas.com/v1/quotes?category=famous`,
-          {
-            headers: {
-              "X-Api-Key": "1vK5cK4t5IPQWf0IM2d2yw==R4fRFzlZWh7DyYlT",
-            },
-          }
-        );
+        const { data } = await axios.get(`${baseUrl}/quotes`);
 
-        this.quote = data[0].quote;
-        console.log(this.quote);
+        this.quote = data;
       } catch (err) {
-        console.log(err);
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Error Quotes Data!",
+        });
       }
     },
   },
