@@ -9,6 +9,7 @@ export const useDataStore = defineStore("dataStore", {
     dataAllPosts: [],
     dataAllProfiles: [],
     dataProfileChat: [],
+    dataAllComments: [],
     isPass: false,
     qr: "",
   }),
@@ -207,6 +208,22 @@ export const useDataStore = defineStore("dataStore", {
           data: formData,
         });
         this.handleAllPost();
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    async handleFetchAllComments(id) {
+      try {
+        console.log(id, "<<<");
+        const { data } = await axios({
+          method: "GET",
+          url: `${baseUrl}/comments/${id}`,
+          headers: {
+            access_token: localStorage.getItem("access_token"),
+          },
+        });
+        this.dataAllComments = data;
+        console.log(this.dataAllComments, "<<<");
       } catch (error) {
         console.log(error);
       }
