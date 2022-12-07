@@ -5,6 +5,7 @@ const baseUrl = "http://localhost:3000";
 export const useDataStore = defineStore("dataStore", {
   state: () => ({
     dataChat: [],
+    dataOneProfile: {},
   }),
   getters: {},
   actions: {
@@ -18,7 +19,7 @@ export const useDataStore = defineStore("dataStore", {
         });
         // console.log(data, "<<<<<");
         localStorage.setItem("access_token", data.access_token);
-        this.router.push("/chat");
+        this.router.push("/");
       } catch (error) {
         console.log(error);
       }
@@ -33,6 +34,46 @@ export const useDataStore = defineStore("dataStore", {
           },
         });
         this.dataChat = data;
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    async handleEditProfile(value) {
+      try {
+        // console.log(value.name, "masuk state<<");
+        const formData = new FormData();
+        formData.append("profilePict", value.profilePict);
+        formData.append("name", value.name);
+        formData.append("dateOfBirth", value.dateOfBirth);
+        formData.append("gender", value.gender);
+        formData.append("about", value.about);
+        formData.append("job", value.job);
+        formData.append("company", value.company);
+        console.log(formData, "<<<");
+        const { data } = await axios({
+          method: "PUT",
+          url: `${baseUrl}/profiles/edit`,
+          headers: {
+            access_token: localStorage.getItem("access_token"),
+          },
+          data: formData,
+        });
+        console.log(data, "<<<");
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    async handleOneProfile() {
+      try {
+        const { data } = await axios({
+          method: "GET",
+          url: `${baseUrl}/profiles`,
+          headers: {
+            access_token: localStorage.getItem("access_token"),
+          },
+        });
+        console.log(data, "<<<");
+        this.dataOneProfile = data;
       } catch (error) {
         console.log(error);
       }
