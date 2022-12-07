@@ -35,7 +35,7 @@ const router = createRouter({
       component: RentView,
     },
     {
-      path: "/rent/detail/:id",
+      path: "/rent/detail/:id/:price/:trxcode",
       name: "rent-detail",
       component: DetailRentView,
     },

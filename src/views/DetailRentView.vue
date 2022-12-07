@@ -3,16 +3,11 @@ import { mapActions, mapState } from 'pinia';
 import { useCounterStore } from '../stores/counter';
 export default {
     name: 'DetailRentView',
-    data() {
-        return {
-            trxcode: `TRX${new Date().getTime()}`
-        }
-    },
     computed: {
         ...mapState(useCounterStore, ['motorcycle'])
     },
     methods: {
-        ...mapActions(useCounterStore, ['fetchDetailMotorcycle'])
+        ...mapActions(useCounterStore, ['fetchDetailMotorcycle', 'handlePayment'])
     },
     created() {
         this.fetchDetailMotorcycle(this.$route.params.id)
@@ -23,11 +18,10 @@ export default {
 <template>
     <div class="detail-section container mt-5">
         <div class="pt-5">
-            <h2 class="pt-4">{{motorcycle.Brand.name}} {{motorcycle.type}}</h2>
+            <h2 class="pt-4">{{ motorcycle.Brand.name }} {{ motorcycle.type }}</h2>
             <div class="d-flex justify-content-between mt-5">
                 <div>
-                    <img :src="motorcycle.imageUrl"
-                        class="card-img-top" alt="Kawasaki ZX-10" style="height: 320px" />
+                    <img :src="motorcycle.imageUrl" class="card-img-top" alt="Kawasaki ZX-10" style="height: 320px" />
                 </div>
                 <div class="card-body row" style="margin-left: 30px;">
                     <div class="col-md-6">
@@ -35,19 +29,19 @@ export default {
                         <div class="card-text mt-3" style="width: 240px">
                             <div class="d-flex justify-content-between">
                                 <p>Brand:</p>
-                                <p>{{motorcycle.Brand.name}}</p>
+                                <p>{{ motorcycle.Brand.name }}</p>
                             </div>
                             <div class="d-flex justify-content-between">
                                 <p>Motorcycle Type:</p>
-                                <p>{{motorcycle.type}}</p>
+                                <p>{{ motorcycle.type }}</p>
                             </div>
                             <div class="d-flex justify-content-between">
                                 <p>CC Power:</p>
-                                <p>{{motorcycle.cc}} cc</p>
+                                <p>{{ motorcycle.cc }} cc</p>
                             </div>
                             <div class="d-flex justify-content-between">
                                 <p>Facilities:</p>
-                                <p>{{motorcycle.facility}}</p>
+                                <p>{{ motorcycle.facility }}</p>
                             </div>
                         </div>
                     </div>
@@ -64,7 +58,8 @@ export default {
                     <div class="col-md-6">
                         <p>tempat upload</p>
                         <div class="mt-4">
-                            <button type="button" class="btn btn-outline-primary btn-sm">
+                            <button type="button" class="btn btn-outline-primary btn-sm"
+                                @click="handlePayment(this.$route.params.price, this.$route.params.trxcode)">
                                 Booking Now!
                             </button>
                         </div>

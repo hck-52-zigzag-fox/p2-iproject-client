@@ -4,6 +4,11 @@ import { useCounterStore } from '../stores/counter';
 
 export default {
     name: 'Card',
+    data() {
+        return {
+            trxcode: `TRX${new Date().getTime()}`
+        }
+    },
     computed: {
         ...mapState(useCounterStore, ['motorcycles'])
     },
@@ -39,7 +44,7 @@ export default {
                             Booked!
                         </button>
                         <button type="button" class="btn btn-outline-primary btn-sm"
-                            @click.prevent="this.$router.push(`/rent/detail/${motor.id}`)"
+                            @click.prevent="this.$router.push(`/rent/detail/${motor.id}/${motor.price}/${this.trxcode}`)"
                             v-if="motor.status === 'available'">
                             Booking Now!
                         </button>

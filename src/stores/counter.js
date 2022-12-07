@@ -54,6 +54,26 @@ export const useCounterStore = defineStore("counter", {
         console.log(err);
       }
     },
+    async handlePayment(price, trxcode) {
+      try {
+        const { data } = await axios({
+          method: "POST",
+          url: `${BASE_URL}/rents/payment/${price}/${trxcode}`,
+          headers: {
+            access_token: localStorage.access_token,
+          },
+        });
+
+        window.snap.pay(data.token, {
+          onSuccess: function (result) {
+            console.log('test bayar');
+            
+          },
+        });
+      } catch (err) {
+        console.log(err);
+      }
+    },
     handleLogout() {
       localStorage.clear();
       this.isLogin = false;
@@ -79,8 +99,6 @@ export const useCounterStore = defineStore("counter", {
             access_token: localStorage.access_token,
           },
         });
-        console.log(data);
-        
         this.motorcycle = data;
       } catch (err) {
         console.log(err);
