@@ -88,6 +88,7 @@ export const useProductStore = defineStore("product", {
         data.data.readBooked.forEach((el) => {
           this.totalPrice += el.Product.price;
         });
+        this.totalPrice = this.totalPrice.toLocaleString("id-ID")
         this.booking = true;
         this.bookmark = data.data.readBooked;
       } catch (error) {
@@ -140,9 +141,10 @@ export const useProductStore = defineStore("product", {
               showConfirmButton: false,
               timer: 1500,
             });
+            this.totalPrice = 0;
           },
         });
-        this.totalPrice = 0;
+        
       } catch (error) {
         console.log(error);
       }
@@ -168,5 +170,12 @@ export const useProductStore = defineStore("product", {
         console.log(error);
       }
     },
+    async deleteBookmarkByCustomerId(){
+      try {
+        
+      } catch (error) {
+        console.log(error)
+      }
+    }
   },
 });

@@ -9,10 +9,14 @@ export default {
   name: "Bookmark",
   components: { Card, Navbar, Header, Footer },
   computed: {
-    ...mapState(useProductStore, ["bookmark"]),
+    ...mapState(useProductStore, ["bookmark", "totalPrice"]),
   },
   methods: {
-    ...mapActions(useProductStore, ["readBookmarkedProduct","checkout","deleteBookmarkedProduct"]),
+    ...mapActions(useProductStore, [
+      "readBookmarkedProduct",
+      "checkout",
+      "deleteBookmarkedProduct",
+    ]),
   },
   created() {
     this.readBookmarkedProduct();
@@ -24,8 +28,20 @@ export default {
   <Navbar />
   <!-- Header-->
   <Header />
-  <div>
-    <button @click.prevent="checkout">Checkout</button>
+  <div class="row">
+    <div class="col"></div>
+    <div class="col"></div>
+    <div class="col"></div>
+    <div class="col m-2">
+      <button
+        v-if="bookmark.length > 0"
+        type="button"
+        class="btn btn-secondary"
+        @click.prevent="checkout"
+      >
+        Checkout : ( Rp {{totalPrice}} )
+      </button>
+    </div>
   </div>
   <!-- Section-->
   <section class="py-5">
@@ -33,7 +49,7 @@ export default {
       <div
         class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center"
       >
-      <Card
+        <Card
           v-for="(product, i) in bookmark"
           :product="product.Product"
           :key="product.Product.id"
