@@ -42,4 +42,15 @@ const router = createRouter({
   ],
 });
 
+router.beforeEach(async (to, from) => {
+  if (!localStorage.access_token && to.name === "rent-detail") {
+    return { name: "login" };
+  } else if (
+    (localStorage.access_token && to.name === "login") ||
+    (localStorage.access_token && to.name === "register")
+  ) {
+    return { name: "home" };
+  }
+});
+
 export default router;

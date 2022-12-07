@@ -36,6 +36,10 @@ export const useCounterStore = defineStore("counter", {
         console.log(err);
       }
     },
-
+    handleLogout() {
+      localStorage.clear();
+      this.isLogin = false;
+      this.router.push("/login");
+    },
   },
 });
