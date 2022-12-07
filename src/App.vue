@@ -10,7 +10,7 @@ export default {
 </script>
 
 <template>
-  <header>
+  <header v-if="$route.name !== 'notFound'">
     <NavBar />
   </header>
 
