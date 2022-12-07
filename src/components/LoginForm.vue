@@ -1,4 +1,7 @@
 <script>
+import { mapActions } from 'pinia';
+import { useStore } from '../stores/store';
+
 export default {
   name: "LoginForm",
   data() {
@@ -9,6 +12,9 @@ export default {
       }
     }
   },
+  methods: {
+    ...mapActions(useStore, ["login"])
+  }
 }
 </script>
 
@@ -21,7 +27,7 @@ export default {
     <p class="text-center fw-bold mx-3 mb-0">Or</p>
   </div>
 
-  <form>
+  <form @submit.prevent="login(loginData)">
     <!-- Email input -->
     <div class="form-outline mb-4">
       <label class="form-label" for="form3Example3">Email address</label>

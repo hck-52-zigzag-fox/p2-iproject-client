@@ -11,6 +11,12 @@ export default {
     handleLogout() {
       localStorage.clear()
       this.isLogin = false
+      this.router.push("/")
+    }
+  },
+  created() {
+    if (localStorage.access_token) {
+      this.isLogin = true
     }
   }
 }
@@ -24,9 +30,9 @@ export default {
         <div class="col-12">
           <nav class="main-nav">
             <!-- ***** Logo Start ***** -->
-            <a href="index.html" class="logo">
+            <RouterLink to="/" class="logo">
               <img src="src/assets/images/logo.png">
-            </a>
+            </RouterLink>
             <!-- ***** Logo End ***** -->
             <!-- ***** Menu Start ***** -->
             <ul class="nav">
@@ -40,7 +46,7 @@ export default {
               <li v-if="!isLogin" class="scroll-to-section">
                 <RouterLink to="/login">Login</RouterLink>
               </li>
-              <li v-if="isLogin" class="scroll-to-section"><a href="#kids">Logout</a></li>
+              <li v-if="isLogin" class="scroll-to-section"><a @click.prevent="handleLogout">Logout</a></li>
             </ul>
             <a class='menu-trigger'>
               <span>Menu</span>

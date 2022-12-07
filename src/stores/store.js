@@ -14,13 +14,8 @@ export const useStore = defineStore("index", {
   actions: {
     async register(input) {
       try {
-        await axios({
-          url: `${baseUrl}/register`,
-          method: "post",
-          data: input,
-        });
+        await axios.post(`${baseUrl}/register`, input);
 
-        console.log(input);
         this.router.push("/login");
         this.registered = true;
         Swal.fire({
@@ -36,17 +31,14 @@ export const useStore = defineStore("index", {
         });
       }
     },
-    async postLogin(input) {
+    async login(input) {
       try {
-        const { data } = await axios({
-          url: `${baseUrl}/login`,
-          method: "post",
-          data: input,
-        });
+        const { data } = await axios.post(`${baseUrl}/login`, input);
 
+        this.isLogin = true;
+        this.router.push("/");
         localStorage.setItem("access_token", data.access_token);
         localStorage.setItem("CustomerId", data.data.id);
-        this.isLogin = true;
         Swal.fire({
           icon: "success",
           title: "Congrats...",
