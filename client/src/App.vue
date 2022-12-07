@@ -1,11 +1,28 @@
 <script>
+import { mapActions, mapState, mapWritableState } from 'pinia';
 import { RouterLink, RouterView } from 'vue-router'
+import NavBar from './components/NavBar.vue';
+import { useCicoStore } from './stores/cico';
+
+export default {
+  name: 'App',
+  computed: {
+    ...mapWritableState(useCicoStore, ['isLogin', 'userStatus'])
+  },
+  components: {
+    NavBar
+  },
+  created(){
+    if(localStorage.access_token){
+      this.isLogin = true
+    }
+  }
+}
+
 </script>
 
 <template>
-  <h1 class="text-3xl font-bold underline">
-    Hello world!
-  </h1>
+  <NavBar />
   <RouterView />
 </template>
 
