@@ -2,8 +2,12 @@
 import { mapActions } from 'pinia';
 import { useCounterStore } from '../stores/counter';
 
+import { GoogleLogin } from 'vue3-google-login';
+
+
 export default {
     name: 'LoginView',
+    components: { GoogleLogin },
     data() {
         return {
             inputValue: {
@@ -13,7 +17,7 @@ export default {
         }
     },
     methods: {
-        ...mapActions(useCounterStore, ['handleLogin'])
+        ...mapActions(useCounterStore, ['handleLogin', 'handleGoogleLogin'])
     }
 }
 </script>
@@ -59,6 +63,9 @@ export default {
                                 <hr />
                                 <div class="d-flex justify-content-center">
                                     <p class="fw-normal text-body">Sign in with :</p>
+                                </div>
+                                <div class="d-flex justify-content-center">
+                                    <GoogleLogin :callback="handleGoogleLogin" />
                                 </div>
                             </form>
                         </div>
