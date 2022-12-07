@@ -1,10 +1,21 @@
 <script>
-import Atropos from 'atropos/vue';
-
+import { mapActions, mapState } from 'pinia';
+import { useCounterStore } from '../stores/counter';
 export default {
     name: 'DetailRentView',
-    components: {
-        Atropos,
+    data() {
+        return {
+            trxcode: `TRX${new Date().getTime()}`
+        }
+    },
+    computed: {
+        ...mapState(useCounterStore, ['motorcycle'])
+    },
+    methods: {
+        ...mapActions(useCounterStore, ['fetchDetailMotorcycle'])
+    },
+    created() {
+        this.fetchDetailMotorcycle(this.$route.params.id)
     }
 }
 </script>
@@ -12,35 +23,31 @@ export default {
 <template>
     <div class="detail-section container mt-5">
         <div class="pt-5">
-            <h2 class="pt-4">Kawasaki ZX-10</h2>
-            <div class="d-flex justify-content-between mt-4">
-                <!-- <div>
-                    <img src="https://www.procycles.com.au/wordpress/wp-content/uploads/2017-Suzuki-GSX-R600c-845x570-1.jpg"
-                        class="card-img-top" alt="Kawasaki ZX-10" style="height: 440px" />
-                </div> -->
-                <atropos class="my-atropos">
-                    <img src="https://www.procycles.com.au/wordpress/wp-content/uploads/2017-Suzuki-GSX-R600c-845x570-1.jpg"
-                        class="card-img-top" alt="Kawasaki ZX-10" style="height: 440px" />
-                </atropos>
-                <div class="card-body row">
+            <h2 class="pt-4">{{motorcycle.Brand.name}} {{motorcycle.type}}</h2>
+            <div class="d-flex justify-content-between mt-5">
+                <div>
+                    <img :src="motorcycle.imageUrl"
+                        class="card-img-top" alt="Kawasaki ZX-10" style="height: 320px" />
+                </div>
+                <div class="card-body row" style="margin-left: 30px;">
                     <div class="col-md-6">
                         <h5 class="card-title">Details Motorcycle.</h5>
                         <div class="card-text mt-3" style="width: 240px">
                             <div class="d-flex justify-content-between">
                                 <p>Brand:</p>
-                                <p>Kawasaki</p>
+                                <p>{{motorcycle.Brand.name}}</p>
                             </div>
                             <div class="d-flex justify-content-between">
                                 <p>Motorcycle Type:</p>
-                                <p>ZX-10</p>
+                                <p>{{motorcycle.type}}</p>
                             </div>
                             <div class="d-flex justify-content-between">
                                 <p>CC Power:</p>
-                                <p>1000cc</p>
+                                <p>{{motorcycle.cc}} cc</p>
                             </div>
                             <div class="d-flex justify-content-between">
                                 <p>Facilities:</p>
-                                <p>Helm fullface AGV</p>
+                                <p>{{motorcycle.facility}}</p>
                             </div>
                         </div>
                     </div>

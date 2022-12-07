@@ -2,7 +2,9 @@
 import News from '../components/News.vue';
 export default {
     name: "HomepageView",
-    components: { News }
+    components: {
+        News,
+    }
 }
 </script>
 

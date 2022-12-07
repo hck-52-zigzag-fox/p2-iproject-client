@@ -10,14 +10,11 @@
   },
   "dependencies": {
     "@popperjs/core": "^2.11.6",
-    "@splidejs/splide-extension-auto-scroll": "^0.5.3",
-    "@splidejs/vue-splide": "^0.6.12",
-    "atropos": "^1.0.2",
     "axios": "^1.2.1",
     "bootstrap": "^5.2.3",
     "pinia": "^2.0.26",
-    "query-string": "^7.1.3",
     "vue": "^3.2.45",
+    "vue-carousel": "^0.18.0",
     "vue-router": "^4.1.6",
     "vue3-google-login": "^2.0.12"
   },

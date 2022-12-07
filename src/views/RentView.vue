@@ -31,7 +31,7 @@ export default {
             <button type="button" class="btn btn-outline-dark">Ducati</button>
             <button type="button" class="btn btn-outline-dark">Suzuki</button>
         </div>
-        <div class="d-flex justify-content-center mt-5">
+        <div class="mt-5">
             <div class="row">
                 <Card />
             </div>

@@ -8,6 +8,7 @@ export const useCounterStore = defineStore("counter", {
     return {
       isLogin: false,
       motorcycles: [],
+      motorcycle: {},
     };
   },
   actions: {
@@ -65,6 +66,22 @@ export const useCounterStore = defineStore("counter", {
           url: `${BASE_URL}/motorcycles`,
         });
         this.motorcycles = data;
+      } catch (err) {
+        console.log(err);
+      }
+    },
+    async fetchDetailMotorcycle(id) {
+      try {
+        const { data } = await axios({
+          method: "GET",
+          url: `${BASE_URL}/motorcycles/${id}`,
+          headers: {
+            access_token: localStorage.access_token,
+          },
+        });
+        console.log(data);
+        
+        this.motorcycle = data;
       } catch (err) {
         console.log(err);
       }
