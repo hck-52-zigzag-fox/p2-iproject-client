@@ -45,7 +45,7 @@ export default {
                   v-model="input.origin"
                 >
                   <option v-for="el in city" :key="el.id" :value="el.city_id">
-                    {{ el.province }}
+                    {{ el.city_name }}
                   </option>
                 </select>
                 <br />
@@ -59,7 +59,7 @@ export default {
                   v-model="input.destination"
                 >
                   <option v-for="el in city" :key="el.id" :value="el.city_id">
-                    {{ el.province }}
+                    {{ el.city_name }}
                   </option>
                 </select>
                 <br />
