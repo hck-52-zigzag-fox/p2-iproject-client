@@ -21,7 +21,7 @@ export default {
         <RouterLink to="/search" v-if="isLogin">Search</RouterLink>
         <RouterLink to="/calculator" v-if="isLogin">Calculator</RouterLink>
         <RouterLink to="/upgrade" v-if="(isLogin && userStatus == 'unpaid')">upgrade</RouterLink>
-        <RouterLink to="/logs" v-if="isLogin">foodlogs</RouterLink>
+        <RouterLink to="/logs" v-if="(isLogin && userStatus == 'paid')">foodlogs</RouterLink>
         <a href="" @click.prevent="logout" v-if="isLogin">logout</a>
     </nav>
 </template>

@@ -8,8 +8,9 @@ export const useCicoStore = defineStore('cico', {
     {
       isLogin: false,
       popularFood: [],
-      userEmail: '',
-      userStatus: ''
+      userEmail: localStorage.getItem('email'),
+      userStatus: localStorage.getItem('status'),
+      foundFood: {}
     }),
   actions: {
     logout() {
@@ -48,22 +49,122 @@ export const useCicoStore = defineStore('cico', {
 
     async login(dataForm) {
       try {
-        const {data} = await axios({
+        const { data } = await axios({
           method: "POST",
           url: `${baseUrl}/login`,
           data: dataForm
         })
-
+        console.log(data);
         localStorage.setItem('access_token', data.access_token)
+        localStorage.setItem('status', data.status)
+        localStorage.setItem('email', data.email)
         this.userEmail = data.email
-        this.userStatus = data.status
         this.router.push('/')
         this.isLogin = true
+
 
       } catch (error) {
         console.log(error.response.data.message);
       }
+    },
+
+    async fetchFood(input) {
+      try {
+        const { data } = await axios({
+          method: "GET",
+          url: `${baseUrl}/food`,
+          params: {
+            item: input
+          }
+        })
+
+        this.foundFood = data
+
+      } catch (error) {
+        console.log(error.response.data.message);
+      }
+    },
+
+    async updateStatus() {
+      try {
+        await axios({
+          method: "PATCH",
+          url: `${baseUrl}/users`,
+          data: {
+            status: 'paid'
+          },
+          headers: {
+            access_token: localStorage.getItem('access_token')
+          }
+        })
+
+        localStorage.setItem('status', 'paid')
+      } catch (error) {
+        console.log(error);
+      }
+    },
+
+    async order() {
+      try {
+
+        const { data } = await axios({
+          method: "POST",
+          url: `${baseUrl}/generate-midtrans-token`,
+          headers: {
+            access_token: localStorage.getItem('access_token')
+          }
+
+        })
+
+        const cb = this.updateStatus
+
+        window.snap.pay(data.token, {
+          onSuccess: function (result) {
+            /* You may add your own implementation here */
+            cb()
+          }
+        })
+      } catch (error) {
+        console.log(error);
+      }
+    },
+
+    async add(id) {
+      try {
+        await axios({
+          method: "POST",
+          url: `${baseUrl}/foodlogs/${id}`,
+          params: {
+            id
+          },
+          headers: {
+            access_token: localStorage.getItem('access_token')
+          }
+        })
+
+      } catch (error) {
+        console.log(error);
+      }
+    },
+
+    async getLogs() {
+      try {
+
+        const { data } = await axios({
+          method: "GET",
+          url: `${baseUrl}/foodlogs`,
+          headers: {
+            access_token: localStorage.getItem('access_token')
+          }
+        })
+
+        console.log(data);
+
+      } catch (error) {
+        console.log(error);
+      }
     }
+
 
   },
 })

@@ -2,6 +2,8 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomePage from '../views/HomePageView.vue'
 import RegisterView from '../views/RegisterView.vue'
 import LoginView from '../views/LoginView.vue'
+import SearchView from '../views/SearchView.vue'
+import UpgradeView from '../views/upgradeView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -24,8 +26,13 @@ const router = createRouter({
     {
       path: '/search',
       name: 'SearchPage',
-      component: LoginView
+      component: SearchView
     },
+    {
+      path: '/upgrade',
+      name: 'UpgradePage',
+      component: UpgradeView
+    }
   ]
 })
 
