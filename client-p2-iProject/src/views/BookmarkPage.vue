@@ -39,7 +39,7 @@ export default {
         class="btn btn-secondary"
         @click.prevent="checkout"
       >
-        Checkout : ( Rp {{totalPrice}} )
+        Checkout : ( Rp {{ totalPrice.toLocaleString("id-ID") }} )
       </button>
     </div>
   </div>
