@@ -2,18 +2,20 @@
 import { mapActions } from "pinia";
 import { useCounterStore } from "../stores/counter";
 import { RouterLink } from "vue-router";
+
 export default {
-  name: "Login",
+  name: "Register",
   data() {
     return {
       input: {
+        username: "",
         email: "",
         password: "",
       },
     };
   },
   methods: {
-    ...mapActions(useCounterStore, ["login"]),
+    ...mapActions(useCounterStore, ["register"]),
   },
 };
 </script>
@@ -29,14 +31,37 @@ export default {
         class="flex flex-col shadow-md px-4 sm:px-6 md:px-8 lg:px-10 py-8 rounded-3xl w-100 max-w-md bg-black bg-opacity-80"
       >
         <div class="font-medium self-center text-xl sm:text-3xl text-stone-600">
-          Login Now
+          Join Now
         </div>
         <div class="mt-4 self-center text-xl sm:text-sm text-stone-600">
           Enter your credentials account
         </div>
 
         <div class="mt-10">
-          <form action="#" @submit.prevent="login(input)">
+          <form action="#" @submit.prevent="register(input)">
+            <div class="flex flex-col mb-5">
+              <label
+                for="email"
+                class="mb-1 text-xs tracking-wide text-gray-600"
+                >Name:</label
+              >
+              <div class="relative">
+                <div
+                  class="inline-flex items-center justify-center absolute left-0 top-0 h-full w-10 text-gray-400"
+                >
+                  <i class="fas fa-user text-blue-500"></i>
+                </div>
+
+                <input
+                  v-model="input.username"
+                  id="name"
+                  type="text"
+                  name="email"
+                  class="text-sm placeholder-gray-500 pl-10 pr-4 rounded-2xl border border-gray-400 w-full py-2 focus:outline-none focus:border-blue-400"
+                  placeholder="Enter your name"
+                />
+              </div>
+            </div>
             <div class="flex flex-col mb-5">
               <label
                 for="email"
@@ -87,7 +112,7 @@ export default {
                 type="submit"
                 class="flex mt-2 items-center justify-center focus:outline-none text-white text-sm sm:text-base bg-blue-500 hover:bg-blue-600 rounded-2xl py-2 w-full transition duration-150 ease-in"
               >
-                <span class="mr-2 uppercase">Sign in</span>
+                <span class="mr-2 uppercase">Sign up</span>
                 <span>
                   <svg
                     class="h-6 w-6"
@@ -112,10 +137,10 @@ export default {
         <!-- <p>{{ this.$route.path }}</p> -->
         <span
           class="ml-2 inline-flex items-center font-medium text-xs text-center text-stone-200"
-          >Didn't have an account?
-          <RouterLink :to="'/register'">
+          >You have an account?
+          <RouterLink :to="'/login'">
             <a href="#" class="text-xs ml-2 text-blue-500 font-semibold"
-              >Register here</a
+              >Login here</a
             ></RouterLink
           ></span
         >
@@ -123,5 +148,3 @@ export default {
     </div>
   </div>
 </template>
-
-<style></style>

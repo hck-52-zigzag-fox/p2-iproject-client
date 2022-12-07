@@ -10,8 +10,9 @@ export default {
     ...mapActions(useCounterStore, ["movieDetail"]),
   },
   created() {
-    // console.log(this.$route.params.id);
     this.movieDetail(this.$route.params.id);
+    console.log(this.movie);
+    // console.log(this.movie);
   },
 };
 </script>
@@ -76,15 +77,9 @@ export default {
           "{{ movie.tagline }}"
         </h4>
         <p class="hero__overview">{{ movie.overview }}</p>
-
-        <!-- SOCIAL ICONS -->
       </div>
     </div>
   </section>
-
-  <!-- CAST -->
-
-  <!-- WALLPAPERs -->
 </template>
 
 <style lang="scss" scoped>

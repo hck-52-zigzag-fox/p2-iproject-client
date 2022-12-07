@@ -1,7 +1,12 @@
 <script>
+import { mapActions } from "pinia";
 import { RouterLink } from "vue-router";
+import { useCounterStore } from "../stores/counter";
 export default {
   name: "Navbar",
+  methods: {
+    ...mapActions(useCounterStore, ["logout"]),
+  },
 };
 </script>
 
@@ -24,7 +29,7 @@ export default {
           </a>
         </li>
         <li><a>Settings</a></li>
-        <li><a>Logout</a></li>
+        <li @click.prevent="logout"><a>Logout</a></li>
       </ul>
     </div>
     <div class="flex items-center justify-center">

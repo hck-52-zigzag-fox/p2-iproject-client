@@ -12,10 +12,11 @@ export default {
     Hero,
   },
   methods: {
-    ...mapActions(useCounterStore, ["fetchMovie"]),
+    ...mapActions(useCounterStore, ["fetchMovie", "fetchGenre"]),
   },
   created() {
-    // this.fetchMovie();
+    this.fetchMovie();
+    this.fetchGenre();
   },
 };
 </script>

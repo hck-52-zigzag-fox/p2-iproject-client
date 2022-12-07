@@ -1,5 +1,6 @@
 <script>
 import { mapActions, mapState } from "pinia";
+import { RouterLink } from "vue-router";
 import { useCounterStore } from "../stores/counter";
 export default {
   name: "MovieCard",
@@ -9,39 +10,37 @@ export default {
   },
   created() {
     // console.log(movie.genre_ids);
-    // this.movieDetail(this.$route.id);
+    // this.movieDetail(this.$route.params.id);
   },
+  components: { RouterLink },
 };
 </script>
 
 <template>
   <div class="card">
     <!-- <p>{{ movie.id }}</p> -->
-    <a href="#" @click.prevent="movieDetail(movie.id)">
-      <div class="img1">
-        <img
-          :src="'https://image.tmdb.org/t/p/h632' + movie.poster_path"
-          alt=""
-        />
-      </div>
-      <div class="img2">
-        <!-- <img
-          :src="'https://image.tmdb.org/t/p/h632' + movie.backdrop_path"
-          alt=""
-        /> -->
-      </div>
-      <div class="title">{{ movie.original_title }}</div>
-      <div class="text">
-        Now You can watch the first epsoide of the action series Vikings , wish
-        you interesting watch
-      </div>
-      <a href="#"
-        ><div class="catagory">Series <i class="fas fa-film"></i></div
-      ></a>
-      <a href="#"
-        ><div class="views">20211 <i class="far fa-eye"></i></div
-      ></a>
-    </a>
+    <RouterLink :to="`/movie/${movie.id}`">
+      <a href="#">
+        <div class="img1">
+          <img
+            :src="'https://image.tmdb.org/t/p/h632' + movie.poster_path"
+            alt=""
+          />
+        </div>
+        <div class="img2"></div>
+        <div class="title">{{ movie.original_title }}</div>
+        <div class="text">
+          Now You can watch the first epsoide of the action series Vikings ,
+          wish you interesting watch
+        </div>
+        <a href="#"
+          ><div class="catagory">Series <i class="fas fa-film"></i></div
+        ></a>
+        <a href="#"
+          ><div class="views">20211 <i class="far fa-eye"></i></div
+        ></a>
+      </a>
+    </RouterLink>
   </div>
 </template>
 
