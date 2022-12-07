@@ -12,10 +12,9 @@ export default {
     ...mapState(useProductStore, ["bookmark"]),
   },
   methods: {
-    ...mapActions(useProductStore, ["readBookmarkedProduct"]),
+    ...mapActions(useProductStore, ["readBookmarkedProduct","checkout","deleteBookmarkedProduct"]),
   },
   created() {
-    console.log(123)
     this.readBookmarkedProduct();
   },
 };
@@ -25,6 +24,9 @@ export default {
   <Navbar />
   <!-- Header-->
   <Header />
+  <div>
+    <button @click.prevent="checkout">Checkout</button>
+  </div>
   <!-- Section-->
   <section class="py-5">
     <div class="container px-4 px-lg-5 mt-5">
