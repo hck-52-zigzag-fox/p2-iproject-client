@@ -72,7 +72,7 @@ export const useDataStore = defineStore("dataStore", {
             access_token: localStorage.getItem("access_token"),
           },
         });
-        console.log(data, "<<<");
+        // console.log(data, "<<<");
         this.dataOneProfile = data;
       } catch (error) {
         console.log(error);
