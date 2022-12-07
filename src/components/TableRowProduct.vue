@@ -16,10 +16,12 @@ export default {
 
 <template>
     <tr>
-        <th scope="col">{{ i + 1 }}</th>
+        <th scope="col" class="align-middle">{{ i + 1 }}</th>
         <td scope="col" class="align-middle"><img :src="order.Product.imageUrl" alt="" width="150"></td>
         <td scope="col" class="align-middle">{{ order.Product.name }}</td>
-        <td scope="col" class="align-middle">Rp {{ order.Product.price }}</td>
+        <td scope="col" class="align-middle"> {{ order.origin }}</td>
+        <td scope="col" class="align-middle"> {{ order.destination }}</td>
+        <td scope="col" class="align-middle">Rp {{ order.price }}</td>
         <td scope="col" class="align-middle">{{ order.status }}</td>
         <td scope="col" class="align-middle">Xendit</td>
         <td scope="col" class="align-middle">

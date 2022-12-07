@@ -104,10 +104,38 @@ export const useStore = defineStore("counter", {
         console.log(error);
       }
     },
-    async addOrderById(id) {
+    async addOrderById(id, input) {
       try {
-        const { data } = await axios({});
-      } catch (error) {}
+        const { data } = await axios({
+          url: baseUrl + `orders/cost`,
+          method: "POST",
+          headers: {
+            access_token: localStorage.getItem("access_token"),
+          },
+          data: {
+            origin: 22,
+            destination: input.destination,
+            weight: 2000,
+            courier: "jne",
+          },
+        });
+
+        await axios({
+          url: baseUrl + `orders/${id}`,
+          method: "POST",
+          headers: {
+            access_token: localStorage.getItem("access_token"),
+          },
+          data: {
+            size: input.size,
+            destination: data.destinationName,
+            price: data.price + input.productPrice,
+          },
+        });
+        this.router.push("/orders");
+      } catch (error) {
+        console.log(error);
+      }
     },
     async getOrderById() {
       try {
@@ -119,7 +147,10 @@ export const useStore = defineStore("counter", {
           },
         });
         this.orders = data;
-      } catch (error) {}
+        console.log(this.orders);
+      } catch (error) {
+        console.log(error);
+      }
     },
     async deleteOrder(id) {
       try {

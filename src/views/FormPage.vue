@@ -7,13 +7,18 @@ export default {
     data() {
         return {
             input: {
-                name: "",
-                size: 0
+                size: 0,
+                destination: 0,
+                productPrice: 0
             }
         }
     },
     methods: {
-        ...mapActions(useStore, ["productById", "getCity"])
+        ...mapActions(useStore, ["productById", "getCity", "addOrderById"]),
+        handleSubmit() {
+            this.input.productPrice = this.product.price
+            this.addOrderById(this.$route.params.id, this.input)
+        }
     },
     computed: {
         ...mapState(useStore, ["product", "cities"])
@@ -29,7 +34,7 @@ export default {
 <template>
     <!-- {{ product }} -->
 
-    <section class="col-md-8 offset-md-3">
+    <section class="col-md-8 md-3">
         <div class="row">
             <div class="col-md-8 offset-md-3">
                 <div class="card flex-row my-5 border-0 shadow rounded-3 overflow-hidden">
@@ -37,23 +42,26 @@ export default {
                         <div class="text-center">
                             <h3>Order Product</h3>
                         </div>
-                        <form>
+                        <form @submit.prevent="handleSubmit">
                             <div class="mb-3">
                                 <div class="d-flex justify-content-center">
                                     <img :src="product.imageUrl" alt="" width="250">
                                 </div>
                                 <label for="Category">Name Product <span class="text-danger fw-bold">*</span></label>
-                                <input type="text" class="form-control" id="product-name" placeholder=""
+                                <input type="text" class="form-control" id="product-name" placeholder="" disabled
                                     v-model="product.name" autocomplete="off" />
+                                <label for="Category">Price <span class="text-danger fw-bold">*</span></label>
+                                <input type="text" class="form-control" id="product-name" placeholder="" disabled
+                                    v-model="product.price" autocomplete="off" />
                                 <label for="Category">Size <span class="text-danger fw-bold">*</span></label>
                                 <input type="Number" class="form-control" id="product-name"
-                                    placeholder="Enter size ex.36-45" autocomplete="off" />
+                                    placeholder="Enter size ex.36-45" autocomplete="off" v-model="input.size" />
 
                             </div>
                             <div class="d-flex justify-content-end me-5">
                                 <div>
+                                    <legend>Pengiriman</legend>
                                     <fieldset disabled>
-                                        <legend>Pengiriman</legend>
                                         <div class="mb-3">
                                             <label for="disabledTextInput" class="form-label">Dikirim Dari:</label>
                                             <input type="text" id="disabledTextInput" class="form-control"
@@ -61,7 +69,8 @@ export default {
                                         </div>
                                     </fieldset>
                                     <label for="disabledTextInput" class="form-label">Alamat Penerima:</label>
-                                    <select class="form-select" aria-label="Default select example">
+                                    <select class="form-select" aria-label="Default select example"
+                                        v-model="input.destination">
                                         <option selected disabled>Open this select menu</option>
                                         <option v-for="city in cities" :key="city.city_id" :value="city.city_id">{{
                                                 city.city_name
@@ -70,7 +79,7 @@ export default {
                                     </select>
                                     <fieldset disabled>
                                         <div class="mb-3">
-                                            <label for="disabledTextInput" class="form-label mt-2">Dikirim Dari:</label>
+                                            <label for="disabledTextInput" class="form-label mt-2">Kurir:</label>
                                             <input type="text" id="disabledTextInput" class="form-control"
                                                 placeholder="JNE">
                                         </div>

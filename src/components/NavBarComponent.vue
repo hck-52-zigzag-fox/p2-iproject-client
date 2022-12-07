@@ -47,12 +47,6 @@ export default {
                         </RouterLink>
                     </li>
                     <li v-if="isLogin" class="nav-item">
-                        <a class="nav-link mx-2 text-uppercase" href="#">Catalog</a>
-                    </li>
-                    <li v-if="isLogin" class="nav-item">
-                        <a class="nav-link mx-2 text-uppercase" href="#">Services</a>
-                    </li>
-                    <li v-if="isLogin" class="nav-item">
                         <a class="nav-link mx-2 text-uppercase" href="#">About</a>
                     </li>
                 </ul>

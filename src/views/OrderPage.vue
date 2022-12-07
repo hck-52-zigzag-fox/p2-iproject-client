@@ -21,7 +21,7 @@ export default {
 <template>
     <!-- {{ orders }} -->
     <section class="text-center">
-        <div class="col-md-6 offset-md-3 mt-5">
+        <div class="col-md-8 offset-md-2 mt-3">
             <h2>Table Cart</h2>
             <table class="table table-striped">
                 <thead>
@@ -29,6 +29,8 @@ export default {
                         <th scope="col">No</th>
                         <th scope="col">Image</th>
                         <th scope="col">Product Name</th>
+                        <th scope="col">Origin</th>
+                        <th scope="col">Destination</th>
                         <th scope="col">Price</th>
                         <th scope="col">Status</th>
                         <th scope="col">Payment</th>
