@@ -87,7 +87,12 @@ export default {
         {{ post.content }}
       </p>
       <!-- Card img -->
-      <img class="card-img" :src="post.imgUrl" alt="Post" />
+      <img
+        class="card-img"
+        v-if="post.imgUrl !== '#'"
+        :src="post.imgUrl"
+        alt="Post"
+      />
       <!-- Feed react START -->
       <ul class="nav nav-stack py-3 small">
         <li class="nav-item">

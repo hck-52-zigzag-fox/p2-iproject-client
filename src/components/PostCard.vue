@@ -4,11 +4,26 @@ import { mapState, mapActions } from "pinia";
 import PostCardReal from "./PostCardReal.vue";
 export default {
   name: "PostCard",
+  data() {
+    return {
+      dataPost: {
+        imgUrl: "",
+        content: "",
+      },
+    };
+  },
   computed: {
-    ...mapState(useDataStore, ["dataAllPosts", "dataOneProfile"]),
+    ...mapState(useDataStore, ["dataAllPosts", "dataOneProfile", ""]),
   },
   methods: {
-    ...mapActions(useDataStore, ["handleAllPost"]),
+    ...mapActions(useDataStore, ["handleAllPost", "handleAddPost"]),
+    onChange() {
+      this.dataPost.imgUrl = this.$refs.file.files[0];
+    },
+    clearData() {
+      this.dataPost.imgUrl = "";
+      this.dataPost.content = "";
+    },
   },
   created() {
     this.handleAllPost();
@@ -150,20 +165,28 @@ export default {
                 />
               </div>
               <!-- Feed box  -->
-              <form class="w-100">
+              <form class="w-100" enctype="multipart/form-data">
                 <textarea
+                  v-model="dataPost.content"
                   class="form-control pe-4 fs-3 lh-1 border-0"
                   rows="2"
                   placeholder="Share your thoughts..."
                 ></textarea>
+                <br />
+                <br />
+                <input
+                  @change="onChange"
+                  type="file"
+                  ref="file"
+                  name=""
+                  id=""
+                />
               </form>
             </div>
 
             <!-- Dropzone photo START -->
             <div>
-              <form action="">
-                <input type="file" name="" id="" />
-              </form>
+              <form action=""></form>
             </div>
             <!-- Dropzone photo END -->
           </div>
@@ -179,7 +202,13 @@ export default {
             >
               Cancel
             </button>
-            <button type="button" class="btn btn-success-soft">Post</button>
+            <button
+              @click.prevent="handleAddPost(dataPost) && clearData()"
+              type="button"
+              class="btn btn-success-soft"
+            >
+              Post
+            </button>
           </div>
           <!-- Modal feed footer -->
         </div>
