@@ -52,11 +52,6 @@ export default {
 
       const chatbox = talkSession.createChatbox();
       chatbox.select(conversation);
-      // chatbox.mount(document.getElementById("talkjs-container"));
-
-      // var inbox = talkSession.createInbox();
-      // inbox.select(conversation);
-
       chatbox.mount(this.$refs.talkjs);
     } else {
       const other = new Talk.User({
@@ -68,6 +63,7 @@ export default {
         welcomeMessage: "Hi! may i help you?",
         role: this.otherUser.role,
       });
+      
       const conversation = talkSession.getOrCreateConversation(
         Talk.oneOnOneId(me, other)
       );

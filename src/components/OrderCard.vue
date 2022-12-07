@@ -49,7 +49,7 @@ export default {
     </div>
     <div class="about ms-5">
       <h1 class="title">{{ order.Item.name }}</h1>
-      <h3 class="subtitle">{{ order.Item.description }}</h3>
+      <h3 class="subtitle">{{ order.additionalDetail }}</h3>
     </div>
     <div class="ms-5">
       <a
@@ -131,7 +131,7 @@ export default {
 }
 .title {
   padding-top: 5px;
-  line-height: 10px;
+  line-height: 25px;
   font-size: 32px;
   font-weight: 800;
   color: #202020;

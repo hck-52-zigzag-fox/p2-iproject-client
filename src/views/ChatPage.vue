@@ -8,7 +8,7 @@ export default {
   name: "ChatPage",
   components: { Inbox },
   computed: {
-    ...mapState(useStore, ["currentUser", "otherUser"]),
+    ...mapState(useStore, ["currentUser", "otherUser", "order"]),
   },
   methods: {
     ...mapActions(useStore, ["fetchOrders", "getOrderChat"]),
@@ -24,5 +24,9 @@ export default {
 </script>
 
 <template>
-  <Inbox :currentUser="currentUser" :otherUser="otherUser ?? otherUser" />
+  <Inbox
+    :currentUser="currentUser"
+    :otherUser="otherUser ?? otherUser"
+    :order="order"
+  />
 </template>

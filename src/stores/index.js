@@ -139,7 +139,6 @@ export const useStore = defineStore("store", {
           },
           data: input,
         });
-
       } catch (err) {
         Swal.fire(err.response.data.message || "Internal server error");
       }

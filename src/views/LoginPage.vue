@@ -24,6 +24,16 @@ export default {
       }
     },
   },
+  mounted() {
+    window.fbAsyncInit = function () {
+      FB.init({
+        appId: "5696387490396786",
+        autoLogAppEvents: true,
+        xfbml: true,
+        version: "v15.0",
+      });
+    };
+  },
 };
 </script>
 
@@ -101,7 +111,6 @@ export default {
                     class="d-flex justify-content-end align-items-center gap-2"
                   >
                     <!-- put twitter here -->
-                    
                   </div>
                 </div>
               </div>
