@@ -11,10 +11,11 @@ export default {
     ...mapState(useCounterStore, ["movies", "genres"]),
   },
   methods: {
-    ...mapActions(useCounterStore, ["fetchMovie"]),
+    ...mapActions(useCounterStore, ["fetchMovie", "fetchGenre"]),
   },
   created() {
     this.fetchMovie();
+    this.fetchGenre();
   },
 };
 </script>

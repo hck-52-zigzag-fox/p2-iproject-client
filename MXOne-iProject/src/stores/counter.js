@@ -18,8 +18,11 @@ export const useCounterStore = defineStore('counter', {
         let { data } = await axios({
           url: baseUrl + 'movies',
           method: "GET",
+          headers: {
+            access_token: localStorage.getItem("access_token")
+          }
         })
-        // console.log(data.items)
+        console.log(data.items)
         this.movies = data.movies
       } catch (error) {
         console.log(error)
@@ -29,7 +32,10 @@ export const useCounterStore = defineStore('counter', {
       try {
         let { data } = await axios({
           url: baseUrl + `movies/${id}`,
-          method: "GET"
+          method: "GET",
+          headers: {
+            access_token: localStorage.getItem("access_token")
+          }
         })
 
         this.movie = data
@@ -50,6 +56,9 @@ export const useCounterStore = defineStore('counter', {
         this.router.push('/')
         // console.log(data)
       } catch (error) {
+        // if (error.response.statusText === 'Unauthorized') {
+        //   this.$router.push('/login')
+        // }
         console.log(error)
       }
     },
@@ -58,6 +67,9 @@ export const useCounterStore = defineStore('counter', {
         await axios({
           url: baseUrl + 'register',
           method: "POST",
+          headers: {
+            access_token: localStorage.getItem("access_token")
+          },
           data: input
         })
         this.router.push('/login')
@@ -70,11 +82,11 @@ export const useCounterStore = defineStore('counter', {
         let { data } = await axios({
           url: baseUrl + "movies/genre",
           method: "GET",
-          // headers: {
-          //   access_token: localStorage.getItem("access_token")
-          // }
+          headers: {
+            access_token: localStorage.getItem("access_token")
+          }
         })
-        // console.log(data)
+        console.log(data)
         this.genres = data
       } catch (error) {
         // console.log(error)
@@ -83,6 +95,22 @@ export const useCounterStore = defineStore('counter', {
     logout() {
       localStorage.removeItem("access_token")
       this.router.push('/login')
+    },
+
+    async addCart(input) {
+      try {
+        let { data } = await axios({
+          url: baseUrl + 'movies/addToCart',
+          method: "POST",
+          headers: {
+            access_token: localStorage.getItem("access_token")
+          },
+          data: input
+        })
+        console.log(data)
+      } catch (error) {
+        console.log(error)
+      }
     }
   }
 })

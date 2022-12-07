@@ -15,8 +15,9 @@ export default {
     ...mapActions(useCounterStore, ["fetchMovie", "fetchGenre"]),
   },
   created() {
-    this.fetchMovie();
-    this.fetchGenre();
+    if (!localStorage.getItem("access_token")) {
+      this.$router.push("/login");
+    }
   },
 };
 </script>
