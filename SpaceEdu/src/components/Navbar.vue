@@ -14,6 +14,7 @@ export default {
        
         <li class="nav-item"><a href="#" class="nav-link"><RouterLink to="/solarsystem" class="nav-link text-dark">Solar System</RouterLink></a></li>
         <li class="nav-item"><a href="#" class="nav-link"><RouterLink to="/about" class="nav-link text-dark">About</RouterLink></a></li>
+        <li class="nav-item"><a href="#" class="nav-link"><RouterLink to="/about" class="nav-link text-dark">Login</RouterLink></a></li>
       </ul>
     </header>
   </div>
