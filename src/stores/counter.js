@@ -11,6 +11,8 @@ export const usePetStore = defineStore("pet", {
     isLogin: false,
     city: [],
     order: {},
+    product: [],
+    wishlist: []
   }),
   actions: {
     async register(input) {
@@ -43,6 +45,45 @@ export const usePetStore = defineStore("pet", {
         this.router.push("/");
       } catch (err) {
         console.log(err);
+      }
+    },
+    async fetchProduct(){
+      try {
+        const {data} = await axios({
+          method: `GET`,
+          url: `${baseUrl}/product`,
+        })
+        this.product = data
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    //order menuju wishlist
+    async addProduct(id){
+      try {
+        const {data} = await axios({
+          method: `POST`,
+          url: `${baseUrl}/order/add/${id}`,
+          headers:{
+            access_token: localStorage.access_token
+          }
+        })
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    async listWishlist(){
+      try {
+        const {data} = await axios({
+          method: 'GET',
+          url: `${baseUrl}/order`,
+          headers:{
+            access_token: localStorage.access_token
+          }
+        })
+        this.wishlist = data
+      } catch (error) {
+        console.log(error);
       }
     },
     // ongkir == post
