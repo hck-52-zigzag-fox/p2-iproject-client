@@ -1,6 +1,22 @@
 <script>
+import { mapActions } from 'pinia';
+import { useCounterStore } from '../stores/counter';
+
 export default {
-    name: 'RegisterView'
+    name: 'RegisterView',
+    data() {
+        return {
+            inputValue: {
+                email: "",
+                password: "",
+                phoneNumber: "",
+                address: ""
+            }
+        }
+    },
+    methods: {
+        ...mapActions(useCounterStore, ['handleRegister'])
+    }
 }
 </script>
 
@@ -14,29 +30,32 @@ export default {
                             <div class="card" style="border-radius: 15px">
                                 <div class="card-body p-4">
                                     <h3 class="text-center mb-3">Create New Account</h3>
-                                    <form>
+                                    <form @submit.prevent="handleRegister(this.inputValue)">
                                         <div class="form-outline mb-3">
                                             <label class="form-label">Email <span style="color: red">*</span></label>
                                             <input type="email" class="form-control form-control-lg"
-                                                placeholder="Enter your email" />
+                                                placeholder="Enter your email" name="name" v-model="inputValue.email" />
                                         </div>
 
                                         <div class="form-outline mb-3">
                                             <label class="form-label">Password <span style="color: red">*</span></label>
                                             <input type="password" class="form-control form-control-lg"
-                                                placeholder="Enter your password" />
+                                                placeholder="Enter your password" name="password"
+                                                v-model="inputValue.password" />
                                         </div>
 
                                         <div class="form-outline mb-3">
                                             <label class="form-label">Phone Number</label>
                                             <input type="text" class="form-control form-control-lg"
-                                                placeholder="Enter your phone number" />
+                                                placeholder="Enter your phone number" name="phoneNumber"
+                                                v-model="inputValue.phoneNumber" />
                                         </div>
 
                                         <div class="form-outline mb-3">
                                             <label class="form-label">Address</label>
                                             <input type="text" class="form-control form-control-lg"
-                                                placeholder="Enter your address" />
+                                                placeholder="Enter your address" name="address"
+                                                v-model="inputValue.address" />
                                         </div>
                                         <div class="d-flex justify-content-center">
                                             <button type="submit" class="btn btn-outline-primary w-25">
@@ -46,7 +65,8 @@ export default {
 
                                         <p class="text-center text-muted mt-3 mb-0">
                                             Have already an account?
-                                            <a href="" class="fw-bold text-body">Log In here!</a>
+                                            <a href="" class="fw-bold text-body"
+                                                @click.prevent="this.$router.push('/login')">Log In here!</a>
                                         </p>
                                     </form>
                                 </div>
