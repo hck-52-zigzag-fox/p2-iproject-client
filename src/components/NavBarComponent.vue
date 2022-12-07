@@ -60,8 +60,10 @@ export default {
                             Cart</a>
                     </li>
                     <li v-if="isLogin" class="nav-item">
-                        <a class="nav-link mx-2 text-uppercase" href="#"><i class="bi bi-person-circle"></i>
-                            Account</a>
+                        <RouterLink to="/login" @click.prevent="logout">
+                            <a class="nav-link mx-2 text-uppercase" href="#"><i class="bi bi-person-circle"></i>
+                                Logout</a>
+                        </RouterLink>
                     </li>
                 </ul>
             </div>

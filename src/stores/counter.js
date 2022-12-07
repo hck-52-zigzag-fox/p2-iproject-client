@@ -6,10 +6,10 @@ const baseUrl = "http://localhost:3000/";
 export const useStore = defineStore("counter", {
   state: () => ({
     isLogin: false,
+    products: [],
   }),
   actions: {
     async postLogin(value) {
-      console.log("<<<<<<<<");
       try {
         const { data } = await axios({
           url: baseUrl + "users/login",
@@ -39,6 +39,20 @@ export const useStore = defineStore("counter", {
         icon: "success",
         text: "Success Logout",
       });
+    },
+    async fetchProduct() {
+      try {
+        const { data } = await axios({
+          url: baseUrl + "products",
+          method: "GET",
+          headers: {
+            access_token: localStorage.getItem("access_token"),
+          },
+        });
+        this.products = data;
+      } catch (error) {
+        console.log(error);
+      }
     },
   },
 });
