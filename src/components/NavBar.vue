@@ -1,8 +1,13 @@
 <script>
-import { RouterLink} from "vue-router";
+import { mapState } from "pinia";
+import { RouterLink } from "vue-router";
+import { useCounterStore } from "../stores/counter";
 
 export default {
   name: "NavBar",
+  computed: {
+    ...mapState(useCounterStore, ["isLogin"]),
+  },
 };
 </script>
 
@@ -30,7 +35,12 @@ export default {
       <div class="collapse navbar-collapse gap-2" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
-            <RouterLink to="/myKeepr" class="nav-link active text-dark" aria-current="page" href="#"
+            <RouterLink
+              v-if="isLogin"
+              to="/myKeepr"
+              class="nav-link active text-dark"
+              aria-current="page"
+              href="#"
               >My keepr</RouterLink
             >
           </li>
@@ -44,6 +54,7 @@ export default {
           Sign In
         </RouterLink>
         <button
+          v-if="isLogin"
           type="button"
           class="btn text-light"
           style="background-color: #30c2c3"
