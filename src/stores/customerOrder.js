@@ -20,11 +20,12 @@ export const useCustomerOrderStore = defineStore("customerOrder", {
             access_token : localStorage.access_token
           }
         })
+        this.orders = data
       } catch (error) {
-        
+        console.log(error)
       }
     },
-    async addOrder(input, id = 2) {
+    async addOrder(input, id) {
       try {
         console.log(input, id);
         const { data } = await axios({

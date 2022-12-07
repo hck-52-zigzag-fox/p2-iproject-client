@@ -2,8 +2,10 @@ import { createRouter, createWebHistory } from "vue-router";
 import HomeView from "../views/HomeView.vue";
 import PaymentView from "../views/PaymentView.vue";
 import LoginView from "../views/LoginView.vue";
+import ProfileGirlfriend from '../views/ProfileGirlfriend.vue'
 import RegisterView from "../views/RegisterView.vue";
-import Chat from '../views/Chat.vue'
+import Chat from '../component/Inbox.vue'
+import  MyChat from '../views/MyChat.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -24,9 +26,21 @@ const router = createRouter({
       component: RegisterView,
     },
     {
-      path: "/chats/:id",
-      name: "chat",
-      component: Chat,
+      path:'/myChat',
+      name:"mychat",
+      component : MyChat,
+      children:[
+        {
+          path:':id',
+          name:'roomChat',
+          component:Chat
+        }
+      ]
+    },
+    {
+      path :'/profile',
+      name:'myProfile',
+      component : ProfileGirlfriend
     },
     {
       path: "/payment/:id",

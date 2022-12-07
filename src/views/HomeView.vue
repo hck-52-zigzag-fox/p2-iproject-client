@@ -4,6 +4,8 @@ import GirlfriendCard from "../component/GirlfriendCard.vue";
 import { useCustomerOrderStore } from "../stores/customerOrder";
 import { useGirlfriendStore } from "../stores/girlfriend";
 
+import Navbar from "../component/Navbar.vue";
+
 export default {
   name: "HomeView",
   computed: {
@@ -17,25 +19,36 @@ export default {
   created() {
     this.fetchGirlfriends();
     if (this.orders.length !== 0) {
-      this.girlfriends = this.girlfriends.map();
+      this.girlfriends = this.girlfriends.map((el) => {
+        this.orders.forEach(order => {
+          if(order.startDate.getTime() === new Date().getTime() && order.ProfileGirlfriendId === el.id){
+            el.booked = false
+          }
+        })
+      });
     }
   },
-  components: { GirlfriendCard },
+  components: { GirlfriendCard, Navbar },
 };
 </script>
 
 <template>
-  <div class="container d-flex">
+  <Navbar />
+  <div class="row container p-4">
+    <!-- <div class="row"> -->
+      {{girlfriends}}
     <GirlfriendCard
+      class="mx-2"
       v-for="girlfriend in girlfriends"
       :key="girlfriend.id"
       :girlfriend="girlfriend"
     />
+    <!-- </div> -->
   </div>
 </template>
 
 <style scoped>
-  .container {
-    gap:2.2rem
-  }
+.container {
+  gap: 2rem;
+}
 </style>
