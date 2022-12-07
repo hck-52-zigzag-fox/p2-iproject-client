@@ -2,6 +2,7 @@
 import { useDataStore } from "../stores/dataStore";
 import { mapActions, mapState } from "pinia";
 import FormEditComponent from "../components/FormEditComponent.vue";
+import NavBar from "../components/NavBar.vue";
 export default {
   name: "ProfileEditView",
   data() {
@@ -39,10 +40,14 @@ export default {
   created() {
     this.waitOneFetch();
   },
-  components: { FormEditComponent },
+  components: { FormEditComponent, NavBar },
 };
 </script>
 <template>
+  <NavBar />
+  <br />
+  <br />
+  <br />
   <br />
   <div class="container">
     <div class="row">

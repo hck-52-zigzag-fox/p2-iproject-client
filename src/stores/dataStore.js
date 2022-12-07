@@ -6,6 +6,7 @@ export const useDataStore = defineStore("dataStore", {
   state: () => ({
     dataChat: [],
     dataOneProfile: {},
+    dataAllPosts: [],
   }),
   getters: {},
   actions: {
@@ -49,7 +50,7 @@ export const useDataStore = defineStore("dataStore", {
         formData.append("about", value.about);
         formData.append("job", value.job);
         formData.append("company", value.company);
-        console.log(formData, "<<<");
+        // console.log(formData, "<<<");
         const { data } = await axios({
           method: "PUT",
           url: `${baseUrl}/profiles/edit`,
@@ -58,7 +59,7 @@ export const useDataStore = defineStore("dataStore", {
           },
           data: formData,
         });
-        console.log(data, "<<<");
+        this.handleOneProfile();
       } catch (error) {
         console.log(error);
       }
@@ -74,6 +75,20 @@ export const useDataStore = defineStore("dataStore", {
         });
         // console.log(data, "<<<");
         this.dataOneProfile = data;
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    async handleAllPost() {
+      try {
+        const { data } = await axios({
+          method: "GET",
+          url: `${baseUrl}/posts`,
+          headers: {
+            access_token: localStorage.getItem("access_token"),
+          },
+        });
+        this.dataAllPosts = data;
       } catch (error) {
         console.log(error);
       }

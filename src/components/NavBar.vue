@@ -1,6 +1,20 @@
 <script>
+import { useDataStore } from "../stores/dataStore";
+import { mapState, mapActions } from "pinia";
 export default {
   name: "NavBar",
+  computed: {
+    ...mapState(useDataStore, ["dataOneProfile"]),
+  },
+  methods: {
+    ...mapActions(useDataStore, ["handleOneProfile"]),
+    clickToHome() {
+      this.$router.push({ name: "home" });
+    },
+  },
+  created() {
+    this.handleOneProfile();
+  },
 };
 </script>
 <template>
@@ -11,8 +25,9 @@ Header START -->
     <nav class="navbar navbar-expand-lg">
       <div class="container">
         <!-- Logo START -->
-        <a class="navbar-brand" href="index-2.html">
+        <a class="navbar-brand" href="#">
           <img
+            @click.prevent="clickToHome"
             class="light-mode-item navbar-brand-item"
             src="@/assets/images/vecteezy_hand-drawn-social-media-logos_14220337-transformed.png"
             alt="logo"
@@ -122,7 +137,7 @@ Header START -->
                         >
                           <img
                             class="avatar-img rounded-circle"
-                            src="@/assets/images/avatar/01.jpg"
+                            :src="dataOneProfile.profilePict"
                             alt=""
                           />
                         </div>
@@ -154,7 +169,7 @@ Header START -->
                         >
                           <img
                             class="avatar-img rounded-circle"
-                            src="@/assets/images/avatar/02.jpg"
+                            :src="dataOneProfile.profilePict"
                             alt=""
                           />
                         </div>
@@ -249,7 +264,7 @@ Header START -->
             >
               <img
                 class="avatar-img rounded-2"
-                src="@/assets/images/avatar/07.jpg"
+                :src="dataOneProfile.profilePict"
                 alt=""
               />
             </a>
@@ -264,17 +279,18 @@ Header START -->
                   <div class="avatar me-3">
                     <img
                       class="avatar-img rounded-circle"
-                      src="@/assets/images/avatar/07.jpg"
+                      :src="dataOneProfile.profilePict"
                       alt="avatar"
                     />
                   </div>
                   <div>
-                    <a class="h6 stretched-link" href="#">Lori Ferguson</a>
-                    <p class="small m-0">Web Developer</p>
+                    <a class="h6 stretched-link" href="#">{{
+                      dataOneProfile.name
+                    }}</a>
+                    <p class="small m-0">{{ dataOneProfile.job }}</p>
                   </div>
                 </div>
                 <a
-                  @click.prenvent="$router.push('/login')"
                   class="dropdown-item btn btn-primary-soft btn-sm my-2 text-center"
                   href="#"
                   >View profile</a
@@ -282,7 +298,10 @@ Header START -->
               </li>
               <!-- Links -->
               <li>
-                <a class="dropdown-item" href="settings.html"
+                <a
+                  @click.prevent="$router.push('/profile/edit')"
+                  class="dropdown-item"
+                  href="settings.html"
                   ><i class="bi bi-gear fa-fw me-2"></i>Settings & Privacy</a
                 >
               </li>
