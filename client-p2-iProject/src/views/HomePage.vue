@@ -21,7 +21,7 @@ export default {
     ...mapWritableState(useCustomerStore, ["isLogin"]),
   },
   methods: {
-    ...mapActions(useProductStore, ["fetchProduct", "showCategories"]),
+    ...mapActions(useProductStore, ["fetchProduct", "showCategories","speechToTextSearch"]),
     handleFitur() {
       if (this.filtering) this.filter = this.filtering;
       if (this.searching) this.search = this.searching;
@@ -49,7 +49,7 @@ export default {
   <!-- Content-->
   <section class="py-5">
     <center>
-      <form>
+      <form id="">
         <div class="container">
           <!--FILTER-->
           <div style="position: relative">
@@ -76,6 +76,16 @@ export default {
             >
               FindMe!
             </button>
+            <!-- <div>
+              <textarea id="convert_text"></textarea>
+              <button
+                @click.prevent="speechToTextSearch"
+                class="m-2"
+                style="border-radius: 8px"
+              >
+              listen
+              </button>
+            </div> -->
           </div>
           <!-- END OF SEARCH-->
         </div>
