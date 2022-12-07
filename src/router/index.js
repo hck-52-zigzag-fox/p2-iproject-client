@@ -34,7 +34,7 @@ router.beforeEach((to, from, next) => {
   const isAuthenticated = localStorage.getItem("access_token");
   if (isAuthenticated && (to.name === "login")) {
     next({ name: "home" });
-  } else if (!isAuthenticated && to.name === "home") {
+  } else if (!isAuthenticated && (to.name === "home" || to.name === "order" || to.name === "addOrder")) {
     next({ name: "login" });
   } else next();
 });

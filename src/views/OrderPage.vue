@@ -1,9 +1,21 @@
 <script>
-import OrderCard from '../components/OrderCard.vue';
+import { createDOMCompilerError } from "@vue/compiler-dom";
+import { mapActions, mapState } from "pinia";
+import OrderCard from "../components/OrderCard.vue";
+import { useStore } from "../stores";
 
 export default {
-    name: "OrderPage",
-    components: { OrderCard },
+  name: "OrderPage",
+  components: { OrderCard },
+  computed: {
+    ...mapState(useStore, ["orders"]),
+  },
+  methods: {
+    ...mapActions(useStore, ["fetchOrders"]),
+  },
+  created() {
+    this.fetchOrders();
+  },
 };
 </script>
 
@@ -14,7 +26,7 @@ export default {
         <h3 class="Heading mt-4">Orders</h3>
       </div>
       <!-- card order -->
-      <OrderCard v-for="el in new Array(4)" :key="1" :order="el"/>
+      <OrderCard v-for="order in orders" :key="order.id" :order="order" />
     </div>
   </div>
 </template>
@@ -49,6 +61,4 @@ export default {
   font-weight: 700;
   color: #2f3841;
 }
-
-
 </style>

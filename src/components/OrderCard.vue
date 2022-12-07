@@ -1,27 +1,48 @@
 <script>
 export default {
   name: "OrderCard",
-  props: ['order'],
-  
+  props: ["order"],
+  computed: {
+    getTotalPrice() {
+      let price = (this.order.additionalPrice + this.order.Item.price)
+        .toLocaleString("id-ID")
+        .split(".");
+        if(price.length === 2){
+            price = price[0] + 'K'
+        } else if (price.length === 3){
+            price = price[0] + 'M'
+        }
+      return price;
+    },
+  },
 };
 </script>
 
 <template>
   <div class="Cart-Items">
     <div class="image-box">
-      <img class="w3-grayscale" src="https://i.pinimg.com/564x/a1/25/90/a12590985e7dec6c1f18355c70564862.jpg" style="height: 120px; border-radius: 10px;" />
+      <img
+        class="w3-grayscale"
+        :src="order.Item.imageUrl"
+        style="
+          height: 100px;
+          width: 100px;
+          border-radius: 10px;
+          object-fit: cover;
+        "
+      />
     </div>
-    <div class="about">
-      <h1 class="title">Bust up</h1>
-      <h3 class="subtitle">250ml</h3>
+    <div class="about ms-5">
+      <h1 class="title">{{ order.Item.name }}</h1>
+      <h3 class="subtitle">{{ order.Item.description }}</h3>
     </div>
-    <div class="status">Unpaid</div>
-    <div class="prices">
-      <div class="amount">$2.99</div>
+    <div class="status ms-5">{{ order.status }}</div>
+    <div class="prices ms-5">
+      <div class="amount">{{ getTotalPrice }}</div>
       <div class="save"><u>Detail</u></div>
       <div class="remove"><u>Remove</u></div>
     </div>
-    <div>
+    <div class="ms-5">
       <i class="bi bi-chat-dots-fill fs-4"></i>
     </div>
   </div>
@@ -53,7 +74,7 @@ export default {
 }
 .subtitle {
   margin-top: 20px;
-  line-height: 10px;
+  line-height: 20px;
   font-size: 18px;
   font-weight: 600;
   color: #909090;

@@ -10,6 +10,7 @@ export const useStore = defineStore("store", {
     isLogin: false,
     currentUser: {},
     items: [],
+    orders: [],
   }),
   actions: {
     async handleLogin(login) {
@@ -57,6 +58,21 @@ export const useStore = defineStore("store", {
         });
 
         this.items = data;
+      } catch (err) {
+        Swal.fire(err.response.data.message || "Internal server error");
+      }
+    },
+    async fetchOrders() {
+      try {
+        const { data } = await axios({
+          method: "GET",
+          url: baseUrl + "/orders",
+          headers: {
+            access_token: localStorage.access_token,
+          },
+        });
+
+        this.orders = data;
       } catch (err) {
         Swal.fire(err.response.data.message || "Internal server error");
       }
