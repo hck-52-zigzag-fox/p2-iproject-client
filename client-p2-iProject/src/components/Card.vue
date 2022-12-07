@@ -6,10 +6,14 @@ export default {
   name: "Card",
   props: ["product"],
   methods: {
-    ...mapActions(useProductStore, ["bookmarkedProducts","fetchProductById"]),
-    handleProductDetail(){
-      this.fetchProductById(this.product.id)
-    }
+    ...mapActions(useProductStore, [
+      "bookmarkedProducts",
+      "fetchProductById",
+      "deleteBookmarkedProduct",
+    ]),
+    handleProductDetail() {
+      this.fetchProductById(this.product.id);
+    },
   },
   computed: {
     ...mapState(useCustomerStore, ["isLogin"]),
@@ -21,13 +25,15 @@ export default {
   <div class="col mb-5">
     <div class="card h-100">
       <!-- Product image-->
-      <img
-        class="card-img-top"
-        :src="product.imgUrl"
-        width="100"
-        height="250"
-        alt="..."
-      />
+      <a href="" @click.prevent="deleteBookmarkedProduct(product.id)">
+        <img
+          class="card-img-top"
+          :src="product.imgUrl"
+          width="100"
+          height="250"
+          alt="..."
+        />
+      </a>
       <!-- Product details-->
       <div class="card-body p-4">
         <div class="text-center">
@@ -49,7 +55,7 @@ export default {
             >See Detail</a
           >
           <a
-            v-if="(!booking && isLogin)"
+            v-if="!booking && isLogin"
             class="btn btn-outline-dark m-2"
             href=""
             @click.prevent="bookmarkedProducts(product.id)"
