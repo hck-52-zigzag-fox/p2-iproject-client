@@ -23,6 +23,11 @@ export const useCounterStore = defineStore("counter", {
         currency: "IDR",
       }).format(this.convertCurrency(price));
     },
+    logout() {
+      toast.info(`Success! Logout success!`);
+      localStorage.clear();
+      this.isLogin = false;
+    },
     async fetchGamesList(params) {
       try {
         this.isLoading = true;
@@ -58,6 +63,49 @@ export const useCounterStore = defineStore("counter", {
         this.isLoading = false;
       } catch (err) {
         toast.error(err.response.data.message);
+        this.isLoading = false;
+      }
+    },
+    async login(email, password) {
+      try {
+        this.isLoading = true;
+        const { data } = await axios({
+          method: "POST",
+          url: `${baseUrl}/users/login`,
+          data: {
+            email,
+            password,
+          },
+        });
+        toast.success(`Login success! Welcome ${data.email.split("@")[0]}`);
+        localStorage.setItem("access_token", data.access_token);
+        localStorage.setItem("email", data.email);
+        this.isLogin = true;
+        this.router.push({ name: "home" });
+        this.isLoading = false;
+      } catch (err) {
+        toast.warning(err.response.data.message);
+        this.isLoading = false;
+      }
+    },
+    async register(email, password) {
+      try {
+        this.isLoading = true;
+        const { data } = await axios({
+          method: "POST",
+          url: `${baseUrl}/users/register`,
+          data: {
+            email,
+            password,
+          },
+        });
+        toast.success(
+          `Success! Successfully create an account with email ${data.email}`
+        );
+        this.router.push({ name: "login" });
+        this.isLoading = false;
+      } catch (err) {
+        toast.warning(err.response.data.message.join(", "));
         this.isLoading = false;
       }
     },
