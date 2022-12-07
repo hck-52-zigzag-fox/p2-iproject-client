@@ -7,6 +7,10 @@ export const useDataStore = defineStore("dataStore", {
     dataChat: [],
     dataOneProfile: {},
     dataAllPosts: [],
+    dataAllProfiles: [],
+    dataProfileChat: [],
+    isPass: false,
+    qr: "",
   }),
   getters: {},
   actions: {
@@ -19,14 +23,18 @@ export const useDataStore = defineStore("dataStore", {
           data: value,
         });
         // console.log(data, "<<<<<");
+        this.isPass = false;
         localStorage.setItem("access_token", data.access_token);
-        this.router.push("/");
+        localStorage.setItem("id", data.id);
+        localStorage.setItem("isPass", false);
+        this.router.push("/2FA");
       } catch (error) {
         console.log(error);
       }
     },
     async fetchChat(receiverId) {
       try {
+        // console.log(`jalann`);
         const { data } = await axios({
           method: "GET",
           url: `${baseUrl}/users/chat/${receiverId}`,
@@ -89,6 +97,98 @@ export const useDataStore = defineStore("dataStore", {
           },
         });
         this.dataAllPosts = data;
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    async fetchAllProfile() {
+      try {
+        console.log(`jalann`);
+        const { data } = await axios({
+          method: "GET",
+          url: `${baseUrl}/profiles/all`,
+          headers: {
+            access_token: localStorage.getItem("access_token"),
+          },
+        });
+        this.dataAllProfiles = data;
+        console.log(this.dataAllProfiles);
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    async fetchOneProfile(id) {
+      try {
+        console.log(`jalan`);
+        const { data } = await axios({
+          method: "GET",
+          url: `${baseUrl}/profiles/${id}`,
+          headers: {
+            access_token: localStorage.getItem("access_token"),
+          },
+        });
+        this.dataProfileChat = data;
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    async handleSendChat(value) {
+      try {
+        console.log(value, "masuk state<<");
+        // const { data } = await axios({
+        //   method: "POST",
+        //   url: `${baseUrl}/users/chat`,
+        //   headers: {
+        //     access_token: localStorage.getItem("access_token"),
+        //   },
+        //   data: value,
+        // });
+        // console.log(data, "<<<<<");
+        this.fetchChat(value.ReceiverId);
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    async getTwoFactorSecret() {
+      try {
+        const { data } = await axios({
+          method: "GET",
+          url: `${baseUrl}/users/2FA`,
+          headers: {
+            access_token: localStorage.getItem("access_token"),
+          },
+        });
+        let dataSecret = data;
+
+        let save = dataSecret.secret.split("?secret=")[1];
+        localStorage.setItem("secret", save);
+        const { data: qr } = await axios({
+          method: "GET",
+          url: `https://api.happi.dev/v1/qrcode?data=${dataSecret.secret}&width=&dots=000000&bg=FFFFFF&apikey=132fdax6K7vXiNZYAZudtI3roSuDSAmbFkGMQh3GU08pySHxOfWNdp2H`,
+        });
+        this.qr = qr.qrcode;
+        return data;
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    async verifyTwoFactorSecret(value) {
+      try {
+        let token = +value.join("");
+        let secret = localStorage.getItem("secret");
+        const { data } = await axios({
+          method: "POST",
+          url: `${baseUrl}/users/2FA`,
+          headers: {
+            access_token: localStorage.getItem("access_token"),
+          },
+          data: {
+            token,
+            secret,
+          },
+        });
+        localStorage.setItem("isPass", true);
+        this.router.push("/");
       } catch (error) {
         console.log(error);
       }
