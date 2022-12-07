@@ -11,7 +11,7 @@ export const useCicoStore = defineStore('cico', {
       userEmail: localStorage.getItem('email'),
       userStatus: localStorage.getItem('status'),
       foundFood: {},
-      logs: [],
+      foodLogs: [],
       calcResult: '',
       dailyCalories: localStorage.getItem('dailyCalories')
     }),
@@ -163,13 +163,30 @@ export const useCicoStore = defineStore('cico', {
           }
         })
 
-        this.logs = data
+        this.foodLogs = data
 
       } catch (error) {
         console.log(error);
       }
     },
 
+    async deleteLog(id){
+      try {
+        // console.log(id);
+        const {data} = await axios ({
+          method: "DELETE",
+          url: `${baseUrl}/foodlogs/${id}`,
+          headers: {
+            access_token: localStorage.getItem('access_token')
+          }
+        })
+        
+        console.log(data);
+        this.getLogs()
+      } catch (error) {
+        console.log(error);
+      }
+    }
 
   },
 })
