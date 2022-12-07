@@ -1,21 +1,22 @@
 <script>
-import { mapActions, mapState } from 'pinia';
+import { mapActions, mapState, mapWritableState } from 'pinia';
 import { useCicoStore } from '../stores/cico';
 
 export default {
     name: 'LogCards',
     props: ['log'],
     emits: ['deletedFood'],
+    computed: {
+        ...mapState(useCicoStore, ['dailyCalories']),
+        ...mapWritableState(useCicoStore, ['remainingCalories'])
+    },
     methods: {
         ...mapActions(useCicoStore, ['deleteLog','countCalories']),
         deleteFromCard(id){
-            this.deleteLog(id),
-            this.$emit('deletedFood')
+            this.deleteLog(id)
+            this.remainingCalories = this.dailyCalories
         }
-    },
-    // created(){
-    //     this.countCalories(this.log.Food)
-    // }
+    }
 }
 </script>
 

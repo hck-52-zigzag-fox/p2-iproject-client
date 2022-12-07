@@ -15,18 +15,10 @@ export default {
         ...mapWritableState(useCicoStore, ["dailyCalories"])
     },
     methods: {
-        ...mapActions(useCicoStore, ["getLogs", 'countCalories']),
-        updateRemainingCalories(){
-            this.remainingCalories = this.dailyCalories
-            // this.countCalories(this.foodLogs)
-        }
+        ...mapActions(useCicoStore, ["getLogs", 'countCalories'])
     },
     created() {
         this.getLogs()
-
-        if(this.dailyCalories == this.remainingCalories){
-            this.countCalories(this.foodLogs)
-        }
     },
     components: { LogCards }
 }
@@ -37,10 +29,10 @@ export default {
     {{userEmail}}'s daily calories : {{dailyCalories}}
     {{remainingCalories}}
 
-    <div class="grid grid-cols-3 gap-3">
+    <div class="grid grid-cols-3 gap-3 ">
 
-        <LogCards v-for="log in foodLogs" :key="log.id" :log="log" @deletedFood="updateRemainingCalories" />
-
+        <LogCards v-for="log in foodLogs" :key="log.id" :log="log" />
+        <button @click="countCalories(foodLogs)" v-if="(foodLogs.length > 0)" >click me</button>
     </div>
 
 

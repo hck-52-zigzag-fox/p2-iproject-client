@@ -148,6 +148,8 @@ export const useCicoStore = defineStore('cico', {
           }
         })
 
+        this.remainingCalories = this.dailyCalories
+
       } catch (error) {
         console.log(error);
       }
@@ -187,6 +189,7 @@ export const useCicoStore = defineStore('cico', {
     },
 
     countCalories(obj) {
+
       obj.forEach(el => {
         this.remainingCalories = Math.floor(this.remainingCalories - el.Food.calories)
       })

@@ -20,7 +20,7 @@ export default {
 
 <template>
 
-    <div class="grid grid-cols-3 gap-3">
+    <div class="grid grid-cols-3 gap-3 mx-auto container">
 
         <FoodCards v-for="food in popularFood" :key="food.id" :food="food" />
 
