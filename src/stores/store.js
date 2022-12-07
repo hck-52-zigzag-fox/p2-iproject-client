@@ -41,7 +41,6 @@ export const useStore = defineStore("index", {
         this.isLogin = true;
         this.router.push("/");
         localStorage.setItem("access_token", data.access_token);
-        localStorage.setItem("CustomerId", data.data.id);
         Swal.fire({
           icon: "success",
           title: "Congrats...",
