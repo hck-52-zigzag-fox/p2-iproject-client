@@ -159,6 +159,50 @@ export const useStore = defineStore("store", {
         Swal.fire(err.response.data.message || "Internal server error");
       }
     },
+    async fbLogin() {
+      try {
+        await axios({
+          method: "GET",
+          url: baseUrl + "/auth/facebook",
+        });
+      } catch (err) {
+        console.log(err);
+      }
+    },
+    async midtrans(id) {
+      try {
+        const { data } = await axios({
+          method: "POST",
+          url: baseUrl + `/orders/${id}/midtrans`,
+          headers: {
+            access_token: localStorage.access_token,
+          },
+        });
+        console.log(data);
+      } catch (err) {
+        console.log(err);
+        Swal.fire(err.response.data.message || "Internal server error");
+      }
+    },
+    async handleGoogleLogin(response) {
+      try {
+        const { data } = await axios({
+          method: "POST",
+          url: `${baseUrl}/customers/googleLogin`,
+          headers: {
+            google_token: response.credential,
+          },
+        });
+        localStorage.setItem("access_token", data.access_token);
+        localStorage.setItem("email", data.email);
+        localStorage.setItem("role", data.role);
+        this.isLogin = true;
+        Swal.fire("Welcome take a look around")
+        this.route.push('/')
+      } catch (err) {
+        Swal.fire(err.response.data.message || "Internal server error")
+      }
+    },
   },
   getters: {
     username() {

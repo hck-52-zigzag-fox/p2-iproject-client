@@ -26,7 +26,12 @@ export default {
     },
   },
   methods: {
-    ...mapActions(useStore, ["deleteOrder", "checkOrder", "changeStatus"]),
+    ...mapActions(useStore, [
+      "deleteOrder",
+      "checkOrder",
+      "changeStatus",
+      "midtrans",
+    ]),
   },
   components: { RouterLink },
 };
@@ -67,7 +72,6 @@ export default {
         >{{ order.status }}</a
       >
       <span
-        @click.prevent=""
         class="btn btn-outline-secondary disabled"
         style="width: 74px"
         v-if="currentUser.role === 'Customer'"
@@ -97,7 +101,7 @@ export default {
         class="btn bi bi-chat-dots-fill fs-4"
       ></RouterLink>
     </div>
-    <div class="ms-5">
+    <!-- <div class="ms-5">
       <a
         class="btn bi bi-download fs-4"
         v-if="order.status === 'Paid' && currentUser.role === 'Customer'"
@@ -108,7 +112,21 @@ export default {
       ></a>
 
       <a class="btn bi bi-upload fs-4" v-if="currentUser.role === 'Admin'"></a>
-    </div>
+    </div> -->
+    <!-- <div class="ms-5">
+      <div
+        class="btn btn-outline-secondary"
+        
+        @click="midtrans(order.id)"
+        v-if="order.status === 'Unpaid' && currentUser.role === 'Customer'"
+      >
+        Pay
+      </div>
+      <div
+      class="btn btn-outline-secondary opacity-0 disabled"
+        v-if="order.status === 'Paid' && currentUser.role === 'Customer'"
+      >Pay</div>
+    </div> -->
   </div>
 </template>
 

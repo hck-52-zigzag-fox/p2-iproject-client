@@ -16,7 +16,7 @@ export default {
     ...mapState(useStore, ["isLogin"]),
   },
   methods: {
-    ...mapActions(useStore, ["handleLogin"]),
+    ...mapActions(useStore, ["handleLogin", "fbLogin", "handleGoogleLogin"]),
     async passLoginData(login) {
       await this.handleLogin(login);
       if (this.isLogin) {
@@ -24,16 +24,7 @@ export default {
       }
     },
   },
-  mounted() {
-    window.fbAsyncInit = function () {
-      FB.init({
-        appId: "5696387490396786",
-        autoLogAppEvents: true,
-        xfbml: true,
-        version: "v15.0",
-      });
-    };
-  },
+  mounted() {},
 };
 </script>
 
@@ -111,6 +102,7 @@ export default {
                     class="d-flex justify-content-end align-items-center gap-2"
                   >
                     <!-- put twitter here -->
+                    <GoogleLogin :callback="handleGoogleLogin" />
                   </div>
                 </div>
               </div>
