@@ -9,6 +9,8 @@ export const useStore = defineStore("counter", {
     products: [],
     product: {},
     cities: [],
+    cost: "",
+    orders: [],
   }),
   actions: {
     async postLogin(value) {
@@ -84,6 +86,40 @@ export const useStore = defineStore("counter", {
       } catch (error) {
         console.log(error);
       }
+    },
+    async ongkir(value) {
+      try {
+        const { data } = await axios({
+          url: baseUrl + "orders/cost",
+          method: "POST",
+          data: {
+            origin: 23,
+            destination: value.destination,
+            weight: 2000,
+            courier: "jne",
+          },
+        });
+        this.cost = data;
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    async addOrderById() {
+      try {
+        const { data } = await axios({});
+      } catch (error) {}
+    },
+    async getOrderById() {
+      try {
+        const { data } = await axios({
+          url: baseUrl + "orders",
+          method: "GET",
+          headers: {
+            access_token: localStorage.getItem("access_token"),
+          },
+        });
+        this.orders = data;
+      } catch (error) {}
     },
   },
 });

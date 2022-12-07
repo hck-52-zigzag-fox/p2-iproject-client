@@ -3,7 +3,8 @@ import HomePage from "../views/HomePage.vue";
 import LoginPage from "../views/LoginPage.vue";
 import NotFoundPage from "../views/NotFoundPage.vue";
 import DetailProductPage from "../views/DetailProductPage.vue";
-
+import OrderPage from "../views/OrderPage.vue";
+import FormPage from "../views/FormPage.vue";
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -23,6 +24,16 @@ const router = createRouter({
       component: DetailProductPage,
     },
     {
+      path: "/orders",
+      name: "detailOrder",
+      component: OrderPage,
+    },
+    {
+      path: "/addorders/:id",
+      name: "addOrder",
+      component: FormPage,
+    },
+    {
       path: "/:pathMatch(.*)*",
       name: "notFound",
       component: NotFoundPage,
@@ -34,6 +45,7 @@ router.beforeEach((to, from, next) => {
   if (to.name == "login" && isAuthenticated) next({ name: "home" });
   else if (to.name == "register" && isAuthenticated) next({ name: "home" });
   else if (to.name == "home" && !isAuthenticated) next({ name: "login" });
+  else if (to.name == "detailPage" && !isAuthenticated) next({ name: "login" });
   else next();
 });
 

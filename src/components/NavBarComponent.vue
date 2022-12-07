@@ -58,8 +58,10 @@ export default {
                 </ul>
                 <ul class="navbar-nav ms-auto ">
                     <li v-if="isLogin" class="nav-item">
-                        <a class="nav-link mx-2 text-uppercase" href="#"><i class="bi bi-cart-plus"></i>
-                            Cart</a>
+                        <RouterLink to="/orders">
+                            <a class="nav-link mx-2 text-uppercase" href="#"><i class="bi bi-cart-plus"></i>
+                                Cart</a>
+                        </RouterLink>
                     </li>
                     <li v-if="isLogin" class="nav-item">
                         <RouterLink to="/login" @click.prevent="logout">
