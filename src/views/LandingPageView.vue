@@ -14,7 +14,7 @@ export default {
           <h1>Kami siap menangani pekerjaan rumah anda</h1>
           <h4>Daftar Sekarang</h4>
           <RouterLink
-            to="/"
+            to="/register"
             type="button"
             class="btn text-light"
             style="background-color: #30c2c3"

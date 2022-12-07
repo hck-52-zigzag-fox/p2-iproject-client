@@ -27,5 +27,22 @@ export const useCounterStore = defineStore("counter", {
       console.log("err", err)
       }
     },
+    async handleRegister(email, password, phoneNumber, address) {
+      try {
+        const { data } = await axios({
+          method: "POST",
+          url: `${baseUrl}/users/register`,
+          data: {
+            email,
+            password,
+            phoneNumber,
+            address,
+          },
+        });
+        this.router.push("/login");
+      } catch (err) {
+      console.log("err", err)
+      }
+    },
   }
 });

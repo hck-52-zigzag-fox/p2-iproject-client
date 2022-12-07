@@ -1,13 +1,20 @@
 <script>
-import { mapState } from "pinia";
+import { mapState, mapWritableState } from "pinia";
 import { RouterLink } from "vue-router";
 import { useCounterStore } from "../stores/counter";
 
 export default {
   name: "NavBar",
   computed: {
-    ...mapState(useCounterStore, ["isLogin"]),
+    ...mapWritableState(useCounterStore, ["isLogin"]),
   },
+  created(){
+    if (localStorage.access_token) {
+      this.isLogin = true
+    } else {
+      this.isLogin = false
+    }
+  }
 };
 </script>
 
@@ -46,6 +53,7 @@ export default {
           </li>
         </ul>
         <RouterLink
+        v-if="!isLogin"
           to="/login"
           type="button"
           class="btn text-light"

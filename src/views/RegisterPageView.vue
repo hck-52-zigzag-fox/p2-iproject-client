@@ -1,8 +1,23 @@
 <script>
+import { mapActions } from "pinia";
 import { RouterLink, RouterView } from "vue-router";
+import { useCounterStore } from "../stores/counter";
 
 export default {
   name: "RegisterPage",
+  data() {
+    return {
+      regist: {
+        email: "",
+        password: "",
+        phoneNumber: "",
+        address: "",
+      },
+    };
+  },
+  methods: {
+    ...mapActions(useCounterStore, ["handleRegister"]),
+  },
 };
 </script>
 
@@ -17,11 +32,21 @@ export default {
                 <h3 class="fw-bold mb-1 text-uppercase">Create New Account</h3>
                 <p class="text-white-50 mb-2">Please enter your data!</p>
 
-                <form>
+                <form
+                  @submit.prevent="
+                    handleRegister(
+                      regist.email,
+                      regist.password,
+                      regist.phoneNumber,
+                      regist.address
+                    )
+                  "
+                >
                   <div class="d-flex gap-2 mb-3">
                     <div class="form-outline form-white">
                       <label class="form-label" for="typeEmailX">Email</label>
                       <input
+                        v-model="regist.email"
                         type="email"
                         id="typeEmailX"
                         class="form-control form-control-lg"
@@ -33,6 +58,7 @@ export default {
                         >Password</label
                       >
                       <input
+                        v-model="regist.password"
                         type="password"
                         class="form-control form-control-lg"
                       />
@@ -43,14 +69,22 @@ export default {
                     <label class="form-label" for="typePasswordX"
                       >Phone Number</label
                     >
-                    <input type="text" class="form-control form-control-lg" />
+                    <input
+                      v-model="regist.phoneNumber"
+                      type="text"
+                      class="form-control form-control-lg"
+                    />
                   </div>
 
                   <div class="form-outline form-white mb-3">
                     <label class="form-label" for="typePasswordX"
                       >Address</label
                     >
-                    <input type="text" class="form-control form-control-lg" />
+                    <input
+                      v-model="regist.address"
+                      type="text"
+                      class="form-control form-control-lg"
+                    />
                   </div>
 
                   <button
