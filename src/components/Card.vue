@@ -1,31 +1,46 @@
 <script>
+import { mapState } from 'pinia';
+import { useCounterStore } from '../stores/counter';
+
 export default {
-    name: 'Card'
+    name: 'Card',
+    computed: {
+        ...mapState(useCounterStore, ['motorcycles'])
+    },
+    methods: {
+        formatter(val) {
+            return new Intl.NumberFormat('en-ID', {
+                style: 'currency',
+                currency: 'IDR',
+            }).format(val)
+        }
+    }
 }
 </script>
 
 <template>
-    <div class="col-md-6">
+    <div class="col-md-6" v-for="motor in motorcycles" :key="motor.id">
         <div class="card card-content mb-3" style="max-width: 540px">
             <div class="row g-0">
                 <div class="col-md-6">
-                    <img src="https://www.procycles.com.au/wordpress/wp-content/uploads/2017-Suzuki-GSX-R600c-845x570-1.jpg"
-                        class="img-fluid rounded-start mt-4" alt="ZX-10" style="width: 200px; margin-left: 27px" />
+                    <img :src="motor.imageUrl" class="img-fluid rounded-start mt-4" alt="ZX-10"
+                        style="width: 200px; margin-left: 27px" />
                 </div>
                 <div class="col-md-6">
                     <div class="card-body">
-                        <h5 class="card-title">Kawasaki ZX-10</h5>
+                        <h5 class="card-title">{{ motor.Brand.name }} {{ motor.type }}</h5>
                         <div class="card-text">
-                            <p style="margin: 0px">CC Motor: 1000cc</p>
-                            <p style="margin: 0px">Transmisi: Kopling</p>
-                            <p style="margin: 0px">Harga: Rp. 1.200.000 / day</p>
-                            <p>Fasilitas: Helm fullface AGV</p>
+                            <p style="margin: 0px">CC Motor: {{ motor.cc }}</p>
+                            <p style="margin: 0px">Harga: {{ formatter(motor.price) }} / day</p>
+                            <p>Fasilitas: {{ motor.facility }}</p>
                         </div>
-                        <button type="button" class="btn btn-outline-secondary btn-sm" disabled>
+                        <button type="button" class="btn btn-outline-secondary btn-sm" disabled
+                            v-if="motor.status === 'booked'">
                             Booked!
                         </button>
                         <button type="button" class="btn btn-outline-primary btn-sm"
-                            @click.prevent="this.$router.push('/rent/detail/:id')">
+                            @click.prevent="this.$router.push(`/rent/detail/${motor.id}`)"
+                            v-if="motor.status === 'available'">
                             Booking Now!
                         </button>
                     </div>

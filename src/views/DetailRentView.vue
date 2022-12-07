@@ -1,6 +1,11 @@
 <script>
+import Atropos from 'atropos/vue';
+
 export default {
-    name: 'DetailRentView'
+    name: 'DetailRentView',
+    components: {
+        Atropos,
+    }
 }
 </script>
 
@@ -9,10 +14,14 @@ export default {
         <div class="pt-5">
             <h2 class="pt-4">Kawasaki ZX-10</h2>
             <div class="d-flex justify-content-between mt-4">
-                <div>
+                <!-- <div>
                     <img src="https://www.procycles.com.au/wordpress/wp-content/uploads/2017-Suzuki-GSX-R600c-845x570-1.jpg"
                         class="card-img-top" alt="Kawasaki ZX-10" style="height: 440px" />
-                </div>
+                </div> -->
+                <atropos class="my-atropos">
+                    <img src="https://www.procycles.com.au/wordpress/wp-content/uploads/2017-Suzuki-GSX-R600c-845x570-1.jpg"
+                        class="card-img-top" alt="Kawasaki ZX-10" style="height: 440px" />
+                </atropos>
                 <div class="card-body row">
                     <div class="col-md-6">
                         <h5 class="card-title">Details Motorcycle.</h5>

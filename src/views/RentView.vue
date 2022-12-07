@@ -1,9 +1,17 @@
 <script>
+import { mapActions } from 'pinia';
+import { useCounterStore } from '../stores/counter';
 import Card from '../components/Card.vue';
 
 export default {
     name: "RentView",
-    components: { Card }
+    components: { Card },
+    methods: {
+        ...mapActions(useCounterStore, ['fetchMotorcycles'])
+    },
+    created() {
+        this.fetchMotorcycles()
+    }
 }
 </script>
 
@@ -25,7 +33,6 @@ export default {
         </div>
         <div class="d-flex justify-content-center mt-5">
             <div class="row">
-                <Card />
                 <Card />
             </div>
         </div>

@@ -7,6 +7,7 @@ export const useCounterStore = defineStore("counter", {
   state: () => {
     return {
       isLogin: false,
+      motorcycles: [],
     };
   },
   actions: {
@@ -56,6 +57,17 @@ export const useCounterStore = defineStore("counter", {
       localStorage.clear();
       this.isLogin = false;
       this.router.push("/login");
+    },
+    async fetchMotorcycles() {
+      try {
+        const { data } = await axios({
+          method: "GET",
+          url: `${BASE_URL}/motorcycles`,
+        });
+        this.motorcycles = data;
+      } catch (err) {
+        console.log(err);
+      }
     },
   },
 });

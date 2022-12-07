@@ -13,7 +13,7 @@ export default {
             inputValue: {
                 email: "",
                 password: "",
-            }
+            },
         }
     },
     methods: {
@@ -24,7 +24,7 @@ export default {
 
 <template>
     <div class="login-section mt-5">
-        <section style="height: 90vh;">
+        <section style="height: 90vh;" class="pt-4">
             <div class="mask d-flex align-items-center h-100 gradient-custom-3">
                 <div class="container-fluid d-flex justify-content-center">
                     <div class="card"
