@@ -11,11 +11,15 @@ export default {
   data() {
     return {
       currentPage: 1,
+      search: "",
     };
   },
   created() {
     if (this.$route.query.page) {
       this.currentPage = +this.$route.query.page;
+    }
+    if (this.$route.query.search) {
+      this.search = this.$route.query.search;
     }
     this.fetchGamesList(this.$route.query);
   },
@@ -27,24 +31,56 @@ export default {
     previousPage() {
       if (this.currentPage > 1) {
         this.currentPage--;
+        let query = {
+          page: this.currentPage,
+        };
+        if (this.$route.query.search) {
+          query.search = this.$route.query.search;
+        }
         this.$router.push({
           path: "/",
-          query: {
-            page: this.currentPage,
-          },
+          query,
         });
-        this.fetchGamesList({ page: this.currentPage });
+        this.fetchGamesList(query);
       }
     },
     nextPage() {
-      this.currentPage++;
-      this.$router.push({
-        path: "/",
-        query: {
+      if (this.games.length > 0) {
+        this.currentPage++;
+        let query = {
           page: this.currentPage,
-        },
-      });
-      this.fetchGamesList({ page: this.currentPage });
+        };
+        if (this.$route.query.search) {
+          query.search = this.$route.query.search;
+        }
+        this.$router.push({
+          path: "/",
+          query,
+        });
+        this.fetchGamesList(query);
+      }
+    },
+    searchTitle() {
+      if (this.search) {
+        this.currentPage = 1;
+        this.$router.push({
+          path: "/",
+          query: {
+            search: this.search,
+          },
+        });
+        this.fetchGamesList({ search: this.search });
+      }
+    },
+    cancelSearch() {
+      if (this.search) {
+        this.search = "";
+        this.currentPage = 1;
+        this.$router.push({
+          path: "/",
+        });
+        this.fetchGamesList();
+      }
     },
   },
 };
@@ -53,14 +89,23 @@ export default {
 <template>
   <div class="row justify-content-center pt-2 pb-2">
     <div class="col-3">
-      <form>
+      <form @submit.prevent="searchTitle">
         <div class="input-group mt-2">
           <input
-            type="search"
+            v-model="search"
+            type="text"
             class="form-control"
             id="search"
             placeholder="Search by title"
           />
+          <button
+            v-if="search"
+            type="button"
+            class="btn btn-danger"
+            @click="cancelSearch"
+          >
+            <i class="bi bi-x-lg"></i>
+          </button>
           <button type="submit" class="btn btn-dark">
             <i class="bi bi-search"></i>
           </button>
@@ -70,7 +115,10 @@ export default {
   </div>
   <div class="row justify-content-center pt-2 pb-2">
     <div class="col">
-      <table class="table table-dark table-striped table-hover align-middle">
+      <table
+        v-if="games.length > 0"
+        class="table table-dark table-striped table-hover align-middle"
+      >
         <thead>
           <tr>
             <th></th>

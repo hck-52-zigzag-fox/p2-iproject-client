@@ -18,7 +18,10 @@ export default {
       </RouterLink>
       <ul class="navbar-nav">
         <li class="nav-item">
-          <RouterLink class="nav-link text-white" aria-current="page" to="/"
+          <RouterLink
+            class="nav-link text-white"
+            aria-current="page"
+            :to="{ path: '/', query: $route.query }"
             >Home</RouterLink
           >
         </li>
