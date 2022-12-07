@@ -34,7 +34,7 @@ export const useCounterStore = defineStore('counter', {
 
         this.movie = data
         this.router.push(`/movie/${id}`)
-        // console.log(data)
+        console.log(data)
       } catch (error) {
         console.log(error)
       }

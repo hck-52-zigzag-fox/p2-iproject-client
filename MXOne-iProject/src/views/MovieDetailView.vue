@@ -11,8 +11,8 @@ export default {
   },
   created() {
     this.movieDetail(this.$route.params.id);
+    // console.log(this.movie.videos.results[0].key);
     console.log(this.movie);
-    // console.log(this.movie);
   },
 };
 </script>
@@ -80,6 +80,19 @@ export default {
       </div>
     </div>
   </section>
+
+  <div class="youtube-iframe">
+    <div class="w-full">
+      <iframe
+        class="w-full"
+        height="400"
+        :src="`https://www.youtube.com/embed/${movie.videos.results[0].key}`"
+        frameborder="0"
+        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen
+      ></iframe>
+    </div>
+  </div>
 </template>
 
 <style lang="scss" scoped>
