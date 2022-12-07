@@ -1,7 +1,54 @@
 <script>
+import { useDataStore } from "../stores/dataStore";
+import { mapState, mapActions } from "pinia";
 export default {
   name: "PostCardReal",
-  props: ["post"],
+  props: ["post", "dataOneProfile", ""],
+  data() {
+    return {
+      lokal: [],
+    };
+  },
+  computed: {
+    ...mapState(useDataStore, ["dataAllComments"]),
+    getIndonesianTimeWithTime() {
+      let date = new Date(this.post.createdAt);
+      let options = {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+        hour: "numeric",
+        minute: "numeric",
+      };
+      return date.toLocaleDateString("id-ID", options);
+    },
+  },
+  methods: {
+    ...mapActions(useDataStore, ["handleFetchAllComments"]),
+    async cobain() {
+      try {
+        await this.handleFetchAllComments(this.post.id);
+
+        this.dataAllComments.forEach((el) => {
+          let date = new Date(el.createdAt);
+          let options = {
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+            hour: "numeric",
+            minute: "numeric",
+          };
+          el.createdAt = date.toLocaleDateString("id-ID", options);
+        });
+        this.lokal = this.dataAllComments;
+      } catch (error) {
+        console.log(error);
+      }
+    },
+  },
+  created() {
+    this.cobain();
+  },
 };
 </script>
 <template>
@@ -26,7 +73,9 @@ export default {
               <h6 class="nav-item card-title mb-0">
                 <a href="#!"> {{ post.User.Profile.name }} </a>
               </h6>
-              <span class="nav-item small"> 2hr</span>
+              <span class="nav-item small"
+                >{{ getIndonesianTimeWithTime }}
+              </span>
             </div>
             <p class="mb-0 small">
               {{ post.User.Profile.job }} at {{ post.User.Profile.company }}
@@ -162,7 +211,7 @@ export default {
           <a href="#!">
             <img
               class="avatar-img rounded-circle"
-              src="@/assets/images/avatar/12.jpg"
+              :src="dataOneProfile.profilePict"
               alt=""
             />
           </a>
@@ -180,14 +229,14 @@ export default {
       <!-- Comment wrap START -->
       <ul class="comment-wrap list-unstyled">
         <!-- Comment item START -->
-        <li class="comment-item">
+        <li v-for="x in lokal" :key="x.id" class="comment-item">
           <div class="d-flex position-relative">
             <!-- Avatar -->
             <div class="avatar avatar-xs">
               <a href="#!"
                 ><img
                   class="avatar-img rounded-circle"
-                  src="@/assets/images/avatar/05.jpg"
+                  :src="x.User.Profile.profilePict"
                   alt=""
               /></a>
             </div>
@@ -196,72 +245,25 @@ export default {
               <div class="bg-light rounded-start-top-0 p-3 rounded">
                 <div class="d-flex justify-content-between">
                   <h6 class="mb-1">
-                    <a href="#!"> Frances Guerrero </a>
+                    <a href="#!"> {{ x.User.Profile.name }} </a>
                   </h6>
-                  <small class="ms-2">5hr</small>
+                  <small class="ms-2">{{ x.createdAt }}</small>
                 </div>
-                <p class="small mb-0">
-                  Removed demands expense account in outward tedious do.
-                  Particular way thoroughly unaffected projection.
-                </p>
+                <p class="small mb-0">{{ x.content }}</p>
               </div>
               <!-- Comment react -->
               <ul class="nav nav-divider py-2 small">
                 <li class="nav-item">
-                  <a class="nav-link" href="#!"> Like (3)</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="#!"> Reply</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="#!"> View 5 replies</a>
+                  <a class="nav-link" href="#!"> delete</a>
                 </li>
               </ul>
             </div>
           </div>
         </li>
+
         <!-- Comment item END -->
         <!-- Comment item START -->
-        <li class="comment-item">
-          <div class="d-flex">
-            <!-- Avatar -->
-            <div class="avatar avatar-xs">
-              <a href="#!"
-                ><img
-                  class="avatar-img rounded-circle"
-                  src="@/assets/images/avatar/05.jpg"
-                  alt=""
-              /></a>
-            </div>
-            <!-- Comment by -->
-            <div class="ms-2">
-              <div class="bg-light p-3 rounded">
-                <div class="d-flex justify-content-between">
-                  <h6 class="mb-1">
-                    <a href="#!"> Frances Guerrero </a>
-                  </h6>
-                  <small class="ms-2">4min</small>
-                </div>
-                <p class="small mb-0">
-                  Removed demands expense account in outward tedious do.
-                  Particular way thoroughly unaffected projection.
-                </p>
-              </div>
-              <!-- Comment react -->
-              <ul class="nav nav-divider pt-2 small">
-                <li class="nav-item">
-                  <a class="nav-link" href="#!"> Like (1)</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="#!"> Reply</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="#!"> View 6 replies</a>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </li>
+
         <!-- Comment item END -->
       </ul>
       <!-- Comment wrap END -->

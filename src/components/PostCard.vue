@@ -13,10 +13,18 @@ export default {
     };
   },
   computed: {
-    ...mapState(useDataStore, ["dataAllPosts", "dataOneProfile", ""]),
+    ...mapState(useDataStore, [
+      "dataAllPosts",
+      "dataOneProfile",
+      "dataAllComments",
+    ]),
   },
   methods: {
-    ...mapActions(useDataStore, ["handleAllPost", "handleAddPost"]),
+    ...mapActions(useDataStore, [
+      "handleAllPost",
+      "handleAddPost",
+      "handleFetchAllComments",
+    ]),
     onChange() {
       this.dataPost.imgUrl = this.$refs.file.files[0];
     },
@@ -27,6 +35,7 @@ export default {
   },
   created() {
     this.handleAllPost();
+    this.handleFetchAllComments();
   },
   components: { PostCardReal },
 };
@@ -215,7 +224,13 @@ export default {
       </div>
     </div>
     <!-- Card feed item START -->
-    <PostCardReal v-for="post in dataAllPosts" :key="post.id" :post="post" />
+    <PostCardReal
+      v-for="post in dataAllPosts"
+      :key="post.id"
+      :post="post"
+      :dataOneProfile="dataOneProfile"
+      :dataAllComments="dataAllComments"
+    />
     <!-- Card feed item END -->
 
     <!-- Load more button START -->
