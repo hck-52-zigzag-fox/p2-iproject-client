@@ -13,10 +13,13 @@ export const useCounterStore = defineStore('counter', {
 
   }),
   actions: {
-    async fetchMovie() {
+    async fetchMovie(page) {
+      console.log(page)
+      let link = ''
+      if (page) link = page
       try {
         let { data } = await axios({
-          url: baseUrl + 'movies',
+          url: baseUrl + 'movies' + link,
           method: "GET",
           headers: {
             access_token: localStorage.getItem("access_token")
@@ -111,6 +114,6 @@ export const useCounterStore = defineStore('counter', {
       } catch (error) {
         console.log(error)
       }
-    }
+    },
   }
 })

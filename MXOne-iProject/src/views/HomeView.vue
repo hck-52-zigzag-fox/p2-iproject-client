@@ -14,8 +14,13 @@ export default {
     ...mapActions(useCounterStore, ["fetchMovie", "fetchGenre"]),
   },
   created() {
-    this.fetchMovie();
+    if (this.$route.query) {
+      this.fetchMovie(`?page=${this.$route.query.page}`);
+    } else {
+      this.fetchMovie();
+    }
     this.fetchGenre();
+    // console.log(this.$route);
   },
 };
 </script>
@@ -37,6 +42,12 @@ export default {
     <div class="flex grid grid-cols-4 gap-1 px-56 gap-1 px-56">
       <Movie v-for="movie in movies" :movie="movie" :key="movie.id" />
     </div>
-    <Pagination />
+    <div class="flex justify-center">
+      <nav aria-label="Page navigation example">
+        <ul class="flex list-style-none">
+          <Pagination v-for="number in 10" :number="number" />
+        </ul>
+      </nav>
+    </div>
   </div>
 </template>

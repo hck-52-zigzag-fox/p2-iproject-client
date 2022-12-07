@@ -1,5 +1,6 @@
 <script>
 import { mapState, mapActions } from "pinia";
+import RecomendationCard from "../components/RecomendationCard.vue";
 import { useCounterStore } from "../stores/counter";
 export default {
   name: "MovieDetailView",
@@ -14,6 +15,7 @@ export default {
     // console.log(this.movie.videos.results[0].key);
     console.log(this.movie);
   },
+  components: { RecomendationCard },
 };
 </script>
 
@@ -93,7 +95,7 @@ export default {
       <!-- HERO DETAILS -->
 
       <div class="hero__details">
-        <h1 class="hero__title">{{ movie.title }}</h1>
+        <h1 class="hero__title">{{ movie.name }}</h1>
         <h4 v-if="movie.tagline" class="hero__tagline">
           "{{ movie.tagline }}"
         </h4>
@@ -114,6 +116,8 @@ export default {
       ></iframe>
     </div>
   </div>
+
+  <RecomendationCard />
 </template>
 
 <style lang="scss" scoped>
