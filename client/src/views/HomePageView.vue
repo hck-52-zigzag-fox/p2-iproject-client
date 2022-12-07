@@ -1,0 +1,11 @@
+<script>
+export default {
+    name: 'HomePage'
+}
+</script>
+
+<template>
+
+    <h1>ini homepage</h1>
+
+</template>
