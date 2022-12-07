@@ -13,7 +13,13 @@ export default {
     }
   },
   methods: {
-    ...mapActions(useStore, ["login"])
+    ...mapActions(useStore, ["login", "handleQuotes", "googleLogin"]),
+    callback(response) {
+      this.googleLogin(response.credential)
+    },
+  },
+  created() {
+    this.handleQuotes()
   }
 }
 </script>
@@ -21,6 +27,7 @@ export default {
 <template>
   <div class="d-flex flex-row align-items-center justify-content-center justify-content-lg-start">
     <p class="lead fw-normal mb-0 me-3">Sign in with</p>
+    <GoogleLogin :callback="callback" promt />
   </div>
 
   <div class="divider d-flex align-items-center my-4">

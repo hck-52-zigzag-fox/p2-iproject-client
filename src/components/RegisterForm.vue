@@ -20,10 +20,13 @@ export default {
     ...mapState(useStore, ["registered"])
   },
   methods: {
-    ...mapActions(useStore, ["register"]),
+    ...mapActions(useStore, ["register", "handleQuotes"]),
     handleRegister() {
       this.register(this.registerData)
     }
+  },
+  created() {
+    this.handleQuotes()
   }
 }
 </script>

@@ -12,6 +12,7 @@ export const useStore = defineStore("index", {
       products: [],
       product: {},
       loading: true,
+      quote: "",
     };
   },
   actions: {
@@ -24,7 +25,7 @@ export const useStore = defineStore("index", {
         Swal.fire({
           icon: "success",
           title: "Congrats...",
-          text: "Register Success! You have been able to Login",
+          text: this.quote,
         });
       } catch (err) {
         Swal.fire({
@@ -44,7 +45,35 @@ export const useStore = defineStore("index", {
         Swal.fire({
           icon: "success",
           title: "Congrats...",
-          text: "Login Success!",
+          text: this.quote,
+        });
+      } catch (err) {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: err.response.data.msg,
+        });
+      }
+    },
+    async googleLogin(input) {
+      try {
+        const { data } = await axios.post(
+          `${baseUrl}/googleLogin`,
+          {},
+          {
+            headers: {
+              google_token: input,
+            },
+          }
+        );
+
+        this.router.push("/");
+        localStorage.setItem("access_token", data.access_token);
+        this.isLogin = true;
+        Swal.fire({
+          icon: "success",
+          title: "Congrats...",
+          text: this.quote,
         });
       } catch (err) {
         Swal.fire({
@@ -84,6 +113,23 @@ export const useStore = defineStore("index", {
           title: "Oops...",
           text: "Error Fetch Data!",
         });
+      }
+    },
+    async handleQuotes() {
+      try {
+        const { data } = await axios.get(
+          `https://api.api-ninjas.com/v1/quotes?category=famous`,
+          {
+            headers: {
+              "X-Api-Key": "1vK5cK4t5IPQWf0IM2d2yw==R4fRFzlZWh7DyYlT",
+            },
+          }
+        );
+
+        this.quote = data[0].quote;
+        console.log(this.quote);
+      } catch (err) {
+        console.log(err);
       }
     },
   },
