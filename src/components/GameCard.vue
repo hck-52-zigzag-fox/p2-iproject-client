@@ -16,7 +16,9 @@ export default {
     <div class="row">
       <a :href="`/games/${game.steamAppID}`">
         <img
-          @click.prevent="$router.push(`/games/${game.steamAppID}`)"
+          @click.prevent="
+            $router.push(`/games/${game.steamAppID}-${game.gameID}`)
+          "
           :src="game.thumb"
           class="card-img img-fluid"
           :alt="`Image for ${game.title}`"
