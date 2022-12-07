@@ -20,7 +20,7 @@ export default {
                   </RouterLink>
                 </div>
               </div>
-              <img src="src/assets/images/left-banner-image.jpg" alt="">
+              <img src="../assets/images/left-banner-image.jpg" alt="">
             </div>
           </div>
         </div>
@@ -43,7 +43,7 @@ export default {
                         </div>
                       </div>
                     </div>
-                    <img src="src/assets/images/baner-right-image-01.jpg">
+                    <img src="../assets/images/baner-right-image-01.jpg">
                   </div>
                 </div>
               </div>
@@ -63,7 +63,7 @@ export default {
                         </div>
                       </div>
                     </div>
-                    <img src="src/assets/images/baner-right-image-02.jpg">
+                    <img src="../assets/images/baner-right-image-02.jpg">
                   </div>
                 </div>
               </div>
@@ -83,7 +83,7 @@ export default {
                         </div>
                       </div>
                     </div>
-                    <img src="src/assets/images/baner-right-image-03.jpg">
+                    <img src="../assets/images/baner-right-image-03.jpg">
                   </div>
                 </div>
               </div>
@@ -103,7 +103,7 @@ export default {
                         </div>
                       </div>
                     </div>
-                    <img src="src/assets/images/baner-right-image-04.jpg">
+                    <img src="../assets/images/baner-right-image-04.jpg">
                   </div>
                 </div>
               </div>

@@ -31,7 +31,7 @@ export default {
           <nav class="main-nav">
             <!-- ***** Logo Start ***** -->
             <RouterLink to="/" class="logo">
-              <img src="src/assets/images/logo.png">
+              <img src="../assets/images/logo.png">
             </RouterLink>
             <!-- ***** Logo End ***** -->
             <!-- ***** Menu Start ***** -->
