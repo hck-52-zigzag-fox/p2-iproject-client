@@ -1,7 +1,13 @@
 <script>
+import { mapActions } from 'pinia';
+import { useStore } from '../stores/store';
+
 export default {
   name: "ProductCard",
-  props: ["product"]
+  props: ["product"],
+  methods: {
+    ...mapActions(useStore, ["readDetailProduct"])
+  },
 }
 </script>
 
@@ -11,7 +17,7 @@ export default {
       <div class="thumb">
         <div class="hover-content">
           <ul>
-            <li><a href="single-product.html"><i class="fa fa-eye"></i></a></li>
+            <li><a @click.prevent="readDetailProduct(product.articles[0].code)"><i class="fa fa-eye"></i></a></li>
             <li><a href="single-product.html"><i class="fa fa-shopping-cart"></i></a></li>
           </ul>
         </div>

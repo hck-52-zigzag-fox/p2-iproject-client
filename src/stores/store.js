@@ -10,6 +10,7 @@ export const useStore = defineStore("index", {
       registered: false,
       isLogin: false,
       products: [],
+      product: {},
       loading: true,
     };
   },
@@ -56,27 +57,25 @@ export const useStore = defineStore("index", {
     },
     async readProducts() {
       try {
-        const { data } = await axios({
-          method: "GET",
-          url: "https://apidojo-hm-hennes-mauritz-v1.p.rapidapi.com/products/list",
-          params: {
-            country: "us",
-            lang: "en",
-            currentpage: "0",
-            pagesize: "30",
-            categories: "men_all",
-            concepts: "H&M MAN",
-          },
-          headers: {
-            "X-RapidAPI-Key":
-              "2e41e92258mshf64252ade8a6ebfp1bff9ajsn9a879d0f9dc4",
-            "X-RapidAPI-Host": "apidojo-hm-hennes-mauritz-v1.p.rapidapi.com",
-          },
-        });
+        const { data } = await axios.get(`${baseUrl}/products`);
 
         this.loading = false;
-        this.products = data.results;
-        console.log(this.products);
+        this.products = data;
+      } catch (err) {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Error Fetch Data!",
+        });
+      }
+    },
+    async readDetailProduct(productCode) {
+      try {
+        const { data } = await axios.get(`${baseUrl}/products/${productCode}`);
+
+        this.router.push(`/products/${productCode}`);
+        this.loading = false;
+        this.product = data;
       } catch (err) {
         Swal.fire({
           icon: "error",

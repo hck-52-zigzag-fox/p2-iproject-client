@@ -24,7 +24,7 @@ export default {
 
 <template>
   <!-- ***** Header Area Start ***** -->
-  <header class="header-area header-sticky">
+  <nav class="header-area header-sticky">
     <div class="container">
       <div class="row">
         <div class="col-12">
@@ -40,9 +40,9 @@ export default {
               <li class="scroll-to-section">
                 <RouterLink to="/">Home</RouterLink>
               </li>
-              <li class="scroll-to-section"><a href="#men">Men's</a></li>
-              <li class="scroll-to-section"><a href="#women">Women's</a></li>
-              <li class="scroll-to-section"><a href="#kids">Kid's</a></li>
+              <li class="scroll-to-section">
+                <RouterLink to="/products">Products</RouterLink>
+              </li>
               <li v-if="!isLogin" class="scroll-to-section">
                 <RouterLink to="/login">Login</RouterLink>
               </li>
@@ -56,6 +56,6 @@ export default {
         </div>
       </div>
     </div>
-  </header>
+  </nav>
   <!-- ***** Header Area End ***** -->
 </template>
