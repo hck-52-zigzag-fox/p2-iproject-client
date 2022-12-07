@@ -1,8 +1,16 @@
 <script>
+import { mapState, mapActions } from 'pinia';
+import { useCounterStore } from '../stores/counter';
 import { RouterLink } from 'vue-router'
 
 export default {
-    name: 'Navbar'
+    name: 'Navbar',
+    computed: {
+        ...mapState(useCounterStore, ['isLogin'])
+    },
+    methods: {
+        ...mapActions(useCounterStore, ['handleLogout'])
+    }
 }
 </script>
 
@@ -28,12 +36,17 @@ export default {
                             <RouterLink class="nav-link" to="/rent">Motorcyle Rent</RouterLink>
                         </li>
                     </ul>
-                    <ul class="navbar-nav mx-4">
+                    <ul class="navbar-nav mx-4" v-if="!isLogin">
                         <li class="nav-item">
                             <RouterLink to="/login" class="nav-link">Login</RouterLink>
                         </li>
                         <li class="nav-item">
                             <RouterLink to="/register" class="nav-link">Register</RouterLink>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav mx-4" v-if="isLogin">
+                        <li class="nav-item">
+                            <a to="/login" class="nav-link" href="" @click.prevent="handleLogout">Logout</a>
                         </li>
                     </ul>
                 </div>

@@ -22,8 +22,20 @@ export const useCounterStore = defineStore("counter", {
         console.log(err);
       }
     },
+    async handleLogin(payload) {
+      try {
+        const { data } = await axios({
+          method: "POST",
+          url: `${BASE_URL}/users/login`,
+          data: payload,
+        });
+        localStorage.setItem("access_token", data.access_token);
+        this.isLogin = true;
+        this.router.push("/rent");
+      } catch (err) {
+        console.log(err);
+      }
+    },
+
   },
-  async handleLogin(payload) {
-    
-  }
 });

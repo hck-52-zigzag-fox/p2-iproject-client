@@ -1,6 +1,20 @@
 <script>
+import { mapActions } from 'pinia';
+import { useCounterStore } from '../stores/counter';
+
 export default {
-    name: 'LoginView'
+    name: 'LoginView',
+    data() {
+        return {
+            inputValue: {
+                email: "",
+                password: "",
+            }
+        }
+    },
+    methods: {
+        ...mapActions(useCounterStore, ['handleLogin'])
+    }
 }
 </script>
 
@@ -13,17 +27,18 @@ export default {
                         style=" display: flex; border-radius: 15px; width: 500px;justify-content: center;">
                         <div class="card-body p-4">
                             <h3 class="text-center mb-3">Log In Account</h3>
-                            <form @submit.prevent="handleRegister">
+                            <form @submit.prevent="handleLogin(this.inputValue)">
                                 <div class="form-outline mb-3">
                                     <label class="form-label">Email <span style="color: red">*</span></label>
                                     <input type="email" class="form-control form-control-lg"
-                                        placeholder="Enter your email" />
+                                        placeholder="Enter your email" name="email" v-model="inputValue.email" />
                                 </div>
 
                                 <div class="form-outline mb-3">
                                     <label class="form-label">Password <span style="color: red">*</span></label>
                                     <input type="password" class="form-control form-control-lg"
-                                        placeholder="Enter your password" />
+                                        placeholder="Enter your password" name="password"
+                                        v-model="inputValue.password" />
                                 </div>
 
                                 <div class="form-check mb-0">
@@ -38,7 +53,8 @@ export default {
 
                                 <p class="text-center text-muted mt-3 mb-0">
                                     Don't have an account?
-                                    <a href="" class="fw-bold link-danger">Register here!</a>
+                                    <a href="" class="fw-bold link-danger"
+                                        @click.prevent="this.$router.push('/register')">Register here!</a>
                                 </p>
                                 <hr />
                                 <div class="d-flex justify-content-center">
