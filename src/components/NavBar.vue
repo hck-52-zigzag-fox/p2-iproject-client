@@ -11,7 +11,7 @@ export default {
     handleLogout() {
       localStorage.clear()
       this.isLogin = false
-      this.router.push("/")
+      this.$router.push("/")
     }
   },
   created() {
