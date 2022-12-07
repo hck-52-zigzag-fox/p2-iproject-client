@@ -42,7 +42,9 @@ export default {
                 </div>
                 <ul class="navbar-nav ms-auto ">
                     <li v-if="isLogin" class="nav-item">
-                        <a class="nav-link mx-2 text-uppercase" href="#">Products</a>
+                        <RouterLink to="/">
+                            <a class="nav-link mx-2 text-uppercase" href="#">Products</a>
+                        </RouterLink>
                     </li>
                     <li v-if="isLogin" class="nav-item">
                         <a class="nav-link mx-2 text-uppercase" href="#">Catalog</a>

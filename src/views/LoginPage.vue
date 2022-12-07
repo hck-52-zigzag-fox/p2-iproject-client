@@ -18,8 +18,6 @@ export default {
     methods: {
         ...mapActions(useStore, ["postLogin"]),
         handleLogin() {
-            console.log("HHHHHHHHH");
-            console.log(this.loginData);
             this.postLogin(this.loginData)
         }
     }

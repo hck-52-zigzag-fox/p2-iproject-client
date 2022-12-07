@@ -1,13 +1,18 @@
 <script>
+import { RouterLink } from 'vue-router';
+
 export default {
     name: "CardProduct",
-    props: ["product"]
+    props: ["product"],
+    components: { RouterLink }
 }
 </script>
 
 <template>
     <div class="card mt-3" style="width: 18rem;">
-        <img :src="product.imageUrl" class="card-img-top" alt="..." height="250">
+        <RouterLink :to="`/products/${product.id}`">
+            <img :src="product.imageUrl" class="card-img-top" alt="..." height="250">
+        </RouterLink>
         <div class="card-body">
             <h5 class="card-title">{{ product.name }}</h5>
         </div>
