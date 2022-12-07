@@ -10,7 +10,10 @@ export const useCicoStore = defineStore('cico', {
       popularFood: [],
       userEmail: localStorage.getItem('email'),
       userStatus: localStorage.getItem('status'),
-      foundFood: {}
+      foundFood: {},
+      logs: [],
+      calcResult: '',
+      dailyCalories: localStorage.getItem('dailyCalories')
     }),
   actions: {
     logout() {
@@ -58,6 +61,8 @@ export const useCicoStore = defineStore('cico', {
         localStorage.setItem('access_token', data.access_token)
         localStorage.setItem('status', data.status)
         localStorage.setItem('email', data.email)
+        localStorage.setItem('dailyCalories', data.dailyCalories)
+
         this.userEmail = data.email
         this.router.push('/')
         this.isLogin = true
@@ -158,12 +163,12 @@ export const useCicoStore = defineStore('cico', {
           }
         })
 
-        console.log(data);
+        this.logs = data
 
       } catch (error) {
         console.log(error);
       }
-    }
+    },
 
 
   },
