@@ -85,10 +85,10 @@ export const useProductStore = defineStore("product", {
           },
         });
 
-        data.data.readBooked.forEach((el) => {
+        await data.data.readBooked.forEach((el) => {
           this.totalPrice += el.Product.price;
         });
-        this.totalPrice = this.totalPrice.toLocaleString("id-ID")
+        this.totalPrice = this.totalPrice
         this.booking = true;
         this.bookmark = data.data.readBooked;
       } catch (error) {
@@ -141,10 +141,11 @@ export const useProductStore = defineStore("product", {
               showConfirmButton: false,
               timer: 1500,
             });
-            this.totalPrice = 0;
           },
         });
-        
+        this.totalPrice = 0
+        await this.deleteBookmarkByCustomerId()
+        this.readBookmarkedProduct()
       } catch (error) {
         console.log(error);
       }
@@ -161,10 +162,11 @@ export const useProductStore = defineStore("product", {
         Swal.fire({
           position: "center",
           icon: "success",
-          title: "Remove Bookmark",
+          title: "Remove Bookmark (too bad)",
           showConfirmButton: false,
           timer: 1000,
         });
+        this.totalPrice = 0
         this.readBookmarkedProduct();
       } catch (error) {
         console.log(error);
@@ -172,7 +174,13 @@ export const useProductStore = defineStore("product", {
     },
     async deleteBookmarkByCustomerId(){
       try {
-        
+        await axios({
+          url: base_url + `/bookmarks/customer/${localStorage.getItem("UserId")}`,
+          method: "DELETE",
+          headers: {
+            access_token: localStorage.getItem("access_token"),
+          },
+        });
       } catch (error) {
         console.log(error)
       }
