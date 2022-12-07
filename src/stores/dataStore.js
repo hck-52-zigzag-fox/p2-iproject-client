@@ -214,7 +214,7 @@ export const useDataStore = defineStore("dataStore", {
     },
     async handleFetchAllComments(id) {
       try {
-        console.log(id, "<<<");
+        // console.log(id, "<<<");
         const { data } = await axios({
           method: "GET",
           url: `${baseUrl}/comments/${id}`,
@@ -223,7 +223,7 @@ export const useDataStore = defineStore("dataStore", {
           },
         });
         this.dataAllComments = data;
-        console.log(this.dataAllComments, "<<<");
+        // console.log(this.dataAllComments, "<<<");
       } catch (error) {
         console.log(error);
       }
