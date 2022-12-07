@@ -9,13 +9,14 @@ export const useStore = defineStore("counter", {
   }),
   actions: {
     async postLogin(value) {
+      console.log("<<<<<<<<");
       try {
         const { data } = await axios({
-          url: baseUrl + "login",
+          url: baseUrl + "users/login",
           method: "POST",
           data: value,
         });
-        // console.log(data);
+        console.log(data);
         localStorage.setItem("access_token", data.access_token);
         this.isLogin = true;
         this.router.push("/");

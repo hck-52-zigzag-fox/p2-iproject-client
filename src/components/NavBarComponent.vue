@@ -1,6 +1,15 @@
 <script>
+import { mapActions, mapWritableState } from 'pinia';
+import { useStore } from '../stores/counter';
+
 export default {
-    name: "NavbarComponent"
+    name: "NavbarComponent",
+    methods: {
+        ...mapActions(useStore, ["logout"])
+    },
+    computed: {
+        ...mapWritableState(useStore, ["isLogin"])
+    }
 }
 
 </script>
@@ -24,7 +33,7 @@ export default {
             </div>
             <div class=" collapse navbar-collapse" id="navbarNavDropdown">
                 <div class="ms-auto d-none d-lg-block">
-                    <div class="input-group">
+                    <div v-if="isLogin" class="input-group">
                         <span class="border-warning input-group-text bg-warning text-white"><i
                                 class="fa-solid fa-magnifying-glass"></i></span>
                         <input type="text" class="form-control border-warning" style="color:#7a7a7a">
@@ -32,25 +41,25 @@ export default {
                     </div>
                 </div>
                 <ul class="navbar-nav ms-auto ">
-                    <li class="nav-item">
+                    <li v-if="isLogin" class="nav-item">
                         <a class="nav-link mx-2 text-uppercase" href="#">Products</a>
                     </li>
-                    <li class="nav-item">
+                    <li v-if="isLogin" class="nav-item">
                         <a class="nav-link mx-2 text-uppercase" href="#">Catalog</a>
                     </li>
-                    <li class="nav-item">
+                    <li v-if="isLogin" class="nav-item">
                         <a class="nav-link mx-2 text-uppercase" href="#">Services</a>
                     </li>
-                    <li class="nav-item">
+                    <li v-if="isLogin" class="nav-item">
                         <a class="nav-link mx-2 text-uppercase" href="#">About</a>
                     </li>
                 </ul>
                 <ul class="navbar-nav ms-auto ">
-                    <li class="nav-item">
+                    <li v-if="isLogin" class="nav-item">
                         <a class="nav-link mx-2 text-uppercase" href="#"><i class="bi bi-cart-plus"></i>
                             Cart</a>
                     </li>
-                    <li class="nav-item">
+                    <li v-if="isLogin" class="nav-item">
                         <a class="nav-link mx-2 text-uppercase" href="#"><i class="bi bi-person-circle"></i>
                             Account</a>
                     </li>
