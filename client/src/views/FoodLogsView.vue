@@ -15,11 +15,15 @@ export default {
         ...mapWritableState(useCicoStore, ["dailyCalories"])
     },
     methods: {
-        ...mapActions(useCicoStore, ["getLogs", 'countCalories'])
+        ...mapActions(useCicoStore, ["getLogs", 'countCalories']),
+        updateRemainingCalories(){
+            this.remainingCalories = this.dailyCalories
+            // this.countCalories(this.foodLogs)
+        }
     },
     created() {
         this.getLogs()
-        
+
         if(this.dailyCalories == this.remainingCalories){
             this.countCalories(this.foodLogs)
         }
@@ -35,7 +39,7 @@ export default {
 
     <div class="grid grid-cols-3 gap-3">
 
-        <LogCards v-for="log in foodLogs" :key="log.id" :log="log" />
+        <LogCards v-for="log in foodLogs" :key="log.id" :log="log" @deletedFood="updateRemainingCalories" />
 
     </div>
 

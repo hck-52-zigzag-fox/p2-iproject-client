@@ -5,8 +5,13 @@ import { useCicoStore } from '../stores/cico';
 export default {
     name: 'LogCards',
     props: ['log'],
+    emits: ['deletedFood'],
     methods: {
-        ...mapActions(useCicoStore, ['deleteLog','countCalories'])
+        ...mapActions(useCicoStore, ['deleteLog','countCalories']),
+        deleteFromCard(id){
+            this.deleteLog(id),
+            this.$emit('deletedFood')
+        }
     },
     // created(){
     //     this.countCalories(this.log.Food)
@@ -39,7 +44,7 @@ export default {
             <p class="font-normal text-gray-700 dark:text-gray-400">protein: {{ log.Food.proteinG }} grams</p>
             <p class="font-normal text-gray-700 dark:text-gray-400">carbs: {{ log.Food.carbsTotalG }} grams</p>
             <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
-                @click="deleteLog(log.id)">
+                @click="deleteFromCard(log.id)">
                 DELETE
             </button>
         </div>
