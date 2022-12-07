@@ -5,7 +5,7 @@ import PostCardReal from "./PostCardReal.vue";
 export default {
   name: "PostCard",
   computed: {
-    ...mapState(useDataStore, ["dataAllPosts"]),
+    ...mapState(useDataStore, ["dataAllPosts", "dataOneProfile"]),
   },
   methods: {
     ...mapActions(useDataStore, ["handleAllPost"]),
@@ -27,7 +27,7 @@ export default {
           <a href="#">
             <img
               class="avatar-img rounded-circle"
-              src="@/assets/images/avatar/03.jpg"
+              :src="dataOneProfile.profilePict"
               alt=""
             />
           </a>
@@ -145,7 +145,7 @@ export default {
               <div class="avatar avatar-xs me-2">
                 <img
                   class="avatar-img rounded-circle"
-                  src="assets/images/avatar/03.jpg"
+                  :src="dataOneProfile.profilePict"
                   alt=""
                 />
               </div>
