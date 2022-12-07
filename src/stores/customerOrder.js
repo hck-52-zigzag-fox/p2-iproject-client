@@ -6,9 +6,24 @@ export const useCustomerOrderStore = defineStore("customerOrder", {
   state() {
     return {
       token: "",
+      orderDetail:{},
+      orders : []
     };
   },
   actions: {
+    async myOrders(){
+      try {
+        const {data} = await axios({
+          url:`${baseUrl}/customer-orders`,
+          method:'get',
+          headers : {
+            access_token : localStorage.access_token
+          }
+        })
+      } catch (error) {
+        
+      }
+    },
     async addOrder(input, id = 2) {
       try {
         console.log(input, id);
@@ -21,7 +36,8 @@ export const useCustomerOrderStore = defineStore("customerOrder", {
           },
         });
         console.log(data, "dari balikan server");
-        this.token = data;
+        this.token = data.token;
+        this.orderDetail = data.order
       } catch (error) {
         console.log(error);
       }
@@ -41,6 +57,7 @@ export const useCustomerOrderStore = defineStore("customerOrder", {
           console.log("otomatis close");
         },
       });
+      this.token = ""
     },
   },
   getters: {},
