@@ -12,6 +12,20 @@ export default {
           class="float-lg-right"
           src="../assets/petshop-indonesia-grooming-kucing-anjing-memandikan-hewan-peliharaan-list1ddad.webp"
         />
+        <div class="row p-4">
+      <div style="margin-right: -8%; z-index: 1; text-align: justify;"
+      >
+        <h1>More than 50 years of<br />health nutrition</h1>
+        <h6>
+          A healthy weight is key to your dog's health and wellbeing. Find out
+          more about the four simple ways you can maintain your dog's healthy
+          weight and keep them in good shape. A healthy weight is key to your
+          cat's health and wellbeing. Find out more about the four simple ways
+          you can maintain your cat's healthy weight and keep them in good
+          shape.
+        </h6>
+      </div>
+    </div>
       </div>
       <div class="col-12 col-sm-6">
         <h1>Health is something different<br />for every pet</h1>
@@ -73,22 +87,7 @@ export default {
         </div>
       </div>
     </div>
-    <div class="row p-4">
-      <div
-        class="col-12 col-sm-6 text-sm-right text-md-right ml-sm-0 ml-md-5 ml-lg-5 ml-xl-5 text-lg-right order-sm-first order-12"
-        style="margin-right: -8%; z-index: 1"
-      >
-        <h1>More than 50 years of<br />health nutrition</h1>
-        <h6>
-          A healthy weight is key to your dog's health and wellbeing. Find out
-          more about the four simple ways you can maintain your dog's healthy
-          weight and keep them in good shape. A healthy weight is key to your
-          cat's health and wellbeing. Find out more about the four simple ways
-          you can maintain your cat's healthy weight and keep them in good
-          shape.
-        </h6>
-      </div>
-    </div>
+
   </section>
 </template>
 
