@@ -1,25 +1,30 @@
 <script>
 import { mapActions, mapState } from 'pinia';
+import FoodCards from '../components/foodCards.vue';
 import { useCicoStore } from '../stores/cico';
 
 export default {
-    name: 'HomePage',
+    name: "HomePage",
     computed: {
-        ...mapState(useCicoStore, ['popularFood'])
+        ...mapState(useCicoStore, ["popularFood"])
     },
     methods: {
-        ...mapActions(useCicoStore, ['fetchPopularFood'])
+        ...mapActions(useCicoStore, ["fetchPopularFood"])
     },
     created() {
-        this.fetchPopularFood()
-    }
+        this.fetchPopularFood();
+    },
+    components: { FoodCards }
 }
 </script>
 
 <template>
 
-    <h1>ini homepage</h1>
+    <div class="grid grid-cols-3 gap-3">
 
-    {{ popularFood }}
+        <FoodCards v-for="food in popularFood" :key="food.id" :food="food" />
+
+    </div>
+
     
 </template>

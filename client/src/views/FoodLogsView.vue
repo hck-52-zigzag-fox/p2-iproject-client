@@ -7,30 +7,31 @@ export default {
     name: "FoodLogsView",
     data() {
         return {
-            totalCalories: 0
+            // totalCalories: 0
         }
     },
     computed: {
-        ...mapState(useCicoStore, ['foodLogs']),
+        ...mapState(useCicoStore, ['foodLogs', 'userEmail','dailyCalories', 'remainingCalories']),
         ...mapWritableState(useCicoStore, ["dailyCalories"])
     },
     methods: {
-        ...mapActions(useCicoStore, ["getLogs"]),
-        // countCalories() {
-        //     this.foodLogs.forEach(el => {
-        //         this.totalCalories += el.Food.calories
-        //     })
-        // }
+        ...mapActions(useCicoStore, ["getLogs", 'countCalories'])
     },
     created() {
         this.getLogs()
-        // this.countCalories()
+        
+        if(this.dailyCalories == this.remainingCalories){
+            this.countCalories(this.foodLogs)
+        }
     },
     components: { LogCards }
 }
 </script>
 
 <template>
+
+    {{userEmail}}'s daily calories : {{dailyCalories}}
+    {{remainingCalories}}
 
     <div class="grid grid-cols-3 gap-3">
 

@@ -13,7 +13,8 @@ export const useCicoStore = defineStore('cico', {
       foundFood: {},
       foodLogs: [],
       calcResult: '',
-      dailyCalories: localStorage.getItem('dailyCalories')
+      dailyCalories: localStorage.getItem('dailyCalories'),
+      remainingCalories: localStorage.getItem('dailyCalories')
     }),
   actions: {
     logout() {
@@ -170,22 +171,26 @@ export const useCicoStore = defineStore('cico', {
       }
     },
 
-    async deleteLog(id){
+    async deleteLog(id) {
       try {
-        // console.log(id);
-        const {data} = await axios ({
+        const { data } = await axios({
           method: "DELETE",
           url: `${baseUrl}/foodlogs/${id}`,
           headers: {
             access_token: localStorage.getItem('access_token')
           }
         })
-        
-        console.log(data);
         this.getLogs()
       } catch (error) {
         console.log(error);
       }
+    },
+
+    countCalories(obj) {
+      obj.forEach(el => {
+        this.remainingCalories = Math.floor(this.remainingCalories - el.Food.calories)
+      })
+      // this.remainingCalories = Math.floor(this.remainingCalories - obj.calories)
     }
 
   },
