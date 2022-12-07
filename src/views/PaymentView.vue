@@ -28,7 +28,7 @@ export default {
         startDate : new Date(this.inputOrder.startDate).toISOString(),
         endDate : new Date(this.inputOrder.endDate).toISOString()
       }
-      this.addOrder(input, 1);
+      this.addOrder(input, this.$route.params.id);
       this.$refs.dataOrder.reset();
     },
   },

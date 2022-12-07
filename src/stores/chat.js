@@ -1,7 +1,5 @@
 import { defineStore } from "pinia";
-import { io } from "socket.io-client";
 import axios from "axios";
-const socket = io("http://localhost:3000");
 const baseUrl = "http://localhost:3000";
 export const useChatStore = defineStore("chat", {
   state() {
@@ -27,7 +25,7 @@ export const useChatStore = defineStore("chat", {
     async saveChat(input, id) {
       try {
         console.log(input, id, "dari chat store");
-        const newChat = await axios({
+        await axios({
           url: `${baseUrl}/chats/${id}`,
           data: {
             text: input,
@@ -37,7 +35,6 @@ export const useChatStore = defineStore("chat", {
             access_token: localStorage.access_token,
           },
         });
-        socket.emit("chat message", input);
         this.myChat();
       } catch (error) {
         console.log(error);
