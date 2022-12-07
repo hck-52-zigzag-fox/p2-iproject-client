@@ -11,6 +11,8 @@ export const useStore = defineStore("store", {
     currentUser: {},
     items: [],
     orders: [],
+    order: {},
+    otherUser: {},
   }),
   actions: {
     async handleLogin(login) {
@@ -45,6 +47,21 @@ export const useStore = defineStore("store", {
         photoUrl:
           "https://www.clipartmax.com/png/middle/434-4349876_profile-icon-vector-png.png",
         role: localStorage.role,
+      };
+    },
+    getOrderChat(id) {
+      this.order = this.orders.find((el) => el.id === id);
+      this.getOtherUser(this.order.User);
+    },
+    getOtherUser(user) {
+      this.otherUser = {
+        id: user.id,
+        name: user.email.split("@")[0],
+        email: user.email,
+        photoUrl:
+          "https://www.clipartmax.com/png/middle/434-4349876_profile-icon-vector-png.png",
+        welcomeMessage: "Hi!",
+        role: user.role,
       };
     },
     async fetchItems() {
@@ -140,7 +157,7 @@ export const useStore = defineStore("store", {
         });
 
         console.log(data);
-        this.fetchOrders()
+        this.fetchOrders();
       } catch (err) {
         Swal.fire(err.response.data.message || "Internal server error");
       }

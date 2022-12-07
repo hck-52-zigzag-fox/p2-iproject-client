@@ -1,10 +1,16 @@
 <script>
 import { mapActions, mapState } from "pinia";
+import { RouterLink } from "vue-router";
 import { useStore } from "../stores/index";
 
 export default {
   name: "OrderCard",
   props: ["order"],
+  data(){
+    return {
+        user: {}
+    }
+  },
   computed: {
     ...mapState(useStore, ["currentUser"]),
     getTotalPrice() {
@@ -22,6 +28,7 @@ export default {
   methods: {
     ...mapActions(useStore, ["deleteOrder", "checkOrder", "changeStatus"]),
   },
+  components: { RouterLink },
 };
 </script>
 
@@ -48,18 +55,21 @@ export default {
       <a
         @click.prevent="changeStatus(order.id)"
         class="btn btn-outline-secondary"
+        style="width: 74px"
         v-if="order.status === 'Unpaid' && currentUser.role === 'Admin'"
         >{{ order.status }}</a
       >
       <a
         @click.prevent="changeStatus(order.id)"
         class="btn"
+        style="width: 74px"
         v-if="order.status === 'Paid' && currentUser.role === 'Admin'"
         >{{ order.status }}</a
       >
       <span
         @click.prevent=""
         class="btn btn-outline-secondary disabled"
+        style="width: 74px"
         v-if="currentUser.role === 'Customer'"
         >{{ order.status }}</span
       >
@@ -82,7 +92,22 @@ export default {
       </div>
     </div>
     <div class="ms-5">
-      <i class="bi bi-chat-dots-fill fs-4"></i>
+      <RouterLink
+        :to="`/chats/${order.id}`"
+        class="btn bi bi-chat-dots-fill fs-4"
+      ></RouterLink>
+    </div>
+    <div class="ms-5">
+      <a
+        class="btn bi bi-download fs-4"
+        v-if="order.status === 'Paid' && currentUser.role === 'Customer'"
+      ></a>
+      <a
+        class="btn bi bi bi-download fs-4 opacity-0 disabled"
+        v-if="order.status === 'Unpaid' && currentUser.role === 'Customer'"
+      ></a>
+
+      <a class="btn bi bi-upload fs-4" v-if="currentUser.role === 'Admin'"></a>
     </div>
   </div>
 </template>

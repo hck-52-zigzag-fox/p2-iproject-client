@@ -1,5 +1,7 @@
 <script>
+import { mapActions, mapState } from "pinia";
 import Talk from "talkjs";
+import { useStore } from "../stores";
 
 export default {
   name: "Inbox",
@@ -8,17 +10,20 @@ export default {
       type: Object,
       required: true,
     },
-    methods: {
-      showConversation() {},
+    otherUser: {
+      type: Object,
+      required: true,
     },
   },
   async mounted() {
     await Talk.ready;
+
     const me = new Talk.User({
       id: this.currentUser.id,
       name: this.currentUser.name,
       email: this.currentUser.email,
-      photoUrl: this.currentUser.photoUrl,
+      photoUrl:
+        "https://www.clipartmax.com/png/middle/434-4349876_profile-icon-vector-png.png",
       role: this.currentUser.role,
     });
 
@@ -28,12 +33,13 @@ export default {
     });
 
     const other = new Talk.User({
-      id: "4",
-      name: "Admin",
-      email: "admin@gmail.com",
+      id: this.otherUser.id,
+      name: this.otherUser.name,
+      email: this.otherUser.email,
       photoUrl:
         "https://www.clipartmax.com/png/middle/434-4349876_profile-icon-vector-png.png",
-      role: "Admin",
+      welcomeMessage: "Hi! may i help you?",
+      role: this.otherUser.role,
     });
 
     const conversation = talkSession.getOrCreateConversation(
@@ -43,11 +49,24 @@ export default {
     conversation.setParticipant(me);
     conversation.setParticipant(other);
 
-    
+    var inbox = talkSession.createInbox();
+    inbox.select(conversation);
+
+    inbox.mount(this.$refs.talkjs);
   },
 };
 </script>
 
 <template>
-  <div ref="talkjs" style="width: 90%"></div>
+  <div
+    ref="talkjs"
+    style="
+      width: 90%;
+      margin: 30px;
+      height: 500px;
+      min-height: calc(100vh - 50px - 112px);
+    "
+  >
+    <i>Loading chat...</i>
+  </div>
 </template>

@@ -101,6 +101,7 @@ export default {
                     class="d-flex justify-content-end align-items-center gap-2"
                   >
                     <!-- put twitter here -->
+                    
                   </div>
                 </div>
               </div>

@@ -4,6 +4,7 @@ import LoginPage from "../views/LoginPage.vue";
 import AddOrderPage from "../views/AddOrderPage.vue";
 import OrderPage from "../views/OrderPage.vue";
 import NotFoundPage from "../views/NotFoundPage.vue";
+import ChatPage from "../views/ChatPage.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -28,7 +29,11 @@ const router = createRouter({
       name: "addOrder",
       component: AddOrderPage,
     },
-
+    {
+      path: "/chats/:id",
+      name: "chat",
+      component: ChatPage
+    },
     {
       path: "/:pathMatch(.*)*",
       name: "notFound",
