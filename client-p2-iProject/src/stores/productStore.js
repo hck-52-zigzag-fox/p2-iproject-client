@@ -147,26 +147,26 @@ export const useProductStore = defineStore("product", {
         console.log(error);
       }
     },
-    // async deleteBookmarkedProduct(id) {
-    //   try {
-    //     await axios({
-    //       url: base_url + `/bookmarks/${id}`,
-    //       method: "DELETE",
-    //       headers: {
-    //         access_token: localStorage.getItem("access_token"),
-    //       },
-    //     });
-    //     Swal.fire({
-    //       position: "center",
-    //       icon: "success",
-    //       title: "Remove Bookmark",
-    //       showConfirmButton: false,
-    //       timer: 1000,
-    //     });
-    //     this.readBookmarkedProduct();
-    //   } catch (error) {
-    //     console.log(error);
-    //   }
-    // },
+    async deleteBookmarkedProduct(id) {
+      try {
+        await axios({
+          url: base_url + `/bookmarks/${id}`,
+          method: "DELETE",
+          headers: {
+            access_token: localStorage.getItem("access_token"),
+          },
+        });
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Remove Bookmark",
+          showConfirmButton: false,
+          timer: 1000,
+        });
+        this.readBookmarkedProduct();
+      } catch (error) {
+        console.log(error);
+      }
+    },
   },
 });
