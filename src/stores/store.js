@@ -71,11 +71,14 @@ export const useStore = defineStore("index", {
     },
     async readDetailProduct(productCode) {
       try {
-        const { data } = await axios.get(`${baseUrl}/products/${productCode}`);
+        this.product = this.products.filter((el) => {
+          if (el.articles[0].code === productCode) {
+            return el;
+          }
+        });
 
         this.router.push(`/products/${productCode}`);
         this.loading = false;
-        this.product = data;
       } catch (err) {
         Swal.fire({
           icon: "error",
