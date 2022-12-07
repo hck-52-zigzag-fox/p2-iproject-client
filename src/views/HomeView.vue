@@ -61,7 +61,7 @@ export default {
             id="search"
             placeholder="Search by title"
           />
-          <button type="submit" class="btn btn-warning">
+          <button type="submit" class="btn btn-dark">
             <i class="bi bi-search"></i>
           </button>
         </div>
