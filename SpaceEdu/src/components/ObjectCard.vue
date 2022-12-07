@@ -1,13 +1,23 @@
 <script>
+import { mapActions } from 'pinia';
+import { useCounterStore } from '../stores/counter';
+
 
 export default {
     name:"ObjectCard",
-    props:["object"]
+    props:["object"],
+    methods:{
+        ...mapActions(useCounterStore,['getObjectDetail']),
+        // getObjectDetailLocal() {
+        //     this.getObjectDetail()
+        // }
+
+    }
 }
 </script>
 
 <template>
-   <div class="col-md-4">
+   <div class="col-md-4 text-center">
       <div class="card" style="width: 18rem;">
   <img style="object-fit:contain;" height="200" width="auto" :src="object.imageUrl" class="card-img-top" alt="...">
   <div class="card-body">
@@ -16,7 +26,7 @@ export default {
         <p class=" mb-2 text-muted">Type: {{object.type}}</p>
 
     <!-- <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> -->
-       <a href="#" class="btn mr-2"><i class="fas fa-link"></i> Visit Site</a>
+       <a href="#" class="btn mr-2 text-light " @click.prevent="getObjectDetail(object.name)"><i class="fas fa-link text-light" ></i> View Detail</a>
     <!-- <a href="#" class="btn "><i class="fab fa-github"></i> Github</a> -->
   </div>
   </div>
@@ -40,7 +50,7 @@ export default {
   border-image-slice: 1;
   background: var(--gradient) !important;
   -webkit-background-clip: text !important;
-  -webkit-text-fill-color: transparent !important;
+  /* -webkit-text-fill-color: transparent !important; */
   border-image-source:  var(--gradient) !important; 
   text-decoration: none;
   transition: all .4s ease;
