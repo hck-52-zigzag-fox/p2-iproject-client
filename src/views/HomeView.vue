@@ -1,12 +1,12 @@
 <script>
 import { mapActions, mapState } from "pinia";
 import { useCounterStore } from "../stores/counter";
-import GameCard from "../components/GameCard.vue";
+import GameTableRow from "../components/GameTableRow.vue";
 
 export default {
   name: "HomeView",
   components: {
-    GameCard,
+    GameTableRow,
   },
   data() {
     return {
@@ -69,7 +69,24 @@ export default {
     </div>
   </div>
   <div class="row justify-content-center pt-2 pb-2">
-    <GameCard v-for="game in games" :key="game.steamAppID" :game="game" />
+    <div class="col">
+      <table class="table table-dark table-striped table-hover align-middle">
+        <thead>
+          <tr>
+            <th></th>
+            <th>Title</th>
+            <th>Price</th>
+          </tr>
+        </thead>
+        <tbody>
+          <GameTableRow
+            v-for="game in games"
+            :key="game.steamAppID"
+            :game="game"
+          />
+        </tbody>
+      </table>
+    </div>
   </div>
   <div class="row justify-content-center pt-2 pb-2">
     <div class="col-3">
