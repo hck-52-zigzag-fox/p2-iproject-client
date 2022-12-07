@@ -40,7 +40,7 @@ router.beforeEach(async (to, from) => {
     (!localStorage.access_token && to.name === "homePage") ||
     (!localStorage.access_token && to.name === "myKeepr")
   ) {
-    return { name: "landingPage" };
+    return { name: "loginPage" };
   } else if (
     (localStorage.access_token && to.name === "loginPage") ||
     (localStorage.access_token && to.name === "registerPage") ||

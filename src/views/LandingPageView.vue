@@ -1,9 +1,20 @@
 <script>
-import { RouterLink, RouterView } from 'vue-router'
+import { mapActions, mapState } from "pinia";
+import { RouterLink, RouterView } from "vue-router";
+import { useCounterStore } from "../stores/counter";
 
 export default {
-  name: 'LandingPage'
-}
+  name: "LandingPage",
+  methods: {
+    ...mapActions(useCounterStore, ["showQrCode"]),
+  },
+  computed: {
+    ...mapState(useCounterStore, ["qr"]),
+  },
+  created() {
+    this.showQrCode();
+  },
+};
 </script>
 
 <template>
@@ -12,15 +23,23 @@ export default {
       <div class="d-flex align-items-center pt-4">
         <div>
           <h1>Kami siap menangani pekerjaan rumah anda</h1>
-          <h4>Daftar Sekarang</h4>
-          <RouterLink
-            to="/register"
-            type="button"
-            class="btn text-light"
-            style="background-color: #30c2c3"
-          >
-            Sign Up
-        </RouterLink>
+          <div class="d-flex gap-5 ">
+            <div>
+              <h4>Daftar Sekarang</h4>
+              <RouterLink
+                to="/register"
+                type="button"
+                class="btn text-light"
+                style="background-color: #30c2c3"
+              >
+                Sign Up
+              </RouterLink>
+            </div>
+            <div>
+              <h4>Scan Here</h4>
+              <img :src="qr.url" alt="" style="width: 110px;"/>
+            </div>
+          </div>
         </div>
         <img src="../assets/Cleaning-boy.png" width="450" />
       </div>
@@ -36,8 +55,8 @@ export default {
         <h4 style="color: #30c2c3">Your Satisfaction, Our Priority</h4>
         <p>
           HZKEEPR is a technology-driven lifestyle platform focused on
-          hospitality services. Founded in 2022, We aim to help people achieve
-          a better quality of life by providing superior services to become
+          hospitality services. Founded in 2022, We aim to help people achieve a
+          better quality of life by providing superior services to become
           assistants to your home needs.
           <br />
           <br />
@@ -49,7 +68,7 @@ export default {
       </div>
     </div>
   </div>
-  <div class="container" style="height: 90vh;">
+  <div class="container" style="height: 90vh">
     <div class="text-center py-5">
       <h2>Layanan Kami</h2>
     </div>
@@ -60,9 +79,9 @@ export default {
             <img
               src="https://cdn-icons-png.flaticon.com/512/995/995053.png"
               class="card-img-top p-4 mx-2"
-              style="width: 200px;"
+              style="width: 200px"
             />
-            <div class="card-body" style="color: #3C4978;">
+            <div class="card-body" style="color: #3c4978">
               <h4 class="card-text text-center">Housekeeper</h4>
             </div>
           </div>
@@ -74,7 +93,7 @@ export default {
               class="card-img-top p-4 mx-2"
               style="width: 200px"
             />
-            <div class="card-body" style="color: #3C4978;">
+            <div class="card-body" style="color: #3c4978">
               <h4 class="card-text text-center">Gardener</h4>
             </div>
           </div>
@@ -86,7 +105,7 @@ export default {
               class="card-img-top p-4 mx-2"
               style="width: 200px"
             />
-            <div class="card-body" style="color: #3C4978;">
+            <div class="card-body" style="color: #3c4978">
               <h4 class="card-text text-center">Driver</h4>
             </div>
           </div>
