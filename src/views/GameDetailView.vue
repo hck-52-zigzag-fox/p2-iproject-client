@@ -11,7 +11,7 @@ export default {
     ...mapState(useCounterStore, ["game", "gamePrice"]),
   },
   methods: {
-    ...mapActions(useCounterStore, ["fetchOneGame"]),
+    ...mapActions(useCounterStore, ["fetchOneGame", "buyGame"]),
   },
 };
 </script>
@@ -31,7 +31,11 @@ export default {
           >{{ game.released }}
         </p>
         <p><span class="text-secondary">Price : </span>{{ gamePrice }}</p>
-        <button type="button" class="btn btn-success">
+        <button
+          type="button"
+          class="btn btn-success"
+          @click="buyGame($route.params.id)"
+        >
           <i class="bi bi-bag"> Buy {{ game.title }}</i>
         </button>
       </div>

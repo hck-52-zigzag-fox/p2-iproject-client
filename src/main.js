@@ -5,6 +5,7 @@ import "vue-toastification/dist/index.css";
 
 import App from "./App.vue";
 import router from "./router";
+import vue3GoogleLogin from "vue3-google-login";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap";
@@ -44,5 +45,10 @@ const options = {
 app.use(pinia);
 app.use(router);
 app.use(Toast, options);
+
+app.use(vue3GoogleLogin, {
+  clientId:
+    "37319788046-ulj21qf9h47kru6g358mntt85h61jl95.apps.googleusercontent.com",
+});
 
 app.mount("#app");

@@ -45,7 +45,7 @@ export default {
       }
     },
     nextPage() {
-      if (this.games.length > 0) {
+      if (this.games.length == 8) {
         this.currentPage++;
         let query = {
           page: this.currentPage,

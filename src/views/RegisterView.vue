@@ -1,5 +1,5 @@
 <script>
-import { mapActions } from "pinia";
+import { mapActions, mapState } from "pinia";
 import { useCounterStore } from "../stores/counter";
 
 export default {
@@ -10,15 +10,21 @@ export default {
       password: "",
     };
   },
+  created() {
+    this.getMotivation();
+  },
+  computed: {
+    ...mapState(useCounterStore, ["quotes"]),
+  },
   methods: {
-    ...mapActions(useCounterStore, ["register"]),
+    ...mapActions(useCounterStore, ["register", "getMotivation"]),
   },
 };
 </script>
 
 <template>
   <div class="row justify-content-center pt-5">
-    <div class="col-5">
+    <div class="col-6">
       <div class="text-center">
         <h1>
           <img
@@ -27,7 +33,7 @@ export default {
           />
         </h1>
         <h4>Lord bersabda:</h4>
-        <h1>Register and enjoy</h1>
+        <h6>{{ quotes.split("-")[0] }}</h6>
       </div>
       <form @submit.prevent="register(email, password)">
         <div class="mb-3 mt-3">
