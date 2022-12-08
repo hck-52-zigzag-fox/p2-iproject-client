@@ -81,16 +81,6 @@ export default {
             >
               FindMe!
             </button>
-            <!-- <div>
-              <textarea id="convert_text"></textarea>
-              <button
-                @click.prevent="speechToTextSearch"
-                class="m-2"
-                style="border-radius: 8px"
-              >
-              listen
-              </button>
-            </div> -->
           </div>
           <!-- END OF SEARCH-->
         </div>
