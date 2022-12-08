@@ -19,13 +19,14 @@ export default {
         <th scope="col" class="align-middle">{{ i + 1 }}</th>
         <td scope="col" class="align-middle"><img :src="order.Product.imageUrl" alt="" width="150"></td>
         <td scope="col" class="align-middle">{{ order.Product.name }}</td>
+        <td scope="col" class="align-middle">{{ order.size }}</td>
         <td scope="col" class="align-middle"> {{ order.origin }}</td>
         <td scope="col" class="align-middle"> {{ order.destination }}</td>
         <td scope="col" class="align-middle">Rp {{ order.price }}</td>
         <td scope="col" class="align-middle">{{ order.status }}</td>
         <td scope="col" class="align-middle">
             <h3>
-                <a href="" @click.prevent="midtrans(order.id)">
+                <a v-if="order.status == 'Unpaid'" href="" @click.prevent="midtrans(order.id)">
 
                     <i class="bi bi-currency-dollar text-success"></i>
                 </a>

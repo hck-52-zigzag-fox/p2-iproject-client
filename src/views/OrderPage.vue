@@ -29,6 +29,7 @@ export default {
                         <th scope="col">No</th>
                         <th scope="col">Image</th>
                         <th scope="col">Product Name</th>
+                        <th scope="col">Size</th>
                         <th scope="col">Origin</th>
                         <th scope="col">Destination</th>
                         <th scope="col">Price</th>

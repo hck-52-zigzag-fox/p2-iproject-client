@@ -112,6 +112,7 @@ export const useStore = defineStore("counter", {
       try {
         const { data } = await axios({
           url: baseUrl + `products/${id}`,
+          method: "GET",
           headers: {
             access_token: localStorage.getItem("access_token"),
           },
