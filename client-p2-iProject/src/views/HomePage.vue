@@ -21,7 +21,11 @@ export default {
     ...mapWritableState(useCustomerStore, ["isLogin"]),
   },
   methods: {
-    ...mapActions(useProductStore, ["fetchProduct", "showCategories","speechToTextSearch"]),
+    ...mapActions(useProductStore, [
+      "fetchProduct",
+      "showCategories",
+      "speechToTextSearch",
+    ]),
     handleFitur() {
       if (this.filtering) this.filter = this.filtering;
       if (this.searching) this.search = this.searching;
@@ -64,6 +68,7 @@ export default {
           <!-- SEARCH-->
           <div>
             <input
+              class="mt-1"
               name="name"
               type="text"
               placeholder="search by name"
@@ -71,7 +76,7 @@ export default {
             />
             <button
               @click.prevent="handleFitur"
-              class="m-2"
+              class="mb-2 btn btn-outline-dark m-2"
               style="border-radius: 8px"
             >
               FindMe!

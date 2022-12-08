@@ -4,6 +4,7 @@ import BookmarkPage from "../views/BookmarkPage.vue";
 import LoginPage from "../views/LoginPage.vue";
 import RegisterView from "../views/RegisterPage.vue";
 import DetailProduct from "../views/DetailProduct.vue";
+import AboutPage from "../views/AboutPage.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -29,10 +30,16 @@ const router = createRouter({
       component: RegisterView,
     },
     {
+      path: "/about",
+      name: "about",
+      component: AboutPage,
+    },
+    {
       path: "/products/:id",
       name: "detailProduct",
       component: DetailProduct,
     },
+    
   ],
 });
 

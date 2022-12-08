@@ -38,7 +38,6 @@ export const useProductStore = defineStore("product", {
     async fetchProductById(id) {
       try {
         let data = await axios.get(`${base_url}/products/${id}`);
-        console.log(data.data.oneProduct, `<<<<<`);
         this.product = data.data.oneProduct;
         router.push(`/products/${id}`);
       } catch (error) {

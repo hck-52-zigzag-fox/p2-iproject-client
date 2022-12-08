@@ -29,7 +29,7 @@ export default {
   <section class="container" id="login-section">
     <div class="row">
       <div class="col-12 text-center">
-        <h1 class="mb-3 mt-5">Tops-Brand</h1>
+        <h1 class="mb-3 mt-5">Shopping Comparement App</h1>
         <span>Log in or Sign up First!</span>
       </div>
     </div>

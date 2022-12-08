@@ -1,13 +1,14 @@
 import { defineStore } from "pinia";
 import axios from "axios";
 import router from "../router";
-import Swal from 'sweetalert2'
+import Swal from "sweetalert2";
+import { Loader } from "@googlemaps/js-api-loader"
 
 const base_url = "http://localhost:3000/pub";
 export const useCustomerStore = defineStore("customer", {
   state: () => ({
     isLogin: false,
-    googleOn: "buttonDiv"
+    googleOn: "buttonDiv",
   }),
   actions: {
     async login(dataCustomer) {
@@ -26,7 +27,7 @@ export const useCustomerStore = defineStore("customer", {
           showConfirmButton: false,
           timer: 1500,
         });
-        router.push("/")
+        router.push("/");
       } catch (error) {
         console.log(error);
       }
@@ -45,11 +46,11 @@ export const useCustomerStore = defineStore("customer", {
         router.push("/login");
       } catch (error) {
         Swal.fire({
-          title: 'Error!',
+          title: "Error!",
           text: `${error.response.data.msg}`,
-          icon: 'error',
-          confirmButtonText: 'ok'
-        })
+          icon: "error",
+          confirmButtonText: "ok",
+        });
       }
     },
     async logout() {
@@ -91,6 +92,23 @@ export const useCustomerStore = defineStore("customer", {
       } catch (error) {
         console.log(error);
       }
+    },
+    async googleMaps() {
+      const loader = new Loader({
+        apiKey: "AIzaSyAEzfXBRA7-oYw29wvqaZDYEJ19eqYnfpA",
+        version: "weekly"
+      });
+      let map
+      loader.load().then(() => {
+        map = new google.maps.Map(document.getElementById("map"), {
+          center: { lat: -6.260831477726917, lng: 106.78151997528039 },
+          zoom: 21,
+        });
+      })
+      .catch(err=>{
+        console.log(err)
+      })
+      router.push("/about")
     },
   },
 });
