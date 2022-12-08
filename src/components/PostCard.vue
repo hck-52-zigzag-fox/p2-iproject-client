@@ -4,11 +4,34 @@ import { mapState, mapActions } from "pinia";
 import PostCardReal from "./PostCardReal.vue";
 export default {
   name: "PostCard",
+  data() {
+    return {
+      dataPost: {
+        imgUrl: "",
+        content: "",
+      },
+    };
+  },
   computed: {
-    ...mapState(useDataStore, ["dataAllPosts"]),
+    ...mapState(useDataStore, [
+      "dataAllPosts",
+      "dataOneProfile",
+      "dataAllComments",
+    ]),
   },
   methods: {
-    ...mapActions(useDataStore, ["handleAllPost"]),
+    ...mapActions(useDataStore, [
+      "handleAllPost",
+      "handleAddPost",
+      "handleFetchAllComments",
+    ]),
+    onChange() {
+      this.dataPost.imgUrl = this.$refs.file.files[0];
+    },
+    clearData() {
+      this.dataPost.imgUrl = "";
+      this.dataPost.content = "";
+    },
   },
   created() {
     this.handleAllPost();
@@ -27,7 +50,7 @@ export default {
           <a href="#">
             <img
               class="avatar-img rounded-circle"
-              src="@/assets/images/avatar/03.jpg"
+              :src="dataOneProfile.profilePict"
               alt=""
             />
           </a>
@@ -145,25 +168,33 @@ export default {
               <div class="avatar avatar-xs me-2">
                 <img
                   class="avatar-img rounded-circle"
-                  src="assets/images/avatar/03.jpg"
+                  :src="dataOneProfile.profilePict"
                   alt=""
                 />
               </div>
               <!-- Feed box  -->
-              <form class="w-100">
+              <form class="w-100" enctype="multipart/form-data">
                 <textarea
+                  v-model="dataPost.content"
                   class="form-control pe-4 fs-3 lh-1 border-0"
                   rows="2"
                   placeholder="Share your thoughts..."
                 ></textarea>
+                <br />
+                <br />
+                <input
+                  @change="onChange"
+                  type="file"
+                  ref="file"
+                  name=""
+                  id=""
+                />
               </form>
             </div>
 
             <!-- Dropzone photo START -->
             <div>
-              <form action="">
-                <input type="file" name="" id="" />
-              </form>
+              <form action=""></form>
             </div>
             <!-- Dropzone photo END -->
           </div>
@@ -179,14 +210,26 @@ export default {
             >
               Cancel
             </button>
-            <button type="button" class="btn btn-success-soft">Post</button>
+            <button
+              @click.prevent="handleAddPost(dataPost) && clearData()"
+              type="button"
+              class="btn btn-success-soft"
+            >
+              Post
+            </button>
           </div>
           <!-- Modal feed footer -->
         </div>
       </div>
     </div>
     <!-- Card feed item START -->
-    <PostCardReal v-for="post in dataAllPosts" :key="post.id" :post="post" />
+    <PostCardReal
+      v-for="post in dataAllPosts"
+      :key="post.id"
+      :post="post"
+      :dataOneProfile="dataOneProfile"
+      :dataAllComments="dataAllComments"
+    />
     <!-- Card feed item END -->
 
     <!-- Load more button START -->

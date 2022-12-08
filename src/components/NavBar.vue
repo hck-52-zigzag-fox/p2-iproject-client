@@ -7,7 +7,7 @@ export default {
     ...mapState(useDataStore, ["dataOneProfile"]),
   },
   methods: {
-    ...mapActions(useDataStore, ["handleOneProfile"]),
+    ...mapActions(useDataStore, ["handleOneProfile", "handleLogout"]),
     clickToHome() {
       this.$router.push({ name: "home" });
     },
@@ -189,56 +189,6 @@ Header START -->
                       </div>
                     </li>
                     <!-- Notif item -->
-                    <li>
-                      <a
-                        href="#"
-                        class="list-group-item list-group-item-action rounded d-flex border-0 mb-1 p-3"
-                      >
-                        <div
-                          class="avatar text-center d-none d-sm-inline-block"
-                        >
-                          <div class="avatar-img rounded-circle bg-success">
-                            <span
-                              class="text-white position-absolute top-50 start-50 translate-middle fw-bold"
-                              >WB</span
-                            >
-                          </div>
-                        </div>
-                        <div class="ms-sm-3">
-                          <div class="d-flex">
-                            <p class="small mb-2">
-                              Webestica has 15 like and 1 new activity
-                            </p>
-                            <p class="small ms-3">1hr</p>
-                          </div>
-                        </div>
-                      </a>
-                    </li>
-                    <!-- Notif item -->
-                    <li>
-                      <a
-                        href="#"
-                        class="list-group-item list-group-item-action rounded d-flex border-0 p-3 mb-1"
-                      >
-                        <div
-                          class="avatar text-center d-none d-sm-inline-block"
-                        >
-                          <img
-                            class="avatar-img rounded-circle"
-                            src="@/assets/images/logo/12.svg"
-                            alt=""
-                          />
-                        </div>
-                        <div class="ms-sm-3 d-flex">
-                          <p class="small mb-2">
-                            <b>Bootstrap in the news:</b> The search giant’s
-                            parent company, Alphabet, just joined an exclusive
-                            club of tech stocks.
-                          </p>
-                          <p class="small ms-3">4hr</p>
-                        </div>
-                      </a>
-                    </li>
                   </ul>
                 </div>
                 <div class="card-footer text-center">
@@ -306,16 +256,12 @@ Header START -->
                 >
               </li>
               <li>
-                <a
-                  class="dropdown-item"
-                  href="https://support.webestica.com/"
-                  target="_blank"
-                >
+                <a class="dropdown-item" href="#" target="_blank">
                   <i class="fa-fw bi bi-life-preserver me-2"></i>Support
                 </a>
               </li>
               <li>
-                <a class="dropdown-item" href="docs/index.html" target="_blank">
+                <a class="dropdown-item" href="#" target="_blank">
                   <i class="fa-fw bi bi-card-text me-2"></i>Documentation
                 </a>
               </li>
@@ -323,7 +269,8 @@ Header START -->
               <li>
                 <a
                   class="dropdown-item bg-danger-soft-hover"
-                  href="sign-in-advance.html"
+                  href="#"
+                  @click.prevent="handleLogout"
                   ><i class="bi bi-power fa-fw me-2"></i>Sign Out</a
                 >
               </li>
