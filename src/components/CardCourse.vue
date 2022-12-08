@@ -2,17 +2,23 @@
 export default {
   name: "CardCourse",
   props: ["data"],
+  methods: {
+    goToDetail(id) {
+      this.$router.push(`/courses/${id}`);
+    },
+  },
 };
 </script>
 
 <template>
-  <div class="max-w-sm rounded-sm overflow-hidden shadow-lg">
+  <div
+    class="max-w-sm rounded-sm overflow-hidden shadow-lg"
+    @click="goToDetail(data?.id)"
+  >
     <img :src="data?.thumbnail" :alt="data?.name" />
     <div class="px-6 py-4">
       <div class="font-bold text-xl mb-2 capitalize">{{ data?.name }}</div>
-      <p class="text-gray-700 text-sm">
-        Mentor: <span class="underline">{{ data?.Mentor?.name }}</span>
-      </p>
+
       <p>
         {{ data?.description }}
       </p>

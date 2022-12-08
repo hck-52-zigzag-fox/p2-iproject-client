@@ -33,15 +33,6 @@ export default {
       class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3"
     >
       <CardCourseVue v-for="(data, n) in listOfCourse" :key="n" :data="data" />
-      <CardCourseVue v-for="(data, n) in listOfCourse" :key="n" :data="data" />
-      <CardCourseVue v-for="(data, n) in listOfCourse" :key="n" :data="data" />
-      <CardCourseVue v-for="(data, n) in listOfCourse" :key="n" :data="data" />
-      <CardCourseVue v-for="(data, n) in listOfCourse" :key="n" :data="data" />
-      <CardCourseVue v-for="(data, n) in listOfCourse" :key="n" :data="data" />
-      <CardCourseVue v-for="(data, n) in listOfCourse" :key="n" :data="data" />
-      <CardCourseVue v-for="(data, n) in listOfCourse" :key="n" :data="data" />
-      <CardCourseVue v-for="(data, n) in listOfCourse" :key="n" :data="data" />
-      <CardCourseVue v-for="(data, n) in listOfCourse" :key="n" :data="data" />
     </div>
   </main>
 
