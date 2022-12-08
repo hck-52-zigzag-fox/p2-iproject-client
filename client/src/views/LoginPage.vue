@@ -1,13 +1,23 @@
 <script>
+import { mapActions } from "pinia";
+import { useRzStore } from "../stores/counter";
+
 export default {
   name: "LoginPage",
+  data() {
+    return {
+      email: "",
+      password: "",
+    };
+  },
+  methods: {
+    ...mapActions(useRzStore, ["loginToSite"]),
+  },
 };
 </script>
 <template>
   <div class="flex justify-center">
     <div class="container bg-white w-96 p-6 rounded shadow-lg mt-16">
-      <!-- <div class="h-36">
-      </div> -->
       <div class="flex items-center justify-center mb-5">
         <div class="flex justify-center h-40 w-40">
           <img src="../assets/RZ.png" alt="" />
@@ -34,7 +44,6 @@ export default {
           Login
         </button>
       </form>
-      <GoogleLogin :callback="callback" />
     </div>
   </div>
 </template>

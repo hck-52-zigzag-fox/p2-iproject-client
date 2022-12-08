@@ -1,12 +1,19 @@
 import { defineStore } from "pinia";
 import axios from "axios";
 
-const baseURL = `https://rz-card-shop.up.railway.app`;
+const baseURL = `http://rz-gaming-production.up.railway.app`;
 
 export const useRzStore = defineStore("rz", {
   state: () => ({
     checkLogin: false,
-    email: localStorage.getItem("email"),
+    profile: {
+      imgUrl: "",
+      gender: "",
+      dateOfBirth: "",
+      location: "",
+      games: "",
+    },
+    posts: [],
   }),
   actions: {
     async logout() {
@@ -16,15 +23,15 @@ export const useRzStore = defineStore("rz", {
     },
     async loginToSite(email, password) {
       try {
-        let { data } = await axios.post(`${baseURL}/pub/login`, {
+        let { data } = await axios.post(`${baseURL}/login`, {
           email,
           password,
         });
         localStorage.setItem("access_token", data.access_token);
-        localStorage.setItem("email", data.email);
         localStorage.setItem("id", data.id);
-        Swal.fire("Login", "Login Success", "success");
-        this.email = data.email;
+        localStorage.setItem("username", data.username);
+        localStorage.setItem("email", data.email);
+
         this.checkLogin = true;
         this.router.push("/");
       } catch (err) {
@@ -34,9 +41,79 @@ export const useRzStore = defineStore("rz", {
 
     async register(user) {
       try {
-        await axios.post(`${baseURL}/pub/register`, user);
+        await axios.post(`${baseURL}/register`, user);
         this.checkLogin = false;
         this.router.push("/login");
+      } catch (err) {
+        console.log(err);
+      }
+    },
+
+    async addProfile() {
+      try {
+        const bodyFormData = new FormData();
+        bodyFormData.append("imgUrl", this.profile.imgUrl);
+        bodyFormData.append("gender", this.profile.gender);
+        bodyFormData.append("dateOfBirth", this.profile.dateOfBirth);
+        bodyFormData.append("location", this.profile.location);
+        bodyFormData.append("games", this.profile.games);
+
+        const { data } = await axios({
+          method: "POST",
+          url: `${baseURL}/profiles`,
+          data: bodyFormData,
+          headers: {
+            "Content-Type": "multipart/form-data",
+            access_token: localStorage.getItem("access_token"),
+          },
+        });
+        this.router.push("/profiles");
+      } catch (err) {
+        console.log(err);
+      }
+    },
+
+    async fetchProfileById(id) {
+      try {
+        let { data } = await axios.get(`${baseURL}/profiles/${id}`, {
+          headers: {
+            access_token: localStorage.getItem("access_token"),
+          },
+        });
+        this.profile = data;
+      } catch (err) {
+        console.log(err);
+      }
+    },
+
+    async addPost(content) {
+      try {
+        await axios.post(
+          `${baseURL}/posts`,
+          {
+            content: content,
+            UserId: localStorage.getItem("id"),
+          },
+          {
+            headers: {
+              access_token: localStorage.getItem("access_token"),
+            },
+          }
+        );
+        this.router.push("/");
+      } catch (err) {
+        console.log(err);
+      }
+    },
+
+    async fetchPosts() {
+      try {
+        const { data } = await axios.get(`${baseURL}/posts`, {
+          headers: {
+            access_token: localStorage.getItem("access_token"),
+          },
+        });
+        this.posts = data;
       } catch (err) {
         console.log(err);
       }

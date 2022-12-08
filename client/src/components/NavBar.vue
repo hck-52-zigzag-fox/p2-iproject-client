@@ -1,6 +1,21 @@
 <script>
+import { mapState, mapActions } from "pinia";
+import { useRzStore } from "../stores/counter";
+
 export default {
   name: "Navbar",
+  data() {
+    return {
+      username: localStorage.getItem("username"),
+      id: localStorage.getItem("id"),
+    };
+  },
+  computed: {
+    ...mapState(useRzStore, ["checkLogin"]),
+  },
+  methods: {
+    ...mapActions(useRzStore, ["logout"]),
+  },
 };
 </script>
 <template>
@@ -16,25 +31,35 @@ export default {
           </div>
         </div>
         <div class="hidden md:flex items-center space-x-3">
-          <a
+          <RouterLink
+            to="/"
+            v-if="checkLogin"
             class="py-4 px-3 text-gray-700 text-1xl font-bold hover:bg-gray-200"
-            >Home</a
+            >Home</RouterLink
+          >
+          <RouterLink
+            to="/login"
+            v-if="!checkLogin"
+            class="py-4 px-3 text-gray-700 text-1xl font-bold hover:bg-gray-200"
+            >Login</RouterLink
+          >
+          <RouterLink
+            to="/register"
+            v-if="!checkLogin"
+            class="py-4 px-3 text-gray-700 text-1xl font-bold hover:bg-gray-200"
+            >Register</RouterLink
           >
           <a
-            class="py-4 px-3 text-gray-700 text-1xl font-bold hover:bg-gray-200"
-            >Login</a
-          >
-          <a
-            class="py-4 px-3 text-gray-700 text-1xl font-bold hover:bg-gray-200"
-            >Register</a
-          >
-          <a
+            @click.prevent="logout"
+            v-if="checkLogin"
             class="py-4 px-3 text-gray-700 text-1xl font-bold hover:bg-gray-200"
             >Logout</a
           >
-          <a
+          <RouterLink
+            :to="`/profiles/${id}`"
+            v-if="checkLogin"
             class="py-4 px-3 text-gray-700 text-1xl font-bold hover:bg-gray-200"
-            >email</a
+            >{{ username }}</RouterLink
           >
         </div>
       </div>
