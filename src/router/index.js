@@ -5,6 +5,7 @@ import ProfileEditView from "../views/ProfileEditView.vue";
 import ChatVue from "../views/ChatVue.vue";
 import ChatBefore from "../views/ChatBefore.vue";
 import TwoFactor from "../views/TwoFactor.vue";
+import NotFound404 from "../views/NotFound404.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -39,6 +40,11 @@ const router = createRouter({
       path: "/2FA",
       name: "2FA",
       component: TwoFactor,
+    },
+    {
+      path: "/:pathMatch(.*)*",
+      name: "NotFound",
+      component: NotFound404,
     },
   ],
 });
