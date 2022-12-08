@@ -1,7 +1,8 @@
 import { ref, computed } from "vue";
 import { defineStore } from "pinia";
 import axios from "axios";
-const baseUrl = "http://localhost:3700"
+// const baseUrl = "http://localhost:3700"
+const baseUrl = "https://nasty-bat-production.up.railway.app"
 
 export const useCounterStore = defineStore("counter", {
 
