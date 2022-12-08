@@ -2,7 +2,7 @@ import { ref, computed } from "vue";
 import { defineStore } from "pinia";
 import axios from "axios";
 import Swal from "sweetalert2";
-const baseUrl = "http://localhost:3000";
+const baseUrl = "https://fiansocialbokk-iproject-production.up.railway.app";
 export const useDataStore = defineStore("dataStore", {
   state: () => ({
     dataChat: [],
@@ -106,7 +106,7 @@ export const useDataStore = defineStore("dataStore", {
     },
     async fetchAllProfile() {
       try {
-        console.log(`jalann`);
+        // console.log(`jalann`);
         const { data } = await axios({
           method: "GET",
           url: `${baseUrl}/profiles/all`,
@@ -115,14 +115,14 @@ export const useDataStore = defineStore("dataStore", {
           },
         });
         this.dataAllProfiles = data;
-        console.log(this.dataAllProfiles);
+        // console.log(this.dataAllProfiles);
       } catch (err) {
         this.handleError(err);
       }
     },
     async fetchOneProfile(id) {
       try {
-        console.log(`jalan`);
+        // console.log(`jalan`);
         const { data } = await axios({
           method: "GET",
           url: `${baseUrl}/profiles/${id}`,
@@ -137,7 +137,7 @@ export const useDataStore = defineStore("dataStore", {
     },
     async handleSendChat(value) {
       try {
-        console.log(value, "masuk state<<");
+        // console.log(value, "masuk state<<");
         // const { data } = await axios({
         //   method: "POST",
         //   url: `${baseUrl}/users/chat`,
@@ -217,8 +217,8 @@ export const useDataStore = defineStore("dataStore", {
 
     async handleAddComment(message, id) {
       try {
-        console.log(message, id, "<<<");
-        console.log(message, id, "<<<");
+        // console.log(message, id, "<<<");
+        // console.log(message, id, "<<<");
         const { data } = await axios({
           method: "POST",
           url: `${baseUrl}/comments/${id}`,
@@ -264,6 +264,11 @@ export const useDataStore = defineStore("dataStore", {
           text: err.response.data.message,
         });
       }
+    },
+    handleLogout() {
+      localStorage.clear();
+
+      this.router.push("/login");
     },
   },
 });

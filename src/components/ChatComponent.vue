@@ -21,7 +21,7 @@ export default {
         await this.fetchAllProfile();
         await this.fetchOneProfile(this.$route.params.ReceiverId);
       } catch (err) {
-        console.log(error);
+        this.handleError(err);
       }
     },
   },

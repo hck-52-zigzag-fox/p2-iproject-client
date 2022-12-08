@@ -7,7 +7,7 @@ export default {
     ...mapState(useDataStore, ["dataOneProfile"]),
   },
   methods: {
-    ...mapActions(useDataStore, ["handleOneProfile"]),
+    ...mapActions(useDataStore, ["handleOneProfile", "handleLogout"]),
     clickToHome() {
       this.$router.push({ name: "home" });
     },
@@ -323,7 +323,8 @@ Header START -->
               <li>
                 <a
                   class="dropdown-item bg-danger-soft-hover"
-                  href="sign-in-advance.html"
+                  href="#"
+                  @click.prevent="handleLogout"
                   ><i class="bi bi-power fa-fw me-2"></i>Sign Out</a
                 >
               </li>

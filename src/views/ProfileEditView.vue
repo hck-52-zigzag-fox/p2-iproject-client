@@ -32,7 +32,7 @@ export default {
         this.profile = { ...this.dataOneProfile };
         this.profile.dateOfBirth = this.profile.dateOfBirth.slice(0, 10);
       } catch (err) {
-        console.log(error);
+        console.log(err);
       }
     },
   },
