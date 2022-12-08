@@ -6,6 +6,7 @@ import CreateObject from "../views/CreateObjectView.vue"
 import CustomObjectsView from "../views/CustomObjectsView.vue"
 import ExploreView from "../views/ExploreView.vue"
 import RegisterView from "../views/RegisterView.vue"
+import WeatherView from "../views/weatherView.vue"
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -75,6 +76,15 @@ const router = createRouter({
       // which is lazy-loaded when the route is visited.
       component:RegisterView,
     },
+    {
+      path: "/weather",
+      name: "weather",
+      // route level code-splitting
+      // this generates a separate chunk (About.[hash].js) for this route
+      // which is lazy-loaded when the route is visited.
+      component:WeatherView,
+    },
+
   ],
 });
 
