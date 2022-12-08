@@ -37,9 +37,15 @@ const router = createRouter({
     {
       path: '/checkout',
       name: 'checkout',
-      component: OrderView
+      component: CheckoutView
     }
   ]
 })
-
+router.beforeEach((to, from, next) => {
+  const isAuthenticated = localStorage.getItem("access_token")
+  if (to.name == 'order' && !isAuthenticated) next({ name: 'login' })
+  else if (to.name == 'checkout' && !isAuthenticated) next({ name: 'login' })
+  else if (to.name == 'login' && isAuthenticated || to.name == 'register' && isAuthenticated) next({ name: 'home' })
+  else next()
+})
 export default router
