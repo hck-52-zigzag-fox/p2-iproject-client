@@ -1,7 +1,8 @@
 import { defineStore } from "pinia";
 import Swal from "sweetalert2";
 import axios from "axios";
-const baseUrl = "http://localhost:3000/";
+// const baseUrl = "http://localhost:3000/";
+const baseUrl = "https://hacktiv8-warteg.up.railway.app/";
 
 export const useStore = defineStore("counter", {
   state: () => ({
@@ -193,6 +194,10 @@ export const useStore = defineStore("counter", {
           },
         });
         this.router.push("/orders");
+        Swal.fire({
+          icon: "success",
+          text: "Success Add Product on Cart",
+        });
       } catch (error) {
         Swal.fire({
           icon: "error",
@@ -204,7 +209,7 @@ export const useStore = defineStore("counter", {
       try {
         const { data } = await axios({
           url: baseUrl + "orders",
-          method: "GET",
+          // method: "GET",
           headers: {
             access_token: localStorage.getItem("access_token"),
           },
