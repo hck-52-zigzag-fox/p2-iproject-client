@@ -21,6 +21,15 @@ export default {
 </script>
 
 <template>
+    <section class="text-gray-600">
+        <div class="container px-5 py-5 mx-auto">
+            <div class="flex flex-col text-center w-full mb-20">
+                <h1 class="text-center text-3xl">Free nutrition and recipe data for 100,000+ foods and beverages</h1>
+                <h1 class="sm:text-xl font-medium text-gray-900">Courtesy of <a href="https://calorieninjas.com/">CalorieNinjas API</a></h1>
+            </div>
+        </div>
+    </section>
+
     <form action="" @submit.prevent="fetchFood(input)">
         <div class="flex justify-center">
             <div class="mb-3 xl:w-96">
