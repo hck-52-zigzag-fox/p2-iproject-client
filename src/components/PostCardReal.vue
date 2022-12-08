@@ -232,7 +232,12 @@ export default {
       <!-- Comment wrap START -->
       <ul class="comment-wrap list-unstyled">
         <!-- Comment item START -->
-        <li v-for="x in post.Comments" :key="x.id" class="comment-item">
+        <li
+          v-if="post.Comments.length != 0"
+          v-for="x in post.Comments"
+          :key="x.id"
+          class="comment-item"
+        >
           <div class="d-flex position-relative">
             <!-- Avatar -->
             <div class="avatar avatar-xs">

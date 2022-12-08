@@ -14,7 +14,7 @@ export default {
     async toChat(id) {
       try {
         this.$router.push(`/chat/${id}`);
-      } catch (error) {
+      } catch (err) {
         console.log(error);
       }
     },

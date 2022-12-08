@@ -31,7 +31,7 @@ export default {
         await this.handleOneProfile();
         this.profile = { ...this.dataOneProfile };
         this.profile.dateOfBirth = this.profile.dateOfBirth.slice(0, 10);
-      } catch (error) {
+      } catch (err) {
         console.log(error);
       }
     },
