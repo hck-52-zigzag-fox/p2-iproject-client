@@ -21,7 +21,7 @@ export default {
       try {
         await this.$emit("handleOneProfile");
         this.profile = { ...this.dataOneProfile };
-      } catch (error) {
+      } catch (err) {
         console.log(error);
       }
     },

@@ -1,6 +1,7 @@
 import { ref, computed } from "vue";
 import { defineStore } from "pinia";
 import axios from "axios";
+import Swal from "sweetalert2";
 const baseUrl = "http://localhost:3000";
 export const useDataStore = defineStore("dataStore", {
   state: () => ({
@@ -30,8 +31,8 @@ export const useDataStore = defineStore("dataStore", {
         localStorage.setItem("id", data.id);
         localStorage.setItem("isPass", false);
         this.router.push("/2FA");
-      } catch (error) {
-        console.log(error);
+      } catch (err) {
+        this.handleError(err);
       }
     },
     async fetchChat(receiverId) {
@@ -45,8 +46,8 @@ export const useDataStore = defineStore("dataStore", {
           },
         });
         this.dataChat = data;
-      } catch (error) {
-        console.log(error);
+      } catch (err) {
+        this.handleError(err);
       }
     },
     async handleEditProfile(value) {
@@ -70,8 +71,8 @@ export const useDataStore = defineStore("dataStore", {
           data: formData,
         });
         this.handleOneProfile();
-      } catch (error) {
-        console.log(error);
+      } catch (err) {
+        this.handleError(err);
       }
     },
     async handleOneProfile() {
@@ -85,8 +86,8 @@ export const useDataStore = defineStore("dataStore", {
         });
         // console.log(data, "<<<");
         this.dataOneProfile = data;
-      } catch (error) {
-        console.log(error);
+      } catch (err) {
+        this.handleError(err);
       }
     },
     async handleAllPost() {
@@ -99,8 +100,8 @@ export const useDataStore = defineStore("dataStore", {
           },
         });
         this.dataAllPosts = data;
-      } catch (error) {
-        console.log(error);
+      } catch (err) {
+        this.handleError(err);
       }
     },
     async fetchAllProfile() {
@@ -115,8 +116,8 @@ export const useDataStore = defineStore("dataStore", {
         });
         this.dataAllProfiles = data;
         console.log(this.dataAllProfiles);
-      } catch (error) {
-        console.log(error);
+      } catch (err) {
+        this.handleError(err);
       }
     },
     async fetchOneProfile(id) {
@@ -130,8 +131,8 @@ export const useDataStore = defineStore("dataStore", {
           },
         });
         this.dataProfileChat = data;
-      } catch (error) {
-        console.log(error);
+      } catch (err) {
+        this.handleError(err);
       }
     },
     async handleSendChat(value) {
@@ -147,8 +148,8 @@ export const useDataStore = defineStore("dataStore", {
         // });
         // console.log(data, "<<<<<");
         this.fetchChat(value.ReceiverId);
-      } catch (error) {
-        console.log(error);
+      } catch (err) {
+        this.handleError(err);
       }
     },
     async getTwoFactorSecret() {
@@ -170,8 +171,8 @@ export const useDataStore = defineStore("dataStore", {
         });
         this.qr = qr.qrcode;
         return data;
-      } catch (error) {
-        console.log(error);
+      } catch (err) {
+        this.handleError(err);
       }
     },
     async verifyTwoFactorSecret(value) {
@@ -191,8 +192,8 @@ export const useDataStore = defineStore("dataStore", {
         });
         localStorage.setItem("isPass", true);
         this.router.push("/");
-      } catch (error) {
-        console.log(error);
+      } catch (err) {
+        this.handleError(err);
       }
     },
     async handleAddPost(value) {
@@ -209,27 +210,11 @@ export const useDataStore = defineStore("dataStore", {
           data: formData,
         });
         this.handleAllPost();
-      } catch (error) {
-        console.log(error);
+      } catch (err) {
+        this.handleError(err);
       }
     },
-    async handleFetchAllComments(id) {
-      try {
-        // console.log(id, "<<<");
-        const { data } = await axios({
-          method: "GET",
-          url: `${baseUrl}/comments/${id}`,
-          headers: {
-            access_token: localStorage.getItem("access_token"),
-          },
-        });
 
-        this.dataAllComments = data;
-        // console.log(this.dataAllComments, "<<<");
-      } catch (error) {
-        console.log(error);
-      }
-    },
     async handleAddComment(message, id) {
       try {
         console.log(message, id, "<<<");
@@ -245,8 +230,8 @@ export const useDataStore = defineStore("dataStore", {
           },
         });
         this.handleAllPost();
-      } catch (error) {
-        console.log(error);
+      } catch (err) {
+        this.handleError(err);
       }
     },
     async handleDeleteComment(id) {
@@ -259,8 +244,25 @@ export const useDataStore = defineStore("dataStore", {
           },
         });
         this.handleAllPost();
-      } catch (error) {
-        console.log(error);
+      } catch (err) {
+        this.handleError(err);
+      }
+    },
+    handleError(err) {
+      if (err.response.request.status == 401) {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "You are not authorized to access this page!",
+        });
+        this.isLogin = false;
+        localStorage.clear();
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: `Status : ${err.response.request.status}`,
+          text: err.response.data.message,
+        });
       }
     },
   },

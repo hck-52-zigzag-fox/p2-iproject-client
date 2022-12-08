@@ -20,7 +20,7 @@ export default {
         await this.fetchChat(this.$route.params.ReceiverId);
         await this.fetchAllProfile();
         await this.fetchOneProfile(this.$route.params.ReceiverId);
-      } catch (error) {
+      } catch (err) {
         console.log(error);
       }
     },
