@@ -4,7 +4,7 @@ import { useCounterStore } from "../stores/counter";
 export default {
   name: "Navbar",
   methods: {
-    ...mapActions(useCounterStore, ["logout"]),
+    ...mapActions(useCounterStore, ["logout", 'tokenMidTrans']),
   },
   computed: {
     ...mapState(useCounterStore, ["isLogin"]),
@@ -54,6 +54,14 @@ export default {
           @:click.prevent="this.$router.push('/highlights')"
           v-if="isLogin"
           >Highlights</a
+        >
+        <a
+          class="navbar-brand"
+          href=""
+          style="color: white; font-size: 20px"
+          @click.prevent="tokenMidTrans"
+          v-if="isLogin"
+          >Upgrade</a
         >
       </div>
       <div class="mb3">

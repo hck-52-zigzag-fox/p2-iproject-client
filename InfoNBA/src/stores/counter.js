@@ -175,6 +175,57 @@ export const useCounterStore = defineStore('counter', {
           duration: 3000
         }).showToast();
       }
+    },
+
+    async upgradeStatus() {
+      try {
+        await axios({
+          method: "PATCH",
+          url: `${baseUrl}/upgrade`,
+          data: {
+            status: 'VIP'
+          },
+          headers: {
+            access_token: localStorage.getItem("access_token"),
+          },
+        })
+        localStorage.setItem('status', 'VIP')
+      } catch (err) {
+        Toastify({
+          text: `${err.response.data.message}`,
+          style: {
+            background: "linear-gradient(to right, #00b09b, #96c93d)",
+          },
+          duration: 3000
+        }).showToast();
+      }
+    },
+
+    async tokenMidTrans() {
+      try {
+        const { data } = await axios({
+          method: "POST",
+          url: `${baseUrl}/tokens`,
+          headers: {
+            access_token: localStorage.getItem("access_token"),
+          },
+        })
+        const callback = this.upgradeStatus
+        window.snap.pay(data.token, {
+          onSuccess: function (result) {
+            /* You may add your own implementation here */
+            callback()
+          }
+        })
+      } catch (err) {
+        Toastify({
+          text: `${err.response.data.message}`,
+          style: {
+            background: "linear-gradient(to right, #00b09b, #96c93d)",
+          },
+          duration: 3000
+        }).showToast();
+      }
     }
   }
 })
