@@ -6,11 +6,13 @@ export default {
   props: ["post", "dataOneProfile", ""],
   data() {
     return {
-      lokal: [],
+      dataComment: {
+        content: "",
+      },
     };
   },
   computed: {
-    ...mapState(useDataStore, ["dataAllComments"]),
+    ...mapState(useDataStore, ["dataAllComments", "lokal"]),
     getIndonesianTimeWithTime() {
       let date = new Date(this.post.createdAt);
       let options = {
@@ -24,13 +26,15 @@ export default {
     },
   },
   methods: {
-    ...mapActions(useDataStore, ["handleFetchAllComments"]),
-    async cobain() {
-      try {
-        await this.handleFetchAllComments(this.post.id);
+    ...mapActions(useDataStore, [
+      "handleFetchAllComments",
+      "handleAddComment",
+      "handleDeleteComment",
+    ]),
 
-        this.dataAllComments.forEach((el) => {
-          let date = new Date(el.createdAt);
+    convertTime() {
+      let date = new Date(
+        this.post.Comments.forEach((el) => {
           let options = {
             year: "numeric",
             month: "long",
@@ -39,16 +43,11 @@ export default {
             minute: "numeric",
           };
           el.createdAt = date.toLocaleDateString("id-ID", options);
-        });
-        this.lokal = this.dataAllComments;
-      } catch (error) {
-        console.log(error);
-      }
+        })
+      );
     },
   },
-  created() {
-    this.cobain();
-  },
+  created() {},
 };
 </script>
 <template>
@@ -219,6 +218,10 @@ export default {
         <!-- Comment box  -->
         <form class="w-100">
           <textarea
+            v-model="dataComment.content"
+            @keydown.enter.exact.prevent="
+              handleAddComment(dataComment.content, post.id)
+            "
             data-autoresize
             class="form-control pe-4 bg-light"
             rows="1"
@@ -229,7 +232,7 @@ export default {
       <!-- Comment wrap START -->
       <ul class="comment-wrap list-unstyled">
         <!-- Comment item START -->
-        <li v-for="x in lokal" :key="x.id" class="comment-item">
+        <li v-for="x in post.Comments" :key="x.id" class="comment-item">
           <div class="d-flex position-relative">
             <!-- Avatar -->
             <div class="avatar avatar-xs">
@@ -247,14 +250,20 @@ export default {
                   <h6 class="mb-1">
                     <a href="#!"> {{ x.User.Profile.name }} </a>
                   </h6>
-                  <small class="ms-2">{{ x.createdAt }}</small>
                 </div>
                 <p class="small mb-0">{{ x.content }}</p>
               </div>
               <!-- Comment react -->
               <ul class="nav nav-divider py-2 small">
                 <li class="nav-item">
-                  <a class="nav-link" href="#!"> delete</a>
+                  <a
+                    v-if="x.User.id == dataOneProfile.id"
+                    @click.prevent="handleDeleteComment(x.id)"
+                    class="nav-link"
+                    href="#!"
+                  >
+                    delete</a
+                  >
                 </li>
               </ul>
             </div>
