@@ -1,7 +1,13 @@
 import { defineStore } from "pinia";
 import axios from "axios";
+import { useToast } from "vue-toastification";
 
 const BASE_URL = `http://localhost:9090`;
+
+const toast = useToast();
+const callToaster = ({ type = "success", val = "Successfully!" }) => {
+  return toast[type](val);
+};
 
 export const useCounterStore = defineStore("counter", {
   state: () => {
@@ -21,8 +27,9 @@ export const useCounterStore = defineStore("counter", {
           data: payload,
         });
         this.router.push("/login");
+        callToaster({ val: `Successfully register account, please login!` });
       } catch (err) {
-        console.log(err);
+        callToaster({ type: "error", val: err.response.data.message });
       }
     },
     async handleLogin(payload) {
@@ -35,8 +42,9 @@ export const useCounterStore = defineStore("counter", {
         localStorage.setItem("access_token", data.access_token);
         this.isLogin = true;
         this.router.push("/rent");
+        callToaster({ val: `Successfully login, brum brum!` });
       } catch (err) {
-        console.log(err);
+        callToaster({ type: "error", val: err.response.data.message });
       }
     },
     async handleGoogleLogin(response) {
@@ -51,6 +59,7 @@ export const useCounterStore = defineStore("counter", {
         localStorage.setItem("access_token", data.access_token);
         this.isLogin = true;
         this.router.push("/rent");
+        callToaster({ val: `Successfully login, brum brum!` });
       } catch (err) {
         console.log(err);
       }
@@ -87,7 +96,7 @@ export const useCounterStore = defineStore("counter", {
           },
         });
       } catch (err) {
-        console.log(err);
+        callToaster({ type: "error", val: err.response.data.message });
       }
     },
     async handleRent(id) {
@@ -100,14 +109,21 @@ export const useCounterStore = defineStore("counter", {
           },
         });
         this.router.push("/rent");
+        callToaster({
+          type: "info",
+          val: `Successfully booked your favorite. big power more faster!`,
+        });
       } catch (err) {
-        console.log(err);
+        callToaster({ type: "error", val: err.response.data.message });
       }
     },
     handleLogout() {
       localStorage.clear();
       this.isLogin = false;
       this.router.push("/login");
+      callToaster({
+        val: `Successfully logout! see you with your speed limit.`,
+      });
     },
     async fetchMotorcycles() {
       try {
@@ -117,7 +133,7 @@ export const useCounterStore = defineStore("counter", {
         });
         this.motorcycles = data;
       } catch (err) {
-        console.log(err);
+        callToaster({ type: "error", val: err.response.data.message });
       }
     },
     async fetchNews() {
@@ -130,7 +146,7 @@ export const useCounterStore = defineStore("counter", {
 
         this.news = data;
       } catch (err) {
-        console.log(err);
+        callToaster({ type: "error", val: err.response.data.message });
       }
     },
     async fetchDetailMotorcycle(id) {
@@ -144,7 +160,7 @@ export const useCounterStore = defineStore("counter", {
         });
         this.motorcycle = data;
       } catch (err) {
-        console.log(err);
+        callToaster({ type: "error", val: err.response.data.message });
       }
     },
   },
