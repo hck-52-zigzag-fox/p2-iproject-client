@@ -14,6 +14,8 @@ export const useStore = defineStore("index", {
       product: {},
       loading: true,
       quote: "",
+      city: [],
+      shipment: [],
     };
   },
   actions: {
@@ -129,6 +131,50 @@ export const useStore = defineStore("index", {
         });
       }
     },
+    async getRajaOngkirCity() {
+      try {
+        const { data } = await axios.get(`${baseUrl}/orders/city`, {
+          headers: {
+            access_token: localStorage.getItem("access_token"),
+          },
+        });
+
+        this.city = data;
+      } catch (err) {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Error Fetch Data!",
+        });
+      }
+    },
+    async postRajaOngkirCost(input) {
+      try {
+        const { data } = await axios.post(
+          `${baseUrl}/orders/cost`,
+          {
+            origin: 445,
+            destination: input,
+            weight: 1000,
+            courier: "jne",
+          },
+          {
+            headers: {
+              access_token: localStorage.getItem("access_token"),
+            },
+          }
+        );
+
+        console.log(data);
+        this.shipment = data;
+      } catch (err) {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Error Fetch Data!",
+        });
+      }
+    },
     async addOrder(id, input) {
       try {
         const { data } = await axios.post(
@@ -137,7 +183,7 @@ export const useStore = defineStore("index", {
             origin: 445,
             destination: input.destination,
             weight: 1000,
-            courier: "jnt",
+            courier: "jne",
           },
           {
             headers: {

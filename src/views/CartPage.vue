@@ -1,6 +1,23 @@
 <script>
+import { mapActions, mapState } from 'pinia';
+import { useStore } from '../stores/store';
+
 export default {
-  name: "CartPage"
+  name: "CartPage",
+  data() {
+    return {
+      cityId: ""
+    }
+  },
+  computed: {
+    ...mapState(useStore, ["city", "shipment"])
+  },
+  methods: {
+    ...mapActions(useStore, ["getRajaOngkirCity", "postRajaOngkirCost"]),
+  },
+  created() {
+    this.getRajaOngkirCity()
+  }
 }
 </script>
 
@@ -43,18 +60,25 @@ export default {
           <div class="col text-right">&euro; 132.00</div>
         </div>
         <form>
-          <p>SHIPPING</p>
+          <p>DESTINATION</p>
+          <select v-model="cityId">
+            <option v-for="el in city" :key="el.city_id" :value="el.city_id" class="text-muted">{{
+                el.city_name
+            }}</option>
+          </select>
+          <button class="btn" @click.prevent="postRajaOngkirCost(cityId)">CHECK SHIPMENT</button>
+          <p class="mt-2">SHIPPING</p>
           <select>
-            <option class="text-muted">Standard-Delivery- &euro;5.00</option>
+            <option class="text-muted" v-for="el in shipment">{{ el.description }} - {{ el.cost[0].value }}</option>
           </select>
           <p>GIVE CODE</p>
           <input id="code" placeholder="Enter your code">
+          <div class="row" style="border-top: 1px solid rgba(0,0,0,.1); padding: 2vh 0;">
+            <div class="col">TOTAL PRICE</div>
+            <div class="col text-right">&euro; 137.00</div>
+          </div>
+          <button class="btn" type="submit">CHECKOUT</button>
         </form>
-        <div class="row" style="border-top: 1px solid rgba(0,0,0,.1); padding: 2vh 0;">
-          <div class="col">TOTAL PRICE</div>
-          <div class="col text-right">&euro; 137.00</div>
-        </div>
-        <button class="btn">CHECKOUT</button>
       </div>
     </div>
 

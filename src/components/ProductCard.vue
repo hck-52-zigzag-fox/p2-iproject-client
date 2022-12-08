@@ -1,6 +1,4 @@
 <script>
-import { mapActions } from 'pinia';
-import { useStore } from '../stores/store';
 
 export default {
   name: "ProductCard",
