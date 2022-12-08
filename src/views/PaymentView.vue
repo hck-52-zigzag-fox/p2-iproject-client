@@ -1,5 +1,6 @@
 <script>
 import { mapActions, mapState } from "pinia";
+import Navbar from "../component/Navbar.vue";
 import { useCustomerOrderStore } from "../stores/customerOrder";
 export default {
   name: "PaymentView",
@@ -16,33 +17,55 @@ export default {
     };
   },
   methods: {
-    ...mapActions(useCustomerOrderStore, ["addOrder",'handlePayment']),
+    ...mapActions(useCustomerOrderStore, ["addOrder", "handlePayment"]),
     async payHandle() {
-      console.log("bisa diklik");
-      this.handlePayment(this.token)
+      this.handlePayment(this.token);
     },
     trigger() {
-      console.log("triger di klik");
       let input = {
-        orderType : this.inputOrder.orderType,
-        startDate : new Date(this.inputOrder.startDate).toISOString(),
-        endDate : new Date(this.inputOrder.endDate).toISOString()
-      }
+        orderType: this.inputOrder.orderType,
+        startDate: new Date(this.inputOrder.startDate).toISOString(),
+        endDate: new Date(this.inputOrder.endDate).toISOString(),
+      };
       this.addOrder(input, this.$route.params.id);
-      this.$refs.dataOrder.reset();
+      this.inputOrder.orderType = "";
+      this.inputOrder.startDate = "";
+      this.inputOrder.endDate = "";
     },
   },
+  components: { Navbar },
 };
 </script>
 
 <template>
-  <div class="container">
-    <form ref="dataOrder" @submit.prevent="trigger">
-      <input v-model="inputOrder.orderType" type="text" />
-      <input v-model="inputOrder.startDate" type="datetime-local" />
-      <input v-model="inputOrder.endDate" type="datetime-local" />
-      <button type="submit">triger midtrans</button>
+  <Navbar />
+  <div class="container d-flex justify-content-center flex-column align-items-center p-4">
+    <h1 class="text-center">RENT A GIRLFRIEND</h1>
+    <form class="form w-50 text-center" ref="dataOrder" @submit.prevent="trigger">
+      <div class="mt-2">
+        <input
+          v-model="inputOrder.orderType"
+          type="text"
+          class="form-control"
+          autocomplete="off"
+        />
+      </div>
+      <div class="mt-4">
+        <input
+          v-model="inputOrder.startDate"
+          type="datetime-local"
+          class="form-control"
+        />
+      </div>
+      <div class="mt-4">
+        <input
+          v-model="inputOrder.endDate"
+          type="datetime-local"
+          class="form-control"
+        />
+      </div>
+      <button class="btn btn-secondary mt-5" style="background-color:pink;" type="submit">RENT</button>
     </form>
-    <button v-if="token" @click="payHandle" id="pay-button">Pay!</button>
+    <button class="btn btn-success rounded" v-if="token" @click="payHandle" id="pay-button">Pay!</button>
   </div>
 </template>

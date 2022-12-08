@@ -30,7 +30,7 @@ export default {
       email: this.currentUser.email,
       welcomeMessage: "Hey there! How are you? :-)",
       role: this.currentUser.role,
-      locale: 'nl-NL',
+      locale:'en-EN'
     });
 
     const other = new Talk.User({
@@ -40,7 +40,7 @@ export default {
       photoUrl: this.otherUser.imageUrl,
       welcomeMessage: "Hey, how can I help?",
       role: this.otherUser.role,
-      locale: 'nl-NL',
+      locale:'en-EN'
     });
 
     const talkSession = new Talk.Session({

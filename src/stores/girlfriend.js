@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 import axios from "axios";
-const baseUrl = 'http://localhost:3000'
+const baseUrl = 'https://iproject-rent-me.up.railway.app'
 
 export const useGirlfriendStore = defineStore("girlfriend", {
   state() {
@@ -20,7 +20,24 @@ export const useGirlfriendStore = defineStore("girlfriend", {
         });
         this.girlfriends = data;
       } catch (error) {
-        console.log(error)
+        const Toast = Swal.mixin({
+          toast: true,
+          position: 'top-end',
+          showConfirmButton: false,
+          background:'rgb(185, 100, 100)',
+          color:'white',
+          timer: 3000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+          }
+        })
+        
+        Toast.fire({
+          icon: 'error',
+          text: `${error.response.data.msg}`
+        })
       }
     },
   },

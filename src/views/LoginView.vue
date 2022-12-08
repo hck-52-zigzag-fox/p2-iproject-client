@@ -156,7 +156,7 @@ export default {
   min-height: 185px;
   position: relative;
   background: #91b3d1
-    url("https://media.istockphoto.com/id/1249860519/photo/entrance-gate-of-madinat-jumeirah-luxury-travel-spot-in-dubai-with-restaurants-and-shops.jpg?s=612x612&w=0&k=20&c=alIHacJNlbPDLQONSi3aqzVNREtgZrt7ETiaDvpolM0=")
+    url("https://th.bing.com/th/id/OIP.jtjqiARqz4poqRoJq0UUUAHaDt?w=200&h=100&c=7&r=0&o=5&dpr=2&pid=1.7")
     no-repeat !important;
   background-size: auto;
   background-position: center;

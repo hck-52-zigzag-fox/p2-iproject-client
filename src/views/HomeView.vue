@@ -18,15 +18,6 @@ export default {
   },
   created() {
     this.fetchGirlfriends();
-    if (this.orders.length !== 0) {
-      this.girlfriends = this.girlfriends.map((el) => {
-        this.orders.forEach(order => {
-          if(order.startDate.getTime() === new Date().getTime() && order.ProfileGirlfriendId === el.id){
-            el.booked = false
-          }
-        })
-      });
-    }
   },
   components: { GirlfriendCard, Navbar },
 };
@@ -36,7 +27,6 @@ export default {
   <Navbar />
   <div class="row container p-4">
     <!-- <div class="row"> -->
-      {{girlfriends}}
     <GirlfriendCard
       class="mx-2"
       v-for="girlfriend in girlfriends"

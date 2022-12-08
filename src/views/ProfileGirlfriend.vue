@@ -5,13 +5,13 @@ import { useGirlfriendStore } from "../stores/girlfriend";
 import GirlfriendCard from "../component/GirlfriendCard.vue";
 export default {
   name: "ProfileGirlfriend",
+  data(){
+    return {
+      oneProfile : {}
+    }
+  },
   computed: {
     ...mapState(useGirlfriendStore, ["girlfriends"]),
-  },
-  data() {
-    return {
-      oneProfile: {},
-    };
   },
   methods: {
     ...mapActions(useGirlfriendStore, ["fetchGirlfriends"]),
@@ -22,16 +22,16 @@ export default {
   },
   created() {
     this.fetchGirlfriends();
-    this.oneProfile = this.girlfriends.find(el => el.User.email == localStorage.email)
-    
+    this.oneProfile = this.girlfriends.find(
+      (el) => el.User.email == localStorage.email
+    );
   },
 };
 </script>
 
 <template>
   <Navbar />
-  {{ oneProfile }}
-  <div class="container p-4 row">
+  <div class="container p-4 row text-center">
     <div class="col-3">
       <div class="card-container" style="left: 2rem !important">
         <img
@@ -40,14 +40,29 @@ export default {
           alt="user"
         />
         <h4 class="text-wrap">
-          <!-- {{oneProfile.name}} -->
+          {{ oneProfile.User.email }}
         </h4>
         <h6>Jakarta</h6>
         <p>* Gohanisuru? Ofuuro isuru ?? soretomo? *</p>
         <div class="skills text-center"></div>
       </div>
     </div>
-    <div class="col-6"></div>
+    <div class="col-6">
+      <div class="row">
+        <div class="col-6">
+          <h2>LIKE</h2>
+          {{oneProfile.like}}
+        </div>
+        <div class="col-6">
+          <h2>DISLIKE</h2>
+          {{oneProfile.dislike}}
+        </div>
+        <h1>RATING</h1>
+        <p style="font-size:15rem;padding:0;" >
+          {{oneProfile.rating}}
+        </p>
+      </div>
+    </div>
     <div class="col-3">
       <GirlfriendCard :girlfriend="oneProfile" />
     </div>

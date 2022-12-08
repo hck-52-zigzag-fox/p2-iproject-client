@@ -2,31 +2,34 @@
 import { mapActions } from 'pinia';
 import {useUserStore} from '../stores/user'
 import { RouterLink } from 'vue-router';
+import Navbar from '../component/Navbar.vue';
 export default {
-  name:"RegisterView",
-  data(){
-    return {
-      inputRegister : {
-        email:'',
-        password:""
-      }
-    }
-  },
-  methods : {
-    ...mapActions(useUserStore,['handleRegister']),
-    handleSubmit(){
-     this.handleRegister(this.inputRegister) 
-    }
-  }
+    name: "RegisterView",
+    data() {
+        return {
+            inputRegister: {
+                email: "",
+                password: ""
+            }
+        };
+    },
+    methods: {
+        ...mapActions(useUserStore, ["handleRegister"]),
+        handleSubmit() {
+            this.handleRegister(this.inputRegister);
+        }
+    },
+    components: { Navbar }
 }
 </script>
 
 <template>
+  <Navbar />
   <div class="limiter max-vh-100" id="login">
     <div
       class="container-login100"
       style="
-        background-image: url(https://media.istockphoto.com/id/1318468661/photo/luxury-hotel-first-class-restaurant.jpg?s=612x612&w=0&k=20&c=mVTRny0x6QgvR8Pk1zaMt59sj5QUQHNM6X1a-cv7gcI=);
+        background-image: url();
       "
     >
       <div class="container">
