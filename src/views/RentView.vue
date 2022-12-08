@@ -24,13 +24,6 @@ export default {
                 terkecuali.
             </p>
         </div>
-        <div class="d-flex justify-content-center gap-5">
-            <button type="button" class="btn btn-outline-dark">Kawasaki</button>
-            <button type="button" class="btn btn-outline-dark">Honda</button>
-            <button type="button" class="btn btn-outline-dark">Yamaha</button>
-            <button type="button" class="btn btn-outline-dark">Ducati</button>
-            <button type="button" class="btn btn-outline-dark">Suzuki</button>
-        </div>
         <div class="mt-5">
             <div class="row">
                 <Card />
