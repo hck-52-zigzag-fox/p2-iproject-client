@@ -1,7 +1,7 @@
 import { defineStore } from "pinia";
 import axios from "axios";
 
-const baseURL = `http://rz-gaming-production.up.railway.app`;
+const baseURL = `https://rz-gaming-production.up.railway.app`;
 
 export const useRzStore = defineStore("rz", {
   state: () => ({

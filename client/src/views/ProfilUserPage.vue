@@ -25,11 +25,19 @@ export default {
   <div class="mt-5 mb-5 px-10 grid grid-rows-1 grid-flow-col gap-4">
     <div class="row-span3 px-5">
       <div class="w-64 p-2 bg-white rounded-xl">
-        <h1 class="mb-5 pl-8 py-4 text-xl font-bold">
+        <h1
+          class="mb-5 pl-8 py-4 text-xl font-bold"
+          v-if="profile.User.username"
+        >
           {{ profile.User.username }}
         </h1>
         <div class="flex justify-center mb-5">
-          <img :src="profile.imgUrl" alt="" class="w-48 h-48" />
+          <img
+            :src="profile.imgUrl"
+            alt=""
+            class="w-48 h-48"
+            v-if="profile.imgUrl"
+          />
         </div>
         <div class="mb-5">
           <RouterLink to="/addProfile" class="pl-8 py-4 text-md"
@@ -45,24 +53,38 @@ export default {
     </div>
     <div class="col-span-2 ...">
       <div class="w-auto p-2 mb-2 bg-white rounded-xl">
-        <h1 class="pl-8 py-4 text-xl font-bold text-center">
+        <h1
+          class="pl-8 py-4 text-xl font-bold text-center"
+          v-if="profile.User.username"
+        >
           {{ profile.User.username }}
         </h1>
       </div>
       <div class="w-auto p-2 bg-white rounded-xl">
         <div class="flex justify-center">
-          <img :src="profile.imgUrl" alt="" class="w-64 h-64" />
+          <img
+            :src="profile.imgUrl"
+            alt=""
+            class="w-64 h-64"
+            v-if="profile.imgUrl"
+          />
         </div>
         <div class="p-2">
           <p class="text-sm text-gray-600"></p>
         </div>
         <div class="m-2">
-          <p class="text-sm text-gray-600">Gender : {{ profile.gender }}</p>
-          <p class="text-sm text-gray-600">
+          <p class="text-sm text-gray-600" v-if="profile.gender">
+            Gender : {{ profile.gender }}
+          </p>
+          <p class="text-sm text-gray-600" v-if="profile.dateOfBirth">
             Date of Birth : {{ profile.dateOfBirth }}
           </p>
-          <p class="text-sm text-gray-600">Location : {{ profile.location }}</p>
-          <p class="text-sm text-gray-600">Games : {{ profile.games }}</p>
+          <p class="text-sm text-gray-600" v-if="profile.location">
+            Location : {{ profile.location }}
+          </p>
+          <p class="text-sm text-gray-600" v-if="profile.games">
+            Games : {{ profile.games }}
+          </p>
         </div>
       </div>
     </div>
