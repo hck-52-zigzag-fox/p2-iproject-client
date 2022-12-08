@@ -3,6 +3,8 @@ import { mapActions, mapState } from "pinia";
 import { RouterLink, RouterView } from "vue-router";
 import NewsCard from "../components/NewsCard.vue";
 import { useCounterStore } from "../stores/counter";
+import PictBanner from "../assets/Cleaning-boy.png"
+import PictBanner2 from "../assets/223798701.png"
 
 export default {
   name: "LandingPage",
@@ -43,14 +45,14 @@ export default {
             </div>
           </div>
         </div>
-        <img src="../assets/Cleaning-boy.png" width="450" />
+        <img :src="PictBanner" width="450" />
       </div>
     </div>
   </section>
   <div class="container" style="height: 90vh">
     <div class="row py-5">
       <div class="col-md-6">
-        <img src="../assets/22379870 1.png" alt="" style="width: 520px" />
+        <img :src="PictBanner2" alt="" style="width: 520px" />
       </div>
       <div class="col-md-6">
         <h2 class="mb-4">Tentang Kami</h2>
