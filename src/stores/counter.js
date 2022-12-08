@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
-const baseUrl = `http://localhost:3000`;
-import Swal from 'sweetalert2'
+const baseUrl = `https://petshop-production-ca7d.up.railway.app`;
+import Swal from "sweetalert2";
 import axios from "axios";
 export const usePetStore = defineStore("pet", {
   state: () => ({
@@ -32,7 +32,7 @@ export const usePetStore = defineStore("pet", {
         });
         this.router.push("/login");
       } catch (err) {
-        this.handleError(err[0])
+        this.handleError(err[0]);
       }
     },
     async login(input) {
@@ -47,25 +47,25 @@ export const usePetStore = defineStore("pet", {
         this.isLogin = true;
         this.router.push("/");
       } catch (error) {
-        this.handleError(error)
+        this.handleError(error);
       }
     },
-    async handleGoogleLog(input){
+    async handleGoogleLog(input) {
       try {
         // console.log(input.credential,'dari bapaknya');
-        const credentials = input.credential
-        const {data} = await axios({
+        const credentials = input.credential;
+        const { data } = await axios({
           method: "POST",
-          url: `${baseUrl}/google-sign-in`,
+          url: `${baseUrl}/users/google-sign-in`,
           headers: {
-            google_token: credentials
-          }
-        })
-        localStorage.setItem('access_token', data.access_token)
+            google_token: credentials,
+          },
+        });
+        localStorage.setItem("access_token", data.access_token);
         this.isLogin = true;
-        this.router.push('/')
+        this.router.push("/");
       } catch (error) {
-        this.handleError(error)
+        this.handleError(error);
       }
     },
     async fetchProduct() {
@@ -76,7 +76,7 @@ export const usePetStore = defineStore("pet", {
         });
         this.product = data;
       } catch (error) {
-        this.handleError(error)
+        this.handleError(error);
       }
     },
     //order menuju wishlist
@@ -95,7 +95,7 @@ export const usePetStore = defineStore("pet", {
         this.router.push("/checkout");
         this.listWishlist();
       } catch (error) {
-        this.handleError(error)
+        this.handleError(error);
       }
     },
     async listWishlist() {
@@ -109,7 +109,7 @@ export const usePetStore = defineStore("pet", {
         });
         this.wishlist = data;
       } catch (error) {
-        this.handleError(error)
+        this.handleError(error);
       }
     },
     // ongkir == post
@@ -122,7 +122,7 @@ export const usePetStore = defineStore("pet", {
         });
         this.order = data.rajaongkir.results[0].costs;
       } catch (error) {
-        this.handleError(error)
+        this.handleError(error);
       }
     },
     async getOngkir() {
@@ -133,7 +133,7 @@ export const usePetStore = defineStore("pet", {
         });
         this.city = data.rajaongkir.results;
       } catch (error) {
-        this.handleError(error)
+        this.handleError(error);
       }
     },
     async deleteOrder(id) {
@@ -148,7 +148,7 @@ export const usePetStore = defineStore("pet", {
         this.router.push("/checkout");
         this.listWishlist();
       } catch (error) {
-        this.handleError(error)
+        this.handleError(error);
       }
     },
     async updatePayment(id) {
@@ -161,19 +161,19 @@ export const usePetStore = defineStore("pet", {
           },
         });
       } catch (error) {
-        this.handleError(error)
-        
+        this.handleError(error);
       }
     },
     // midtrans
-    async payment(totalPrice,shipping) {
+    async payment(totalPrice, shipping) {
       try {
         // console.log(totalPrice, shipping);
         const { data } = await axios({
           method: `POST`,
           url: `${baseUrl}/order/payment`,
-          data:{
-            totalPrice,shipping
+          data: {
+            totalPrice,
+            shipping,
           },
           headers: {
             access_token: localStorage.getItem("access_token"),
@@ -197,27 +197,28 @@ export const usePetStore = defineStore("pet", {
             alert("you closed the popup without finishing the payment");
           },
         });
+        this.router.push("/product");
       } catch (error) {
-        this.handleError(error)
+        // this.handleError(error)
       }
     },
     handleLogout() {
       localStorage.clear();
-      this.isLogin = false
+      this.isLogin = false;
       Swal.fire({
-        position: 'top-end',
-        icon: 'success',
-        title: 'Success signout account',
+        position: "top-end",
+        icon: "success",
+        title: "Success signout account",
         showConfirmButton: false,
-        timer: 1500
-      })
+        timer: 1500,
+      });
     },
-    handleError(err){
+    handleError(err) {
       Swal.fire({
-        icon: 'error',
-        title: 'Oops...',
+        icon: "error",
+        title: "Oops...",
         text: err.response.data.message,
-      })
-    }
+      });
+    },
   },
 });
