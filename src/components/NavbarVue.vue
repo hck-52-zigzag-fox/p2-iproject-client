@@ -49,7 +49,7 @@ export default {
               ></a
             >
           </li>
-          <li class="nav-item">
+          <li class="nav-item" v-if="isLogin">
             <a class="nav-link">
               <RouterLink to="/product" class="text-decoration-none"
                 >Product</RouterLink
