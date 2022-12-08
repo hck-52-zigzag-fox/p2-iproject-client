@@ -7,7 +7,7 @@ export default {
         ...mapState(useCounterStore, ['motorcycle'])
     },
     methods: {
-        ...mapActions(useCounterStore, ['fetchDetailMotorcycle', 'handlePayment'])
+        ...mapActions(useCounterStore, ['fetchDetailMotorcycle', 'handlePayment', 'fetchMotorcycles'])
     },
     created() {
         this.fetchDetailMotorcycle(this.$route.params.id)
@@ -56,16 +56,17 @@ export default {
                         </ul>
                     </div>
                     <div class="col-md-6">
-                        <p>tempat upload</p>
                         <div class="mt-4">
+                            <button type="button" class="btn btn-outline-success btn-sm"
+                                v-if="motorcycle.status === 'booked'">
+                                Confirm payment!
+                            </button>
                             <button type="button" class="btn btn-outline-primary btn-sm"
-                                @click="handlePayment(this.$route.params.price, this.$route.params.trxcode)">
+                                @click="handlePayment(this.$route.params.id, this.$route.params.price, this.$route.params.trxcode)"
+                                v-if="motorcycle.status === 'available'">
                                 Booking Now!
                             </button>
                         </div>
-                    </div>
-                    <div class="col-md-6">
-                        <p>tempat upload</p>
                     </div>
                 </div>
             </div>

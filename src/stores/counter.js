@@ -54,7 +54,7 @@ export const useCounterStore = defineStore("counter", {
         console.log(err);
       }
     },
-    async handlePayment(price, trxcode) {
+    async handlePayment(id, price, trxcode) {
       try {
         const { data } = await axios({
           method: "POST",
@@ -64,10 +64,25 @@ export const useCounterStore = defineStore("counter", {
           },
         });
 
+        const status = this.handleStatus;
+
         window.snap.pay(data.token, {
           onSuccess: function (result) {
-            console.log('test bayar');
-            
+            status(id);
+            location.reload();
+          },
+        });
+      } catch (err) {
+        console.log(err);
+      }
+    },
+    async handleStatus(id) {
+      try {
+        await axios({
+          method: "PATCH",
+          url: `${BASE_URL}/rents/${id}`,
+          headers: {
+            access_token: localStorage.access_token,
           },
         });
       } catch (err) {
