@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
 import axios from "axios"
+import Swal from 'sweetalert2'
 let baseUrl = 'http://localhost:3000/'
 
 export const useCounterStore = defineStore('counter', {
@@ -31,7 +32,11 @@ export const useCounterStore = defineStore('counter', {
         // console.log(data.items)
         this.movies = data.movies
       } catch (error) {
-        console.log(error)
+        Swal.fire(
+          error.response.data.message,
+          "",
+          'error'
+        )
       }
     },
     async movieDetail(id) {
@@ -48,7 +53,11 @@ export const useCounterStore = defineStore('counter', {
         this.router.push(`/movie/${id}`)
         console.log(data)
       } catch (error) {
-        console.log(error)
+        Swal.fire(
+          error.response.data.message,
+          "",
+          'error'
+        )
       }
     },
     async login(input) {
@@ -60,12 +69,19 @@ export const useCounterStore = defineStore('counter', {
         })
         localStorage.setItem('access_token', data.access_token)
         this.router.push('/')
+        Swal.fire(
+          'Login success',
+          "",
+          'success'
+        )
         // console.log(data)
       } catch (error) {
-        // if (error.response.statusText === 'Unauthorized') {
-        //   this.$router.push('/login')
-        // }
-        console.log(error)
+        // console.log(error.response.data.message)
+        Swal.fire(
+          error.response.data.message,
+          "",
+          'error'
+        )
       }
     },
     async register(input) {
@@ -80,7 +96,11 @@ export const useCounterStore = defineStore('counter', {
         })
         this.router.push('/login')
       } catch (error) {
-        console.log(error)
+        Swal.fire(
+          error.response.data.message,
+          "",
+          'error'
+        )
       }
     },
     async fetchGenre() {
@@ -92,10 +112,14 @@ export const useCounterStore = defineStore('counter', {
             access_token: localStorage.getItem("access_token")
           }
         })
-        console.log(data)
+        // console.log(data)
         this.genres = data
       } catch (error) {
-        // console.log(error)
+        Swal.fire(
+          error.response.data.message,
+          "",
+          'error'
+        )
       }
     },
     logout() {
@@ -113,9 +137,13 @@ export const useCounterStore = defineStore('counter', {
           },
           data: input
         })
-        console.log(data)
+        // console.log(data)
       } catch (error) {
-        console.log(error)
+        Swal.fire(
+          error.response.data.message,
+          "",
+          'error'
+        )
       }
     },
 
@@ -130,10 +158,14 @@ export const useCounterStore = defineStore('counter', {
             access_token: localStorage.getItem("access_token")
           }
         })
-        console.log(data)
+        // console.log(data)
         this.recomendations = data.results
       } catch (error) {
-        console.log(error)
+        Swal.fire(
+          error.response.data.message,
+          "",
+          'error'
+        )
       }
     },
     async fetchCart() {
@@ -145,11 +177,85 @@ export const useCounterStore = defineStore('counter', {
             access_token: localStorage.getItem("access_token")
           }
         })
-        console.log(data.cart)
+        // console.log(data.cart)
         this.carts = data.cart
       } catch (error) {
-        console.log(error)
+        Swal.fire(
+          error.response.data.message,
+          "",
+          'error'
+        )
       }
+    },
+
+    async deleteCart(id) {
+      try {
+        let response = await axios({
+          url: baseUrl + `movies/cart/${id}`,
+          method: "DELETE",
+          headers: {
+            access_token: localStorage.getItem("access_token")
+          }
+        })
+        Swal.fire(
+          response.data.message,
+          "1 film dihapus",
+          'success'
+        )
+
+        return response
+      } catch (error) {
+        Swal.fire(
+          error.response.data.message,
+          "",
+          'error'
+        )
+      }
+    },
+    async payment() {
+      try {
+        let { data } = await axios({
+          url: baseUrl + 'payment/midtrans-generate',
+          method: "POST",
+          headers: {
+            access_token: localStorage.getItem("access_token")
+          }
+        })
+        window.snap.pay(data.token, {
+          onSuccess: function (result) {
+            Swal.fire(
+              'Payment success',
+              'Pembayaran anda telah berhasil',
+              'success'
+            )
+            console.log(result);
+          },
+          onPending: function (result) {
+            console.log('pending')
+            Swal.fire(
+              'Payment success',
+              'Pembayaran anda sedang kami process',
+              'success'
+            )
+          },
+          onError: function (result) { console.log('error'); console.log(result); },
+          onClose: function () {
+            console.log('customer closed the popup without finishing the payment')
+            Swal.fire(
+              'Payment denied',
+              'Pembayaran anda gagal',
+              'error'
+            )
+          }
+        })
+      } catch (error) {
+        Swal.fire(
+          error.response.data.message,
+          '',
+          'error'
+        )
+      }
+
     }
   }
 })

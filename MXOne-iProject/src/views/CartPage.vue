@@ -9,7 +9,7 @@ export default {
     ...mapState(useCounterStore, ["carts"]),
   },
   methods: {
-    ...mapActions(useCounterStore, ["fetchCart"]),
+    ...mapActions(useCounterStore, ["fetchCart", "payment"]),
   },
   created() {
     this.fetchCart();
@@ -106,6 +106,11 @@ export default {
             </tr> -->
           </tbody>
         </table>
+        <div class="col justify-items-center">
+          <button @click="payment" class="btn btn-primary btn-block">
+            Gass
+          </button>
+        </div>
       </div>
     </div>
   </div>

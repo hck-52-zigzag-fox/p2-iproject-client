@@ -2,11 +2,20 @@
 export default {
   name: "TableRowCart",
   props: ["cart"],
-  methods: {},
+  methods: {
+    ...mapActions(useCounterStore, ["deleteCart", "fetchCart"]),
+    async actionDelete(id) {
+      let data = await this.deleteCart(id);
+      if (data.status === 200) this.fetchCart();
+    },
+  },
 };
 </script>
 
 <script setup>
+import { mapActions } from "pinia";
+import { useCounterStore } from "../stores/counter";
+
 function formatRupiah(money) {
   return new Intl.NumberFormat(
     "id-ID",
@@ -41,7 +50,11 @@ function formatRupiah(money) {
       <a href="#" class="text-gray-400 hover:text-gray-100 mx-2">
         <i class="material-icons-outlined text-base">edit</i>
       </a>
-      <a href="#" class="text-gray-400 hover:text-gray-100 ml-2">
+      <a
+        href="#"
+        class="text-gray-400 hover:text-gray-100 ml-2"
+        @click.prevent="actionDelete(cart.id)"
+      >
         <i class="material-icons-round text-base">delete_outline</i>
       </a>
     </td>
