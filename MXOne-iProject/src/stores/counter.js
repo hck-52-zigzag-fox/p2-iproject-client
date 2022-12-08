@@ -2,6 +2,7 @@ import { defineStore } from 'pinia'
 import axios from "axios"
 import Swal from 'sweetalert2'
 let baseUrl = 'http://localhost:3000/'
+// let baseUrl = 'https://mxone.up.railway.app/'
 
 export const useCounterStore = defineStore('counter', {
   state: () => ({
@@ -32,11 +33,7 @@ export const useCounterStore = defineStore('counter', {
         // console.log(data.items)
         this.movies = data.movies
       } catch (error) {
-        Swal.fire(
-          error.response.data.message,
-          "",
-          'error'
-        )
+        console.log(error)
       }
     },
     async movieDetail(id) {
@@ -53,11 +50,7 @@ export const useCounterStore = defineStore('counter', {
         this.router.push(`/movie/${id}`)
         console.log(data)
       } catch (error) {
-        Swal.fire(
-          error.response.data.message,
-          "",
-          'error'
-        )
+        console.log(error)
       }
     },
     async login(input) {
@@ -115,11 +108,7 @@ export const useCounterStore = defineStore('counter', {
         // console.log(data)
         this.genres = data
       } catch (error) {
-        Swal.fire(
-          error.response.data.message,
-          "",
-          'error'
-        )
+        console.log(error)
       }
     },
     logout() {
@@ -139,11 +128,7 @@ export const useCounterStore = defineStore('counter', {
         })
         // console.log(data)
       } catch (error) {
-        Swal.fire(
-          error.response.data.message,
-          "",
-          'error'
-        )
+        console.log(error)
       }
     },
 
@@ -161,11 +146,7 @@ export const useCounterStore = defineStore('counter', {
         // console.log(data)
         this.recomendations = data.results
       } catch (error) {
-        Swal.fire(
-          error.response.data.message,
-          "",
-          'error'
-        )
+        console.log(error)
       }
     },
     async fetchCart() {
@@ -180,11 +161,7 @@ export const useCounterStore = defineStore('counter', {
         // console.log(data.cart)
         this.carts = data.cart
       } catch (error) {
-        Swal.fire(
-          error.response.data.message,
-          "",
-          'error'
-        )
+        console.log(error)
       }
     },
 
