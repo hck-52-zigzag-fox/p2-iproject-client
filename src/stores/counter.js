@@ -89,6 +89,20 @@ export const useCounterStore = defineStore("counter", {
         console.log(err);
       }
     },
+    async handleRent(id) {
+      try {
+        await axios({
+          method: "POST",
+          url: `${BASE_URL}/rents/${id}`,
+          headers: {
+            access_token: localStorage.access_token,
+          },
+        });
+        this.router.push("/rent");
+      } catch (err) {
+        console.log(err);
+      }
+    },
     handleLogout() {
       localStorage.clear();
       this.isLogin = false;
