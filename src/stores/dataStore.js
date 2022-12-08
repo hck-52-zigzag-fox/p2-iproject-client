@@ -190,6 +190,13 @@ export const useDataStore = defineStore("dataStore", {
             secret,
           },
         });
+        Swal.fire({
+          icon: "success",
+          title: "Success",
+          text: "WELCOME",
+          showConfirmButton: false,
+          timer: 1500,
+        });
         localStorage.setItem("isPass", true);
         this.router.push("/");
       } catch (err) {
@@ -263,6 +270,24 @@ export const useDataStore = defineStore("dataStore", {
           title: `Status : ${err.response.request.status}`,
           text: err.response.data.message,
         });
+      }
+    },
+    async handleRegister(value) {
+      try {
+        // console.log(data);
+        const { data } = await axios({
+          method: "POST",
+          url: `${baseUrl}/users/register`,
+          data: value,
+        });
+        Swal.fire({
+          icon: "success",
+          title: "Register Success",
+          text: "Please Login",
+        });
+        this.router.push("/login");
+      } catch (error) {
+        this.handleError(error);
       }
     },
     handleLogout() {

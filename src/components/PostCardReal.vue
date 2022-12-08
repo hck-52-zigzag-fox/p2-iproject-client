@@ -262,7 +262,7 @@ export default {
               <ul class="nav nav-divider py-2 small">
                 <li class="nav-item">
                   <a
-                    v-if="x.User.id == dataOneProfile.id"
+                    v-if="x.UserId == dataOneProfile.UserId"
                     @click.prevent="handleDeleteComment(x.id)"
                     class="nav-link"
                     href="#!"

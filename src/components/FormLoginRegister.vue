@@ -13,7 +13,7 @@ export default {
     },
   }),
   methods: {
-    ...mapActions(useDataStore, ["handleLogin"]),
+    ...mapActions(useDataStore, ["handleLogin", "handleRegister"]),
     showOrHidePassword() {
       if (this.isClick) this.isClick = false;
       else {
@@ -103,7 +103,11 @@ export default {
                 v-if="page == 'Login'"
                 :page="'Login'"
               />
-              <ButtonComponent v-if="page == 'Register'" :page="'Register'" />
+              <ButtonComponent
+                @click.prevent="handleRegister(data)"
+                v-if="page == 'Register'"
+                :page="'Register'"
+              />
               <!-- Copyright -->
               <p class="mb-0 mt-3">
                 ©2022
