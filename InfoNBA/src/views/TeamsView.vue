@@ -11,9 +11,9 @@ export default {
   methods: {
     ...mapActions(useCounterStore, ["showTeam"]),
   },
- created(){
-  this.showTeam()
- }
+  created() {
+    this.showTeam();
+  },
 };
 </script>
 
@@ -22,7 +22,11 @@ export default {
     <div id="accommodation" class="container w-75">
       <div class="row">
         <h1 style="color: white">TEAMS</h1>
-        <CardTeams v-for="team in teams.data" :key="team.id" :dataTeams="team"/>
+        <CardTeams
+          v-for="team in teams.data"
+          :key="team.id"
+          :dataTeams="team"
+        />
       </div>
     </div>
   </section>

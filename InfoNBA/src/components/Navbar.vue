@@ -51,7 +51,10 @@ export default {
           class="navbar-brand"
           href=""
           style="color: white; font-size: 20px"
-        ></a>
+          @:click.prevent="this.$router.push('/highlights')"
+          v-if="isLogin"
+          >Highlights</a
+        >
       </div>
       <div class="mb3">
         <a

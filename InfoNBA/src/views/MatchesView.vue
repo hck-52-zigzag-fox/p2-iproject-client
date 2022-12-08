@@ -1,38 +1,33 @@
 <script>
-import YouTube from "vue3-youtube";
-
+import CardMatch from "../components/CardMatch.vue";
+import { mapActions, mapState } from "pinia";
+import { useCounterStore } from "../stores/counter";
 export default {
-  name: "Match",
-  components: { YouTube },
+  name: "Matches",
+  components: { CardMatch },
+  computed: {
+    ...mapState(useCounterStore, ["matches"]),
+  },
+  methods: {
+    ...mapActions(useCounterStore, ["showMatch"]),
+  },
+  created() {
+    this.showMatch();
+  },
 };
 </script>
 
 <template>
-  <div class="container">
-    <div class="d-flex" style="gap: 50px; padding-bottom: 50px">
-      <YouTube
-        src="https://www.youtube.com/embed/utWlBdgYhFo"
-        @ready="onReady"
-        ref="youtube"
-      />
-      <YouTube
-        src="https://www.youtube.com/embed/Pw69vSviVpw"
-        @ready="onReady"
-        ref="youtube"
-      />
+  <section>
+    <div id="accommodation" class="container w-75">
+      <div class="row">
+        <h1 style="color: white">MATCHES</h1>
+        <CardMatch
+          v-for="match in matches.data"
+          :key="match.id"
+          :dataMatch="match"
+        />
+      </div>
     </div>
-
-    <div class="d-flex" style="gap: 50px">
-      <YouTube
-        src="https://www.youtube.com/embed/3Vcw-Yed-gM"
-        @ready="onReady"
-        ref="youtube"
-      />
-      <YouTube
-        src="https://www.youtube.com/embed/0Cxv9jhJx3o"
-        @ready="onReady"
-        ref="youtube"
-      />
-    </div>
-  </div>
+  </section>
 </template>

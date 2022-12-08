@@ -8,7 +8,7 @@ export default {
 <template>
   <div class="col-sm-4 mb-5">
     <div class="card">
-      <div class="card-body">
+      <div class="card-body" style="text-align: center;">
         <h3 class="card-text">{{dataTeams.full_name}}</h3>
         <p class="card-text">Name: {{dataTeams.name}}</p>
         <p class="card-text">City: {{dataTeams.city}}</p>
