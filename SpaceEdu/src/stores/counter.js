@@ -10,7 +10,8 @@ export const useCounterStore = defineStore("counter", {
     objectDetail: {},
     isLogin:false,
     customObjects:[],
-    suggestions:[]
+    suggestions:[],
+    weather:{}
   }),
 
   actions: {
@@ -155,6 +156,21 @@ export const useCounterStore = defineStore("counter", {
         })
 
         this.router.push("/login")
+      }catch(error){
+        console.log(error);
+      }
+    },
+
+    async checkWeather(){
+      try{
+
+        // console.log(city, "test");
+        const{data} =  await axios({
+          url:baseUrl + `/weathers`,
+          method:"get"
+        })
+
+        this.weather = data
       }catch(error){
         console.log(error);
       }

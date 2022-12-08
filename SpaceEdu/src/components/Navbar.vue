@@ -23,6 +23,7 @@ export default {
         <li class="nav-item"><a href="#" class="nav-link"><RouterLink to="/" class="nav-link text-light">Solar System</RouterLink></a></li>
         <li class="nav-item"><a href="#" class="nav-link"><RouterLink to="/creatorssystem" class="nav-link text-light">Creators System</RouterLink></a></li>
         <li class="nav-item"><a href="#" class="nav-link"><RouterLink to="/explore" class="nav-link text-light">Explore</RouterLink></a></li>
+        <li class="nav-item"><a href="#" class="nav-link"><RouterLink to="/weather" class="nav-link text-light">Check Weather!</RouterLink></a></li>
         <li class="nav-item" v-if="(isLogin === true)"><a href="#" class="nav-link"><RouterLink to="/create" class="nav-link text-light">Create Object</RouterLink></a></li>
 
         <li class="nav-item" v-if="(isLogin === false)"><a href="#" class="nav-link"><RouterLink to="/login" class="nav-link text-light">Login</RouterLink></a></li>
