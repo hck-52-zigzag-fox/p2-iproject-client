@@ -50,4 +50,12 @@ const router = createRouter({
   ],
 });
 
+router.beforeEach((to,from) => {
+  if((to.name == "mychat"  || to.name == 'myProfile' || to.name == "payment" || to.name == 'home') && !localStorage.access_token){
+    return {name:"login"}
+  }else if(to.name == 'login' && localStorage.access_token){
+    return {name:"home"}
+  } 
+})
+
 export default router;

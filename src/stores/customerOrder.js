@@ -1,6 +1,7 @@
 import axios from "axios";
 import { defineStore } from "pinia";
-const baseUrl = "http://localhost:3000";
+const baseUrl = "https://iproject-rent-me.up.railway.app";
+import Swal from 'sweetalert2'
 
 export const useCustomerOrderStore = defineStore("customerOrder", {
   state() {
@@ -22,12 +23,28 @@ export const useCustomerOrderStore = defineStore("customerOrder", {
         })
         this.orders = data
       } catch (error) {
-        console.log(error)
+        const Toast = Swal.mixin({
+          toast: true,
+          position: 'top-end',
+          showConfirmButton: false,
+          background:'rgb(185, 100, 100)',
+          color:'white',
+          timer: 3000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+          }
+        })
+        
+        Toast.fire({
+          icon: 'error',
+          text: `${error.response.data.msg}`
+        })
       }
     },
     async addOrder(input, id) {
       try {
-        console.log(input, id);
         const { data } = await axios({
           url: `${baseUrl}/customer-orders/${id}`,
           method: "post",
@@ -36,26 +53,109 @@ export const useCustomerOrderStore = defineStore("customerOrder", {
             access_token: localStorage.access_token,
           },
         });
-        console.log(data, "dari balikan server");
         this.token = data.token;
         this.orderDetail = data.order
       } catch (error) {
-        console.log(error);
+        const Toast = Swal.mixin({
+          toast: true,
+          position: 'top-end',
+          showConfirmButton: false,
+          background:'rgb(185, 100, 100)',
+          color:'white',
+          timer: 3000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+          }
+        })
+        
+        Toast.fire({
+          icon: 'error',
+          text: `${error.response.data.msg}`
+        })
       }
     },
     async handlePayment(token) {
       window.snap.pay(token, {
         onSuccess: function (result) {
-          console.log(result,'sucess payment nya boss');
+          const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            background:'rgb(185, 100, 100)',
+            color:'white',
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+              toast.addEventListener('mouseenter', Swal.stopTimer)
+              toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+          })
+          
+          Toast.fire({
+            icon: 'success',
+            title: 'Success process your payment. happy dating',
+          })
         },
         onPending: function (result) {
-          console.log(result);
+          const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            background:'rgb(185, 100, 100)',
+            color:'white',
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+              toast.addEventListener('mouseenter', Swal.stopTimer)
+              toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+          })
+          
+          Toast.fire({
+            icon: 'success',
+            title: 'Please wait we are processing your payment',
+          })
         },
         onError: function (result) {
-          console.log(result);
+          const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            background:'rgb(185, 100, 100)',
+            color:'white',
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+              toast.addEventListener('mouseenter', Swal.stopTimer)
+              toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+          })
+          
+          Toast.fire({
+            icon: 'error',
+            text: `${result}`
+          })
         },
         onClose: function () {
-          console.log("otomatis close");
+          const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            background:'rgb(185, 100, 100)',
+            color:'white',
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+              toast.addEventListener('mouseenter', Swal.stopTimer)
+              toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+          })
+          
+          Toast.fire({
+            icon: 'success',
+          })
         },
       });
       this.token = ""

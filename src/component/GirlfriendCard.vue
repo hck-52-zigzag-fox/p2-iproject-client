@@ -22,7 +22,7 @@ export default {
         {{ girlfriend.benefits }}
       </p>
     </div>
-    <div class="row descript p-2 text-justify">
+    <div class="container d-flex descript p-1 text-justify" style="background-color:rgb(185, 100, 100);color:white;">
       <div class="col-6 d-flex flex-column justify-content-center">
         <h5>LIKE</h5>
         {{ girlfriend.like }}
@@ -32,12 +32,12 @@ export default {
         {{ girlfriend.dislike }}
       </div>
     </div>
-    <div class="card-body">
+    <div class="card-body" style="background-color: rgb(241, 178, 189);">
       <RouterLink
         v-if="!girlfriend.booked"
         :to="`/payment/${girlfriend.id}`"
-        class="card-link"
-        >Card link</RouterLink
+        class="btn btn-light"
+        >Rent</RouterLink
       >
       <p v-if="girlfriend.booked">Seems your girlfriend is busy now</p>
     </div>

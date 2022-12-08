@@ -1,6 +1,7 @@
 import { defineStore } from "pinia";
 import axios from "axios";
-const baseUrl = "http://localhost:3000";
+const baseUrl = "https://iproject-rent-me.up.railway.app";
+import Swal from "sweetalert2";
 export const useChatStore = defineStore("chat", {
   state() {
     return {
@@ -19,12 +20,28 @@ export const useChatStore = defineStore("chat", {
         });
         this.chats = data;
       } catch (error) {
-        console.log(error);
+        const Toast = Swal.mixin({
+          toast: true,
+          position: 'top-end',
+          showConfirmButton: false,
+          background:'rgb(185, 100, 100)',
+          color:'white',
+          timer: 3000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+          }
+        })
+        
+        Toast.fire({
+          icon: 'error',
+          text: `${error.response.data.msg}`
+        })
       }
     },
     async saveChat(input, id) {
       try {
-        console.log(input, id, "dari chat store");
         await axios({
           url: `${baseUrl}/chats/${id}`,
           data: {
@@ -36,8 +53,43 @@ export const useChatStore = defineStore("chat", {
           },
         });
         this.myChat();
+        const Toast = Swal.mixin({
+          toast: true,
+          position: 'top-end',
+          showConfirmButton: false,
+          background:'rgb(185, 100, 100)',
+          color:'white',
+          timer: 3000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+          }
+        })
+        
+        Toast.fire({
+          icon: 'success',
+          title: 'Your message has been send',
+        })
       } catch (error) {
-        console.log(error);
+        const Toast = Swal.mixin({
+          toast: true,
+          position: 'top-end',
+          showConfirmButton: false,
+          background:'rgb(185, 100, 100)',
+          color:'white',
+          timer: 3000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+          }
+        })
+        
+        Toast.fire({
+          icon: 'error',
+          text: `${error.response.data.msg}`
+        })
       }
     },
   },

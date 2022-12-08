@@ -1,7 +1,7 @@
 import { defineStore } from "pinia";
 import axios from 'axios'
 import Swal from "sweetalert2";
-const baseUrl = 'http://localhost:3000'
+const baseUrl = 'https://iproject-rent-me.up.railway.app'
 
 export const useUserStore =defineStore('user',{
   state(){
@@ -21,9 +21,47 @@ export const useUserStore =defineStore('user',{
         localStorage.setItem('email',data.email)
         localStorage.setItem('role',data.role)
         this.isLogin = true
+        const Toast = Swal.mixin({
+          toast: true,
+          position: 'top-end',
+          showConfirmButton: false,
+          background:'rgb(185, 100, 100)',
+          color:'white',
+          timer: 3000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+          }
+        })
+        
+        Toast.fire({
+          icon: 'success',
+          title: 'Signed in successfully',
+          text: `Welcome ${data.email}`
+        })
         this.router.push('/')
+
       } catch (error) {
-        console.log(error)
+        const Toast = Swal.mixin({
+          toast: true,
+          position: 'top-end',
+          showConfirmButton: false,
+          background:'rgb(185, 100, 100)',
+          color:'white',
+          timer: 3000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+          }
+        })
+        
+        Toast.fire({
+          icon: 'error',
+          title: 'Sign in failed',
+          text: `${error.response.data.msg}`
+        })
       }
     },
     async handleCredentialResponse(response) {
@@ -38,12 +76,13 @@ export const useUserStore =defineStore('user',{
         });
         localStorage.setItem("access_token", data.access_token);
         localStorage.setItem("email", data.email);
+        localStorage.setItem('role',data.role)
         this.isLogin = true
         const Toast = Swal.mixin({
           toast: true,
           position: 'top-end',
           showConfirmButton: false,
-          background:'rgb(27, 23, 23)',
+          background:'rgb(185, 100, 100)',
           color:'white',
           timer: 3000,
           timerProgressBar: true,
@@ -64,7 +103,7 @@ export const useUserStore =defineStore('user',{
           toast: true,
           position: 'top-end',
           showConfirmButton: false,
-          background:'rgb(27, 23, 23)',
+          background:'rgb(185, 100, 100)',
           color:'white',
           timer: 3000,
           timerProgressBar: true,
@@ -83,15 +122,32 @@ export const useUserStore =defineStore('user',{
     },
     async handleRegister(input){
       try {
-        const  {data} = await axios({
+        await axios({
           url:`${baseUrl}/register`,
           method:'post',
           data : input
         })
-        console.log(data)
         this.router.push('/login')
       } catch (error) {
-        console.log(error)
+        const Toast = Swal.mixin({
+          toast: true,
+          position: 'top-end',
+          showConfirmButton: false,
+          background:'rgb(185, 100, 100)',
+          color:'white',
+          timer: 3000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+          }
+        })
+        
+        Toast.fire({
+          icon: 'error',
+          title: 'Register failed',
+          text: `${error.response.data.msg}`
+        })
       }
     }
   },
