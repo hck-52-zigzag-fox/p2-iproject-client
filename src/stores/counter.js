@@ -142,8 +142,6 @@ export const useCounterStore = defineStore("counter", {
           method: "GET",
           url: `${BASE_URL}/news`,
         });
-        console.log(data);
-
         this.news = data;
       } catch (err) {
         callToaster({ type: "error", val: err.response.data.message });
