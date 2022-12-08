@@ -2,8 +2,8 @@ import { defineStore } from "pinia";
 import axios from "axios";
 import Swal from "sweetalert2";
 
-// const baseUrl = "https://hexashop-production.up.railway.app";
-const baseUrl = "http://localhost:3000";
+const baseUrl = "https://hexashop-production.up.railway.app";
+// const baseUrl = "http://localhost:3000";
 
 export const useStore = defineStore("index", {
   state() {
@@ -200,7 +200,6 @@ export const useStore = defineStore("index", {
           }
         );
 
-        console.log(data);
       } catch (err) {
         Swal.fire({
           imageUrl: "https://cataas.com/cat/cute/says/Oops...",
@@ -218,7 +217,6 @@ export const useStore = defineStore("index", {
           },
         });
 
-        console.log(data);
       } catch (err) {
         Swal.fire({
           imageUrl: "https://cataas.com/cat/cute/says/Oops...",
