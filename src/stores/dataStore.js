@@ -12,6 +12,7 @@ export const useDataStore = defineStore("dataStore", {
     dataAllComments: [],
     isPass: false,
     qr: "",
+    lokal: [],
   }),
   getters: {},
   actions: {
@@ -222,8 +223,42 @@ export const useDataStore = defineStore("dataStore", {
             access_token: localStorage.getItem("access_token"),
           },
         });
+
         this.dataAllComments = data;
         // console.log(this.dataAllComments, "<<<");
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    async handleAddComment(message, id) {
+      try {
+        console.log(message, id, "<<<");
+        console.log(message, id, "<<<");
+        const { data } = await axios({
+          method: "POST",
+          url: `${baseUrl}/comments/${id}`,
+          headers: {
+            access_token: localStorage.getItem("access_token"),
+          },
+          data: {
+            message,
+          },
+        });
+        this.handleAllPost();
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    async handleDeleteComment(id) {
+      try {
+        const { data } = await axios({
+          method: "DELETE",
+          url: `${baseUrl}/comments/${id}`,
+          headers: {
+            access_token: localStorage.getItem("access_token"),
+          },
+        });
+        this.handleAllPost();
       } catch (error) {
         console.log(error);
       }
