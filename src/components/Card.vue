@@ -1,7 +1,13 @@
 <script>
+import { mapActions } from 'pinia';
+import { useCounterStore } from '../stores/counter';
+
 export default {
   name: "Card",
   props: ["keepr"],
+  methods:{
+    ...mapActions(useCounterStore,['handlePayment'])
+  }
 };
 </script>
 
@@ -22,7 +28,7 @@ export default {
             class="btn btn-primary"
             >Details</a
           >
-          <a href="#" class="btn btn-primary">Hire me!</a>
+          <a @click.prevent="handlePayment(keepr.id)" class="btn btn-primary">Hire me!</a>
         </div>
       </div>
     </div>

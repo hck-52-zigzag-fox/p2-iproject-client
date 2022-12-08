@@ -9,6 +9,7 @@ export const useCounterStore = defineStore("counter", {
     qr: {},
     keeprs: [],
     keepr: {},
+    newss: [],
   }),
   actions: {
     async handleLogin(email, password) {
@@ -91,12 +92,12 @@ export const useCounterStore = defineStore("counter", {
         this.showQrCode(id);
       } catch (err) {}
     },
-    logOut(){
+    logOut() {
       localStorage.clear();
       this.isLogin = false;
       this.router.push("/");
     },
-    async googleLogin(response){
+    async googleLogin(response) {
       try {
         const { data } = await axios({
           method: "POST",
@@ -110,12 +111,57 @@ export const useCounterStore = defineStore("counter", {
         localStorage.setItem("customerEmail", data.user.email);
         this.isLogin = true;
         this.router.push("/home");
-        toastGenerator({ title: `Welcome, ${data.user.email}` });
-        await this.fetchMovie();
-        await this.fetchGenre();
       } catch (err) {
-      console.log("err", err)
+        console.log("err", err);
       }
-    }
+    },
+
+    async createTransaction(id) {
+      try {
+        const { data } = await axios({
+          method: "POST",
+          url: `${baseUrl}/transactions/${id}`,
+          headers: {
+            access_token: localStorage.access_token,
+          },
+        });
+      } catch (err) {
+        console.log("err", err);
+      }
+    },
+
+    async handlePayment(id) {
+      console.log("id", id);
+      try {
+        const { data } = await axios({
+          method: "POST",
+          url: `${baseUrl}/transactions/payment/${id}`,
+          headers: {
+            access_token: localStorage.access_token,
+          },
+        });
+        let transactions = this.createTransaction;
+        window.snap.pay(data.token, {
+          onSuccess: function (result) {
+            transactions(id);
+          },
+        });
+      } catch (err) {
+        console.log("err", err);
+      }
+    },
+
+    async readNews() {
+      try {
+        const { data } = await axios({
+          method: "GET",
+          url: `${baseUrl}/news`,
+        });
+        console.log(data.value);
+        this.newss = data.value;
+      } catch (error) {
+        console.log("error", error);
+      }
+    },
   },
 });

@@ -1,15 +1,20 @@
 <script>
 import { mapActions, mapState } from "pinia";
 import { RouterLink, RouterView } from "vue-router";
+import NewsCard from "../components/NewsCard.vue";
 import { useCounterStore } from "../stores/counter";
 
 export default {
   name: "LandingPage",
   methods: {
-    ...mapActions(useCounterStore, []),
+    ...mapActions(useCounterStore, ["readNews"]),
   },
   computed: {
-    ...mapState(useCounterStore, []),
+    ...mapState(useCounterStore, ["newss"]),
+  },
+  components: { NewsCard },
+  created() {
+    this.readNews();
   },
 };
 </script>
@@ -65,7 +70,7 @@ export default {
       </div>
     </div>
   </div>
-  <div  style="height: 90vh; background-color: #aeefe7">
+  <div style="height: 90vh; background-color: #aeefe7">
     <div class="container">
       <div class="text-center py-5">
         <h2>Layanan Kami</h2>
@@ -110,6 +115,14 @@ export default {
           </div>
         </div>
       </div>
+    </div>
+  </div>
+  <div class="mt-3">
+    <h1 class="text-center">News</h1>
+    <div
+      class="row mt-4 row-cols-2 row-cols-lg-4 d-flex gap-4 justify-content-center"
+    >
+      <NewsCard v-for="news in newss" :key="news.id" :news="news" />
     </div>
   </div>
 </template>
