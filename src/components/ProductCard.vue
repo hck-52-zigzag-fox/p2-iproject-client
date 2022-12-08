@@ -1,10 +1,21 @@
 <script>
+import { mapActions } from 'pinia';
+import { useStore } from '../stores/store';
 
 export default {
   name: "ProductCard",
+  data() {
+    return {
+      price: ""
+    }
+  },
   props: ["product"],
   methods: {
-  },
+    ...mapActions(useStore, ["addOrder"]),
+    handleAddOrder() {
+      this.addOrder(this.product.code.split("_")[2], "Jakarta")
+    }
+  }
 }
 </script>
 
@@ -14,7 +25,7 @@ export default {
       <div class="thumb">
         <div class="hover-content">
           <ul>
-            <li><a href="single-product.html"><i class="fa fa-shopping-cart"></i></a></li>
+            <li><a @click.prevent="handleAddOrder"><i class="fa fa-shopping-cart"></i></a></li>
           </ul>
         </div>
         <img :src="product.images[0].url" alt="">

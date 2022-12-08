@@ -13,9 +13,10 @@ export default {
     ...mapState(useStore, ["city", "shipment"])
   },
   methods: {
-    ...mapActions(useStore, ["getRajaOngkirCity", "postRajaOngkirCost"]),
+    ...mapActions(useStore, ["getRajaOngkirCity", "postRajaOngkirCost", "readAllOrders"]),
   },
   created() {
+    this.readAllOrders()
     this.getRajaOngkirCity()
   }
 }
@@ -35,7 +36,9 @@ export default {
         </div>
         <div class="row border-top border-bottom">
           <div class="row main align-items-center">
-            <div class="col-2"><img class="img-fluid" src="https://i.imgur.com/1GrakTl.jpg"></div>
+            <div class="col-2">
+              <img class="img-fluid" src="../assets/images/instagram-03.jpg">
+            </div>
             <div class="col">
               <div class="row text-muted">Shirt</div>
               <div class="row">Cotton T-shirt</div>

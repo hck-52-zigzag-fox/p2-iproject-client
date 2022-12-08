@@ -26,14 +26,16 @@ export const useStore = defineStore("index", {
         this.router.push("/login");
         this.registered = true;
         Swal.fire({
-          icon: "success",
           title: "Congrats...",
           text: this.quote,
+          imageUrl: "https://cataas.com/cat/cute/says/lest%20gooow!",
+          imageHeight: 200,
         });
       } catch (err) {
         Swal.fire({
-          icon: "error",
           title: "Oops...",
+          imageUrl: "https://cataas.com/cat/cute/says/Oops...",
+          imageHeight: 200,
           text: err.response.data.msg,
         });
       }
@@ -46,14 +48,16 @@ export const useStore = defineStore("index", {
         this.router.push("/");
         localStorage.setItem("access_token", data.access_token);
         Swal.fire({
-          icon: "success",
           title: "Congrats...",
           text: this.quote,
+          imageUrl: "https://cataas.com/cat/cute/says/wellcome%20baybeh",
+          imageHeight: 200,
         });
       } catch (err) {
         Swal.fire({
-          icon: "error",
           title: "Oops...",
+          imageUrl: "https://cataas.com/cat/cute/says/Oops...",
+          imageHeight: 200,
           text: err.response.data.msg,
         });
       }
@@ -74,14 +78,16 @@ export const useStore = defineStore("index", {
         localStorage.setItem("access_token", data.access_token);
         this.isLogin = true;
         Swal.fire({
-          icon: "success",
           title: "Congrats...",
           text: this.quote,
+          imageUrl: "https://cataas.com/cat/cute/says/have%20a%20nice%20day!",
+          imageHeight: 200,
         });
       } catch (err) {
         Swal.fire({
-          icon: "error",
           title: "Oops...",
+          imageUrl: "https://cataas.com/cat/cute/says/Oops...",
+          imageHeight: 200,
           text: err.response.data.msg,
         });
       }
@@ -94,7 +100,8 @@ export const useStore = defineStore("index", {
         this.products = data;
       } catch (err) {
         Swal.fire({
-          icon: "error",
+          imageUrl: "https://cataas.com/cat/cute/says/Oops...",
+          imageHeight: 200,
           title: "Oops...",
           text: "Error Fetch Data!",
         });
@@ -112,7 +119,8 @@ export const useStore = defineStore("index", {
         this.loading = false;
       } catch (err) {
         Swal.fire({
-          icon: "error",
+          imageUrl: "https://cataas.com/cat/cute/says/Oops...",
+          imageHeight: 200,
           title: "Oops...",
           text: "Error Fetch Data!",
         });
@@ -125,7 +133,8 @@ export const useStore = defineStore("index", {
         this.quote = data;
       } catch (err) {
         Swal.fire({
-          icon: "error",
+          imageUrl: "https://cataas.com/cat/cute/says/Oops...",
+          imageHeight: 200,
           title: "Oops...",
           text: "Error Quotes Data!",
         });
@@ -142,7 +151,8 @@ export const useStore = defineStore("index", {
         this.city = data;
       } catch (err) {
         Swal.fire({
-          icon: "error",
+          imageUrl: "https://cataas.com/cat/cute/says/Oops...",
+          imageHeight: 200,
           title: "Oops...",
           text: "Error Fetch Data!",
         });
@@ -165,11 +175,11 @@ export const useStore = defineStore("index", {
           }
         );
 
-        console.log(data);
         this.shipment = data;
       } catch (err) {
         Swal.fire({
-          icon: "error",
+          imageUrl: "https://cataas.com/cat/cute/says/Oops...",
+          imageHeight: 200,
           title: "Oops...",
           text: "Error Fetch Data!",
         });
@@ -178,12 +188,10 @@ export const useStore = defineStore("index", {
     async addOrder(id, input) {
       try {
         const { data } = await axios.post(
-          `${baseUrl}/orders/cost`,
+          `${baseUrl}/orders/${id}`,
           {
-            origin: 445,
-            destination: input.destination,
-            weight: 1000,
-            courier: "jne",
+            destination: input,
+            price: 120000,
           },
           {
             headers: {
@@ -192,23 +200,31 @@ export const useStore = defineStore("index", {
           }
         );
 
-        await axios.post(
-          `${baseUrl}/orders/${id}`,
-          {
-            destination: data.destination,
-            price: data.price,
-          },
-          {
-            headers: {
-              access_token: localStorage.getItem("access_token"),
-            },
-          }
-        );
+        console.log(data);
       } catch (err) {
         Swal.fire({
-          icon: "error",
+          imageUrl: "https://cataas.com/cat/cute/says/Oops...",
+          imageHeight: 200,
           title: "Oops...",
-          text: err.response.data.msg,
+          text: "Something error!",
+        });
+      }
+    },
+    async readAllOrders(id, input) {
+      try {
+        const { data } = await axios.get(`${baseUrl}/orders`, {
+          headers: {
+            access_token: localStorage.getItem("access_token"),
+          },
+        });
+
+        console.log(data);
+      } catch (err) {
+        Swal.fire({
+          imageUrl: "https://cataas.com/cat/cute/says/Oops...",
+          imageHeight: 200,
+          title: "Oops...",
+          text: "Something error!",
         });
       }
     },
