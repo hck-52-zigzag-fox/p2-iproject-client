@@ -8,6 +8,7 @@ export const useCounterStore = defineStore("counter", {
     return {
       isLogin: false,
       motorcycles: [],
+      news: [],
       motorcycle: {},
     };
   },
@@ -115,6 +116,19 @@ export const useCounterStore = defineStore("counter", {
           url: `${BASE_URL}/motorcycles`,
         });
         this.motorcycles = data;
+      } catch (err) {
+        console.log(err);
+      }
+    },
+    async fetchNews() {
+      try {
+        const { data } = await axios({
+          method: "GET",
+          url: `${BASE_URL}/news`,
+        });
+        console.log(data);
+
+        this.news = data;
       } catch (err) {
         console.log(err);
       }

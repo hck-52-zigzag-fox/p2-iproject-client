@@ -1,9 +1,17 @@
 <script>
-import News from '../components/News.vue';
+import { mapActions } from 'pinia';
+import { useCounterStore } from '../stores/counter';
+import NewsView from './NewsView.vue';
 export default {
     name: "HomepageView",
     components: {
-        News,
+        NewsView,
+    },
+    methods: {
+        ...mapActions(useCounterStore, ['fetchNews'])
+    },
+    created() {
+        this.fetchNews()
     }
 }
 </script>
@@ -93,7 +101,7 @@ export default {
             </div>
         </div>
     </div>
-    <News />
+    <NewsView />
 </template>
 
 <style>
