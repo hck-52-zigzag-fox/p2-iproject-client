@@ -1,19 +1,26 @@
 import { defineStore } from "pinia";
-import { createClient } from "@supabase/supabase-js";
-const supabaseUrl = "https://framdkgssbeinkvaclys.supabase.co";
-const SUPABASE_KEY = "SUPABASE_CLIENT_API_KEY";
-const SUPABASE_URL = "https://framdkgssbeinkvaclys.supabase.co";
-const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
 const baseUrl = `http://localhost:3000`;
+import Swal from 'sweetalert2'
 import axios from "axios";
 export const usePetStore = defineStore("pet", {
   state: () => ({
     isLogin: false,
     city: [],
-    order: {},
+    order: [],
     product: [],
-    wishlist: []
+    wishlist: [],
   }),
+  getters: {
+    totalPrice(state) {
+      let total = 0;
+      state.wishlist.forEach((e, i) => {
+        if (e.Product) {
+          total += e.Product.price;
+        }
+      });
+      return total;
+    },
+  },
   actions: {
     async register(input) {
       try {
@@ -25,15 +32,11 @@ export const usePetStore = defineStore("pet", {
         });
         this.router.push("/login");
       } catch (err) {
-        console.log(err);
+        this.handleError(err[0])
       }
     },
     async login(input) {
       try {
-        // console.log(`dari counter`);
-        // const { data, error } = await supabase.auth.signInWithOAuth({
-        //   provider: 'twitter',
-        // }
         const { data } = await axios({
           method: "POST",
           url: `${baseUrl}/users/login`,
@@ -43,47 +46,70 @@ export const usePetStore = defineStore("pet", {
         localStorage.setItem("access_token", data.access_token);
         this.isLogin = true;
         this.router.push("/");
-      } catch (err) {
-        console.log(err);
+      } catch (error) {
+        this.handleError(error)
       }
     },
-    async fetchProduct(){
+    async handleGoogleLog(input){
       try {
+        // console.log(input.credential,'dari bapaknya');
+        const credentials = input.credential
         const {data} = await axios({
+          method: "POST",
+          url: `${baseUrl}/google-sign-in`,
+          headers: {
+            google_token: credentials
+          }
+        })
+        localStorage.setItem('access_token', data.access_token)
+        this.isLogin = true;
+        this.router.push('/')
+      } catch (error) {
+        this.handleError(error)
+      }
+    },
+    async fetchProduct() {
+      try {
+        const { data } = await axios({
           method: `GET`,
           url: `${baseUrl}/product`,
-        })
-        this.product = data
+        });
+        this.product = data;
       } catch (error) {
-        console.log(error);
+        this.handleError(error)
       }
     },
     //order menuju wishlist
-    async addProduct(id){
+    async addProduct(id, qty) {
       try {
-        const {data} = await axios({
+        const { data } = await axios({
           method: `POST`,
           url: `${baseUrl}/order/add/${id}`,
-          headers:{
-            access_token: localStorage.access_token
-          }
-        })
+          headers: {
+            access_token: localStorage.access_token,
+          },
+          data: {
+            quantity: qty,
+          },
+        });
+        this.router.push("/checkout");
+        this.listWishlist();
       } catch (error) {
-        console.log(error);
+        this.handleError(error)
       }
     },
-    async listWishlist(){
+    async listWishlist() {
       try {
-        const {data} = await axios({
-          method: 'GET',
+        const { data } = await axios({
+          method: "GET",
           url: `${baseUrl}/order`,
-          headers:{
-            access_token: localStorage.access_token
-          }
-        })
-        this.wishlist = data
+          headers: {
+            access_token: localStorage.access_token,
+          },
+        });
+        this.wishlist = data;
       } catch (error) {
-        console.log(error);
+        this.handleError(error)
       }
     },
     // ongkir == post
@@ -94,11 +120,9 @@ export const usePetStore = defineStore("pet", {
           url: `${baseUrl}/order/ongkir`,
           data: input,
         });
-        console.log(input);
-        // this.router.push("/");
         this.order = data.rajaongkir.results[0].costs;
       } catch (error) {
-        console.log(error);
+        this.handleError(error)
       }
     },
     async getOngkir() {
@@ -109,7 +133,22 @@ export const usePetStore = defineStore("pet", {
         });
         this.city = data.rajaongkir.results;
       } catch (error) {
-        console.log(error);
+        this.handleError(error)
+      }
+    },
+    async deleteOrder(id) {
+      try {
+        const { data } = await axios({
+          method: `DELETE`,
+          url: `${baseUrl}/order/${id}`,
+          headers: {
+            access_token: localStorage.access_token,
+          },
+        });
+        this.router.push("/checkout");
+        this.listWishlist();
+      } catch (error) {
+        this.handleError(error)
       }
     },
     async updatePayment(id) {
@@ -121,14 +160,21 @@ export const usePetStore = defineStore("pet", {
             access_token: localStorage.access_token,
           },
         });
-      } catch (error) {}
+      } catch (error) {
+        this.handleError(error)
+        
+      }
     },
     // midtrans
-    async payment() {
+    async payment(totalPrice,shipping) {
       try {
+        // console.log(totalPrice, shipping);
         const { data } = await axios({
           method: `POST`,
           url: `${baseUrl}/order/payment`,
+          data:{
+            totalPrice,shipping
+          },
           headers: {
             access_token: localStorage.getItem("access_token"),
           },
@@ -141,35 +187,37 @@ export const usePetStore = defineStore("pet", {
           onPending: function (result) {
             /* You may add your own implementation here */
             alert("wating your payment!");
-            console.log(result);
           },
           onError: function (result) {
             /* You may add your own implementation here */
             alert("payment failed!");
-            console.log(result);
           },
           onClose: function () {
             /* You may add your own implementation here */
             alert("you closed the popup without finishing the payment");
           },
         });
-      } catch (error) {}
-    },
-    async loginTwitter() {
-      try {
-        const { data, error } = await supabase.auth.signInWithOAuth({
-          provider: "twitter",
-        });
       } catch (error) {
-        console.log(error);
+        this.handleError(error)
       }
     },
-    async logOutTwitter() {
-      try {
-        const { error } = await supabase.auth.signOut();
-      } catch (error) {
-        console.log(error);
-      }
+    handleLogout() {
+      localStorage.clear();
+      this.isLogin = false
+      Swal.fire({
+        position: 'top-end',
+        icon: 'success',
+        title: 'Success signout account',
+        showConfirmButton: false,
+        timer: 1500
+      })
     },
+    handleError(err){
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: err.response.data.message,
+      })
+    }
   },
 });

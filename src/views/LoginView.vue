@@ -1,4 +1,5 @@
 <script>
+import { GoogleLogin } from "vue3-google-login";
 import { usePetStore } from "../stores/counter";
 import { mapActions } from "pinia";
 export default {
@@ -12,7 +13,11 @@ export default {
     };
   },
   methods:{
-    ...mapActions(usePetStore, ['login'])
+    ...mapActions(usePetStore, ['login', 'handleGoogleLog']),
+    async googleLog(input) {
+      // console.log(input);
+      await this.handleGoogleLog(input);
+    }
   }
 }
 </script>
@@ -53,6 +58,8 @@ export default {
                 </button>
               </form>
             </div>
+            <GoogleLogin :callback="googleLog" />
+            <br> <br>
           </div>
         </div>
       </div>
