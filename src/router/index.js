@@ -5,6 +5,7 @@ import AddOrderPage from "../views/AddOrderPage.vue";
 import OrderPage from "../views/OrderPage.vue";
 import NotFoundPage from "../views/NotFoundPage.vue";
 import ChatPage from "../views/ChatPage.vue";
+import FormUpload from "../views/FormUpload.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -32,7 +33,12 @@ const router = createRouter({
     {
       path: "/chats/:id",
       name: "chat",
-      component: ChatPage
+      component: ChatPage,
+    },
+    {
+      path: "/image/:id",
+      name: "uploadImage",
+      component: FormUpload,
     },
     {
       path: "/:pathMatch(.*)*",

@@ -39,7 +39,6 @@ export default {
         email: "admin@gmail.com",
         photoUrl:
           "https://www.clipartmax.com/png/middle/434-4349876_profile-icon-vector-png.png",
-        welcomeMessage: "Hi! may i help you?",
         role: "Admin",
       });
 
@@ -60,7 +59,6 @@ export default {
         email: this.otherUser.email,
         photoUrl:
           "https://www.clipartmax.com/png/middle/434-4349876_profile-icon-vector-png.png",
-        welcomeMessage: "Hi! may i help you?",
         role: this.otherUser.role,
       });
       
@@ -73,10 +71,6 @@ export default {
 
       const chatbox = talkSession.createChatbox();
       chatbox.select(conversation);
-      // chatbox.mount(document.getElementById("talkjs-container"));
-
-      // var inbox = talkSession.createInbox();
-      // inbox.select(conversation);
 
       chatbox.mount(this.$refs.talkjs);
     }

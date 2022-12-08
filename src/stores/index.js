@@ -13,6 +13,7 @@ export const useStore = defineStore("store", {
     orders: [],
     order: {},
     otherUser: {},
+    loading: false,
   }),
   actions: {
     async handleLogin(login) {
@@ -49,7 +50,7 @@ export const useStore = defineStore("store", {
         role: localStorage.role,
       };
     },
-    getOrderChat(id) {
+    async getOrderChat(id) {
       this.order = this.orders.find((el) => el.id === id);
       this.getOtherUser(this.order.User);
     },
@@ -165,9 +166,7 @@ export const useStore = defineStore("store", {
           method: "GET",
           url: baseUrl + "/auth/facebook",
         });
-      } catch (err) {
-        console.log(err);
-      }
+      } catch (err) {}
     },
     async midtrans(id) {
       try {
@@ -178,9 +177,7 @@ export const useStore = defineStore("store", {
             access_token: localStorage.access_token,
           },
         });
-        console.log(data);
       } catch (err) {
-        console.log(err);
         Swal.fire(err.response.data.message || "Internal server error");
       }
     },
@@ -193,14 +190,56 @@ export const useStore = defineStore("store", {
             google_token: response.credential,
           },
         });
+
         localStorage.setItem("access_token", data.access_token);
         localStorage.setItem("email", data.email);
         localStorage.setItem("role", data.role);
+        localStorage.setItem("id", data.id);
         this.isLogin = true;
-        Swal.fire("Welcome take a look around")
-        this.route.push('/')
+        this.router.push("/");
       } catch (err) {
-        Swal.fire(err.response.data.message || "Internal server error")
+        Swal.fire(err.response.data.message || "Internal server error");
+      }
+    },
+    async uploadImage(id, input) {
+      try {
+        this.loading = true;
+        const { data } = await axios({
+          method: "POST",
+          url: baseUrl + `/orders/images/${id}`,
+          headers: {
+            access_token: localStorage.access_token,
+          },
+          data: {
+            url: input.url,
+            fileName: input.name,
+          },
+        });
+
+        this.router.push("/orders");
+      } catch (err) {
+        Swal.fire(err.response.data.message || "Internal server error");
+      } finally {
+        this.loading = false;
+      }
+    },
+    async getOrderById(id) {
+      try {
+        this.loading = true
+        const { data } = await axios({
+          method: "GET",
+          url: baseUrl + `/orders/${id}`,
+          headers: {
+            access_token: localStorage.access_token
+          }
+        });
+
+        this.order = data
+        this.getOtherUser(data.User)
+      } catch (err) {
+        Swal.fire(err.response.data.message || "Internal server error");
+      } finally {
+        this.loading = false
       }
     },
   },

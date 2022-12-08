@@ -39,6 +39,7 @@ export default {
 
 <template>
   <!-- {{order}} -->
+
   <div class="Cart-Items">
     <div class="image-box">
       <img
@@ -53,8 +54,8 @@ export default {
       />
     </div>
     <div class="about ms-5">
-      <h1 class="title">{{ order.Item.name }}</h1>
-      <h3 class="subtitle">{{ order.additionalDetail }}</h3>
+      <h1 class="title">{{( order.Item.name +" - "+ order.User.email?.split("@")[0])}}</h1>
+      <h3 class="subtitle">{{ order.Item.description}}</h3>
     </div>
     <div class="ms-5">
       <a
@@ -66,7 +67,7 @@ export default {
       >
       <a
         @click.prevent="changeStatus(order.id)"
-        class="btn"
+        class="btn disabled"
         style="width: 74px"
         v-if="order.status === 'Paid' && currentUser.role === 'Admin'"
         >{{ order.status }}</a
@@ -101,18 +102,21 @@ export default {
         class="btn bi bi-chat-dots-fill fs-4"
       ></RouterLink>
     </div>
-    <!-- <div class="ms-5">
-      <a
-        class="btn bi bi-download fs-4"
-        v-if="order.status === 'Paid' && currentUser.role === 'Customer'"
-      ></a>
-      <a
-        class="btn bi bi bi-download fs-4 opacity-0 disabled"
-        v-if="order.status === 'Unpaid' && currentUser.role === 'Customer'"
-      ></a>
+    <div class="ms-5">
+      <img
+        :src="order.ImageId"
+        alt=""
+        v-if="order.ImageId && currentUser.role === 'Customer'"
+        style="width: 150px; height: 150px; object-fit: cover"
+      />
 
-      <a class="btn bi bi-upload fs-4" v-if="currentUser.role === 'Admin'"></a>
-    </div> -->
+      <RouterLink
+        :to="`/image/${order.id}`"
+        class="btn bi bi-upload fs-4"
+        v-if="currentUser.role === 'Admin'"
+      ></RouterLink>
+    </div>
+    
     <!-- <div class="ms-5">
       <div
         class="btn btn-outline-secondary"

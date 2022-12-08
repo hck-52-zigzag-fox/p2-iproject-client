@@ -1,32 +1,40 @@
 <script>
 import { mapActions, mapState } from "pinia";
-import Talk from "talkjs";
 import Inbox from "../components/Inbox.vue";
 import { useStore } from "../stores";
 
 export default {
   name: "ChatPage",
   components: { Inbox },
-  computed: {
-    ...mapState(useStore, ["currentUser", "otherUser", "order"]),
+  data() {
+    return {
+      newOther: {},
+      newOrder: {},
+    };
   },
-  methods: {
-    ...mapActions(useStore, ["fetchOrders", "getOrderChat"]),
-    async loadDataOrder() {
-      await this.fetchOrders();
-      this.getOrderChat(+this.$route.params.id);
+  computed: {
+    ...mapState(useStore, ["currentUser", "otherUser", "order", "loading"]),
+  },
+  watch: {
+    otherUser(newVal, oldVal) {
+      this.newOther = newVal;
+    },
+    newOrder(newVal, oldVal) {
+      this.newOrder = newVal;
     },
   },
-  created() {
-    this.loadDataOrder();
+  methods: {
+    ...mapActions(useStore, ["fetchOrders", "getOrderChat", "getOrderById"]),
+  },
+  async created() {
+    // this.loadDataOrder();
+    await this.fetchOrders();
+    this.getOrderChat(+this.$route.params.id);
+    this.getOrderById(this.$route.params.id)
   },
 };
 </script>
 
 <template>
-  <Inbox
-    :currentUser="currentUser"
-    :otherUser="otherUser ?? otherUser"
-    :order="order"
-  />
+  <Inbox v-if="!loading" :currentUser="currentUser" :otherUser="newOther" />
 </template>
