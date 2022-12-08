@@ -14,7 +14,11 @@ export default {
     };
   },
   methods: {
-    ...mapActions(useCounterStore, ["handleLogin"]),
+    ...mapActions(useCounterStore, ["handleLogin", "googleLogin"]),
+
+    callback(res) {
+      this.googleLogin(res.credential);
+    },
   },
 };
 </script>
@@ -28,13 +32,13 @@ export default {
             <div class="card-body p-3 text-center">
               <div class="mb-md-3 mt-md-1 pb-1">
                 <h2 class="fw-bold mb-2 text-uppercase">Login</h2>
-                <p class="text-50 mb-4">
+                <p class="text-50 mb-3">
                   Please enter your login and password!
                 </p>
                 <form
                   @submit.prevent="handleLogin(login.email, login.password)"
                 >
-                  <div class="form-outline form-white mb-4">
+                  <div class="form-outline form-white mb-2">
                     <label class="form-label" for="typeEmailX">Email</label>
                     <input
                       v-model="login.email"
@@ -44,7 +48,7 @@ export default {
                     />
                   </div>
 
-                  <div class="form-outline form-white mb-4">
+                  <div class="form-outline form-white mb-2">
                     <label class="form-label" for="typePasswordX"
                       >Password</label
                     >
@@ -64,9 +68,9 @@ export default {
                     Login
                   </button>
                 </form>
-                <div
-                  class="d-flex justify-content-center text-center mt-2"
-                ></div>
+                <div class="d-flex justify-content-center text-center mt-2">
+                  <GoogleLogin :callback="callback" style="width: 150px;"/>
+                </div>
               </div>
               <div>
                 <p>

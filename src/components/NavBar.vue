@@ -1,5 +1,5 @@
 <script>
-import { mapState, mapWritableState } from "pinia";
+import { mapActions, mapState, mapWritableState } from "pinia";
 import { RouterLink } from "vue-router";
 import { useCounterStore } from "../stores/counter";
 
@@ -7,6 +7,9 @@ export default {
   name: "NavBar",
   computed: {
     ...mapWritableState(useCounterStore, ["isLogin"]),
+  },
+  methods:{
+    ...mapActions(useCounterStore, ['logOut'])
   },
   created(){
     if (localStorage.access_token) {
@@ -63,6 +66,7 @@ export default {
         </RouterLink>
         <button
           v-if="isLogin"
+          @click.prevent="logOut"
           type="button"
           class="btn text-light"
           style="background-color: #30c2c3"
