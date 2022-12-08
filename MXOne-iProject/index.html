@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" href="/favicon.ico">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="./src//assets//style.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css"
+    integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Vite App</title>
+</head>
+
+<body>
+  <div id="app"></div>
+  <script type="text/javascript" src="https://app.sandbox.midtrans.com/snap/snap.js"
+    data-client-key="SB-Mid-client-HWJCpiiPEx5j27U7"></script>
+  <script type="module" src="/src/main.js"></script>
+  <button id="pay-button">Pay!</button>
+  <script type="text/javascript">
+    var payButton = document.getElementById('pay-button');
+    payButton.addEventListener('click', function () {
+      snap.pay();
+    });
+  </script>
+</body>
+
+</html>
