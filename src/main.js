@@ -25,7 +25,7 @@ pinia.use(({ store }) => {
 
 app.use(vue3GoogleLogin, {
   clientId:
-    "942858210689-nrorlikk783t6ge3c59ma2755thd13vb.apps.googleusercontent.com",
+    "884275666991-gmfbi1umulpr11i99spasngtu6vkt1rh.apps.googleusercontent.com",
 });
 
 app.mount("#app");
