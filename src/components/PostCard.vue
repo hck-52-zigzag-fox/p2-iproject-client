@@ -1,0 +1,252 @@
+<script>
+import { useDataStore } from "../stores/dataStore";
+import { mapState, mapActions } from "pinia";
+import PostCardReal from "./PostCardReal.vue";
+export default {
+  name: "PostCard",
+  data() {
+    return {
+      dataPost: {
+        imgUrl: "",
+        content: "",
+      },
+    };
+  },
+  computed: {
+    ...mapState(useDataStore, [
+      "dataAllPosts",
+      "dataOneProfile",
+      "dataAllComments",
+    ]),
+  },
+  methods: {
+    ...mapActions(useDataStore, [
+      "handleAllPost",
+      "handleAddPost",
+      "handleFetchAllComments",
+    ]),
+    onChange() {
+      this.dataPost.imgUrl = this.$refs.file.files[0];
+    },
+    clearData() {
+      this.dataPost.imgUrl = "";
+      this.dataPost.content = "";
+    },
+  },
+  created() {
+    this.handleAllPost();
+  },
+  components: { PostCardReal },
+};
+</script>
+
+<template>
+  <div class="col-md-8 col-lg-6 vstack gap-4">
+    <!-- Share feed START -->
+    <div class="card card-body">
+      <div class="d-flex mb-3">
+        <!-- Avatar -->
+        <div class="avatar avatar-xs me-2">
+          <a href="#">
+            <img
+              class="avatar-img rounded-circle"
+              :src="dataOneProfile.profilePict"
+              alt=""
+            />
+          </a>
+        </div>
+        <!-- Post input -->
+        <form class="w-100">
+          <textarea
+            class="form-control pe-4 border-0"
+            rows="2"
+            data-autoresize
+            placeholder="Share your thoughts..."
+          ></textarea>
+        </form>
+      </div>
+      <!-- Share feed toolbar START -->
+      <ul class="nav nav-pills nav-stack small fw-normal">
+        <li class="nav-item">
+          <a
+            class="nav-link bg-light py-1 px-2 mb-0"
+            href="#!"
+            data-bs-toggle="modal"
+            data-bs-target="#feedActionPhoto"
+          >
+            <i class="bi bi-image-fill text-success pe-2"></i>Photo</a
+          >
+        </li>
+
+        <li class="nav-item">
+          <a
+            href="#"
+            class="nav-link bg-light py-1 px-2 mb-0"
+            data-bs-toggle="modal"
+            data-bs-target="#modalCreateEvents"
+          >
+            <i class="bi bi-calendar2-event-fill text-danger pe-2"></i>Event
+          </a>
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link bg-light py-1 px-2 mb-0"
+            href="#!"
+            data-bs-toggle="modal"
+            data-bs-target="#modalCreateFeed"
+          >
+            <i class="bi bi-emoji-smile-fill text-warning pe-2"></i>Feeling
+            /Activity</a
+          >
+        </li>
+        <li class="nav-item dropdown ms-lg-auto">
+          <a
+            class="nav-link bg-light py-1 px-2 mb-0"
+            href="#"
+            id="feedActionShare"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            <i class="bi bi-three-dots"></i>
+          </a>
+          <!-- Dropdown menu -->
+          <ul
+            class="dropdown-menu dropdown-menu-end"
+            aria-labelledby="feedActionShare"
+          >
+            <li>
+              <a class="dropdown-item" href="#">
+                <i class="bi bi-envelope fa-fw pe-2"></i>Create a poll</a
+              >
+            </li>
+            <li>
+              <a class="dropdown-item" href="#">
+                <i class="bi bi-bookmark-check fa-fw pe-2"></i>Ask a question
+              </a>
+            </li>
+            <li><hr class="dropdown-divider" /></li>
+            <li>
+              <a class="dropdown-item" href="#">
+                <i class="bi bi-pencil-square fa-fw pe-2"></i>Help</a
+              >
+            </li>
+          </ul>
+        </li>
+      </ul>
+      <!-- Share feed toolbar END -->
+    </div>
+    <!-- Share feed END -->
+    <!-- modal create feed foto start -->
+    <div
+      class="modal fade"
+      id="feedActionPhoto"
+      tabindex="-1"
+      aria-labelledby="feedActionPhotoLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <!-- Modal feed header START -->
+          <div class="modal-header">
+            <h5 class="modal-title" id="feedActionPhotoLabel">
+              Add post photo
+            </h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <!-- Modal feed header END -->
+
+          <!-- Modal feed body START -->
+          <div class="modal-body">
+            <!-- Add Feed -->
+            <div class="d-flex mb-3">
+              <!-- Avatar -->
+              <div class="avatar avatar-xs me-2">
+                <img
+                  class="avatar-img rounded-circle"
+                  :src="dataOneProfile.profilePict"
+                  alt=""
+                />
+              </div>
+              <!-- Feed box  -->
+              <form class="w-100" enctype="multipart/form-data">
+                <textarea
+                  v-model="dataPost.content"
+                  class="form-control pe-4 fs-3 lh-1 border-0"
+                  rows="2"
+                  placeholder="Share your thoughts..."
+                ></textarea>
+                <br />
+                <br />
+                <input
+                  @change="onChange"
+                  type="file"
+                  ref="file"
+                  name=""
+                  id=""
+                />
+              </form>
+            </div>
+
+            <!-- Dropzone photo START -->
+            <div>
+              <form action=""></form>
+            </div>
+            <!-- Dropzone photo END -->
+          </div>
+          <!-- Modal feed body END -->
+
+          <!-- Modal feed footer -->
+          <div class="modal-footer">
+            <!-- Button -->
+            <button
+              type="button"
+              class="btn btn-danger-soft me-2"
+              data-bs-dismiss="modal"
+            >
+              Cancel
+            </button>
+            <button
+              @click.prevent="handleAddPost(dataPost) && clearData()"
+              type="button"
+              class="btn btn-success-soft"
+            >
+              Post
+            </button>
+          </div>
+          <!-- Modal feed footer -->
+        </div>
+      </div>
+    </div>
+    <!-- Card feed item START -->
+    <PostCardReal
+      v-for="post in dataAllPosts"
+      :key="post.id"
+      :post="post"
+      :dataOneProfile="dataOneProfile"
+      :dataAllComments="dataAllComments"
+    />
+    <!-- Card feed item END -->
+
+    <!-- Load more button START -->
+    <a
+      href="#!"
+      role="button"
+      class="btn btn-loader btn-primary-soft"
+      data-bs-toggle="button"
+      aria-pressed="true"
+    >
+      <span class="load-text"> Load more </span>
+      <div class="load-icon">
+        <div class="spinner-grow spinner-grow-sm" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+      </div>
+    </a>
+    <!-- Load more button END -->
+  </div>
+</template>
