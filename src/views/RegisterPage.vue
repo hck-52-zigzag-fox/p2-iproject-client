@@ -1,32 +1,27 @@
 <script>
-import { mapActions, mapState } from 'pinia';
+import { mapActions } from 'pinia';
 import { useStore } from '../stores/counter';
-
 export default {
-    name: "LoginPage",
+    name: "RegisterPage",
     data() {
         return {
-            loginData: {
+            dataRegister: {
                 email: "",
                 password: "",
+                address: ""
+
             }
         }
     },
-    computed: {
-        ...mapState(useStore, ["isLogin"])
-    },
     methods: {
-        ...mapActions(useStore, ["postLogin", "googleLogin"]),
-        handleLogin() {
-            this.postLogin(this.loginData)
-
-        },
-        callback(response) {
-            this.googleLogin(response.credential)
+        ...mapActions(useStore, ['postRegister']),
+        async handleRegister() {
+            await this.postRegister(this.dataRegister)
         }
     }
 }
 </script>
+
 
 <template>
 
@@ -40,39 +35,39 @@ export default {
                             <div class="col-md-6 col-lg-7 d-flex align-items-center">
                                 <div class="card-body p-4 p-lg-5 text-black">
 
-                                    <form @submit.prevent="handleLogin">
+                                    <form @submit.prevent="handleRegister">
 
                                         <div class="d-flex align-items-center mb-3 pb-1">
                                             <i class="fas fa-cubes fa-2x me-3" style="color: #ff6219;"></i>
                                             <span class="h1 fw-bold mb-0">ELGOLA.ID</span>
                                         </div>
 
-                                        <h5 class="fw-normal mb-2 pb-3" style="letter-spacing: 1px;">Sign into your
+                                        <h5 class="fw-normal mb-2 pb-3" style="letter-spacing: 1px;">Register your
                                             account</h5>
 
                                         <div class="form-outline mb-4">
-                                            <input v-model="loginData.email" type="email" id="form2Example17"
+                                            <input v-model="dataRegister.email" type="email" id="form2Example17"
                                                 class="form-control form-control-lg" />
                                             <label class="form-label" for="form2Example17">Email address</label>
                                         </div>
 
                                         <div class="form-outline mb-4">
-                                            <input v-model="loginData.password" type="password" id="form2Example27"
+                                            <input v-model="dataRegister.password" type="password" id="form2Example27"
                                                 class="form-control form-control-lg" />
                                             <label class="form-label" for="form2Example27">Password</label>
                                         </div>
 
+                                        <div class="form-outline mb-4">
+                                            <input v-model="dataRegister.address" type="text" id="address"
+                                                class="form-control form-control-lg" />
+                                            <label class="form-label" for="address"> Address</label>
+                                        </div>
+
                                         <div class="pt-1 mb-4">
-                                            <button class="btn btn-dark btn-lg btn-block" type="submit">Login</button>
+                                            <button class="btn btn-dark btn-lg btn-block"
+                                                type="submit">Register</button>
                                         </div>
-                                        <div class="d-grid mb-2">
-                                            <GoogleLogin :callback="callback" />
-                                        </div>
-                                        <p class="mb-5 pb-lg-2" style="color: #393f81;">Don't have an account?
-                                            <RouterLink to="/register"><a href="#!" style="color: #393f81;">Register
-                                                    here</a>
-                                            </RouterLink>
-                                        </p>
+
                                     </form>
 
                                 </div>

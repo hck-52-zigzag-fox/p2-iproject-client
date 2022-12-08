@@ -1,11 +1,11 @@
 import { createApp } from "vue";
 import { createPinia } from "pinia";
 import { markRaw } from "vue";
-
+import vue3GoogleLogin from "vue3-google-login";
 import App from "./App.vue";
 import router from "./router";
 
-import "./assets/main.css";
+// import "./assets/main.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import "bootstrap-icons/font/bootstrap-icons.css";
@@ -19,5 +19,10 @@ pinia.use(({ store }) => {
 });
 app.use(pinia);
 app.use(router);
+
+app.use(vue3GoogleLogin, {
+  clientId:
+    "308068222211-shih844362ajq8gnq19u844jcfk9u7ad.apps.googleusercontent.com",
+});
 
 app.mount("#app");

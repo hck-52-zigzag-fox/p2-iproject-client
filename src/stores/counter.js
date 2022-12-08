@@ -36,6 +36,53 @@ export const useStore = defineStore("counter", {
         });
       }
     },
+    async postRegister(value) {
+      try {
+        this.loading = true;
+        const { data } = await axios({
+          url: baseUrl + "users/register",
+          method: "POST",
+          data: value,
+        });
+        // console.log(data);
+        this.router.push("/login");
+        Swal.fire({
+          icon: "success",
+          text: "Success Register",
+        });
+      } catch (error) {
+        console.log(error);
+        Swal.fire({
+          icon: "error",
+          text: error.response.data.message,
+        });
+      }
+    },
+    async googleLogin(response) {
+      try {
+        const { data } = await axios({
+          method: "POST",
+          url: baseUrl + "users/login-sign-in",
+          headers: {
+            google_token: response,
+          },
+        });
+        localStorage.setItem("access_token", data.access_token);
+        localStorage.setItem("email", data.email);
+        this.userEmail = localStorage.getItem("email");
+        this.isLogin = true;
+        this.router.push("/");
+        Swal.fire({
+          icon: "success",
+          text: "Success Login from Google",
+        });
+      } catch (error) {
+        Swal.fire({
+          icon: "error",
+          text: error.response.data.message || "Server Error",
+        });
+      }
+    },
     logout() {
       localStorage.clear();
       this.isLogin = false;
@@ -55,7 +102,10 @@ export const useStore = defineStore("counter", {
         });
         this.products = data;
       } catch (error) {
-        console.log(error);
+        Swal.fire({
+          icon: "error",
+          text: error.response.data.message || "Server Error",
+        });
       }
     },
     async productById(id) {
@@ -69,7 +119,10 @@ export const useStore = defineStore("counter", {
         this.product = data;
         // console.log(this.product);
       } catch (error) {
-        console.log(error);
+        Swal.fire({
+          icon: "error",
+          text: error.response.data.message || "Server Error",
+        });
       }
     },
     async getCity() {
@@ -84,7 +137,10 @@ export const useStore = defineStore("counter", {
         this.cities = data.rajaongkir.results;
         // console.log(this.cities);
       } catch (error) {
-        console.log(error);
+        Swal.fire({
+          icon: "error",
+          text: error.response.data.message || "Server Error",
+        });
       }
     },
     async ongkir(value) {
@@ -101,7 +157,10 @@ export const useStore = defineStore("counter", {
         });
         this.cost = data;
       } catch (error) {
-        console.log(error);
+        Swal.fire({
+          icon: "error",
+          text: error.response.data.message || "Server Error",
+        });
       }
     },
     async addOrderById(id, input) {
@@ -134,7 +193,10 @@ export const useStore = defineStore("counter", {
         });
         this.router.push("/orders");
       } catch (error) {
-        console.log(error);
+        Swal.fire({
+          icon: "error",
+          text: error.response.data.message || "Server Error",
+        });
       }
     },
     async getOrderById() {
@@ -147,9 +209,11 @@ export const useStore = defineStore("counter", {
           },
         });
         this.orders = data;
-        console.log(this.orders);
       } catch (error) {
-        console.log(error);
+        Swal.fire({
+          icon: "error",
+          text: error.response.data.message || "Server Error",
+        });
       }
     },
     async deleteOrder(id) {
@@ -167,7 +231,10 @@ export const useStore = defineStore("counter", {
           text: data.message,
         });
       } catch (error) {
-        console.log(error);
+        Swal.fire({
+          icon: "error",
+          text: error.response.data.message || "Server Error",
+        });
       }
     },
     async patchById(id) {
@@ -178,31 +245,34 @@ export const useStore = defineStore("counter", {
           headers: {
             access_token: localStorage.getItem("access_token"),
           },
-          data,
         });
-      } catch (error) {}
+
+        this.getOrderById();
+        Swal.fire({
+          icon: "success",
+          text: data.message,
+        });
+      } catch (error) {
+        Swal.fire({
+          icon: "error",
+          text: error.response.data.message || "Server Error",
+        });
+      }
     },
-    async midtrans() {
+    async midtrans(id) {
       try {
         // console.log("kesini");
         const { data } = await axios({
           method: "POST",
-          url: baseUrl + `orders/midtrans`,
+          url: baseUrl + `orders/midtrans/${id}`,
           headers: {
             access_token: localStorage.getItem("access_token"),
           },
         });
-        window.snap.pay(data.token, {
-          onSuccess: async function (result) {
-            //   const { data } = await axios({
-            //     url: baseUrl + `orders/${id}`,
-            //     method: "PATCH",
-            //     headers: {
-            //       access_token: localStorage.getItem("access_token"),
-            //     },
-            //     data,
-            //   });
-            console.log(result);
+        let temp = this;
+        window.snap.pay(data.mitrans_token.token, {
+          onSuccess: function (result) {
+            temp.patchById(data.order.id);
           },
           onPending: function (result) {
             /* You may add your own implementation here /

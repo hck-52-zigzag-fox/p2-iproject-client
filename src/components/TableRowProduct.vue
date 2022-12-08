@@ -25,7 +25,7 @@ export default {
         <td scope="col" class="align-middle">{{ order.status }}</td>
         <td scope="col" class="align-middle">
             <h3>
-                <a href="" @click.prevent="midtrans">
+                <a href="" @click.prevent="midtrans(order.id)">
 
                     <i class="bi bi-currency-dollar text-success"></i>
                 </a>
@@ -33,7 +33,8 @@ export default {
         </td>
         <td scope="col" class="align-middle">
             <h3>
-                <RouterLink to="/orders" @click.prevent="deleteOrder(order.id)" class="bi bi-trash text-danger">
+                <RouterLink v-if="order.status == 'Unpaid'" to="/orders" @click.prevent="deleteOrder(order.id)"
+                    class="bi bi-trash text-danger">
                 </RouterLink>
             </h3>
         </td>

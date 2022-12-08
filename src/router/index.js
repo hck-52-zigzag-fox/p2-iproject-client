@@ -5,6 +5,7 @@ import NotFoundPage from "../views/NotFoundPage.vue";
 import DetailProductPage from "../views/DetailProductPage.vue";
 import OrderPage from "../views/OrderPage.vue";
 import FormPage from "../views/FormPage.vue";
+import RegisterPage from "../views/RegisterPage.vue";
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -17,6 +18,11 @@ const router = createRouter({
       path: "/login",
       name: "login",
       component: LoginPage,
+    },
+    {
+      path: "/register",
+      name: "register",
+      component: RegisterPage,
     },
     {
       path: "/products/:id",
@@ -46,6 +52,9 @@ router.beforeEach((to, from, next) => {
   else if (to.name == "register" && isAuthenticated) next({ name: "home" });
   else if (to.name == "home" && !isAuthenticated) next({ name: "login" });
   else if (to.name == "detailPage" && !isAuthenticated) next({ name: "login" });
+  else if (to.name == "detailOrder" && !isAuthenticated)
+    next({ name: "login" });
+  else if (to.name == "addOrder" && !isAuthenticated) next({ name: "login" });
   else next();
 });
 
