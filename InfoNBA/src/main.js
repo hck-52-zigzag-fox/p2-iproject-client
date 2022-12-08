@@ -20,5 +20,5 @@ pinia.use(({ store }) => {
 app.use(pinia)
 app.use(router)
 
-// app.provide("baseUrl", "https://rentroomhactiv-production.up.railway.app");
+// app.provide("baseUrl", "https://infonba-production.up.railway.app");
 app.mount('#app')

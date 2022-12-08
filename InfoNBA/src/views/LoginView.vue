@@ -21,7 +21,6 @@ export default {
 
 <template>
   <div class="container text-center">
-    <img src="../image/logo-rentroom.png" alt="" />
   </div>
   <div class="container-fluid d-flex w-75">
     <div id="login" class="container text-center w-50">
