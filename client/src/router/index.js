@@ -42,4 +42,22 @@ const router = createRouter({
   ],
 });
 
+router.beforeEach((to, from) => {
+  let isAuthenticate = localStorage.getItem("access_token");
+
+  if (!isAuthenticate && to.fullPath === "/") {
+    return { name: "login" };
+  } else if (!isAuthenticate && to.fullPath === "/games") {
+    return { name: "login" };
+  } else if (!isAuthenticate && to.fullPath === "/addProfile") {
+    return { name: "login" };
+  } else if (!isAuthenticate && to.fullPath === "/profiles/:id") {
+    return { name: "login" };
+  } else if (isAuthenticate && to.fullPath === "/login") {
+    return { name: "home" };
+  } else if (isAuthenticate && to.fullPath === "/register") {
+    return { name: "home" };
+  }
+});
+
 export default router;
