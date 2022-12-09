@@ -18,6 +18,10 @@ export default {
   },
   methods: {
     ...mapActions(useRzStore, ["addPost", "fetchPosts"]),
+    async addpost(content) {
+      await this.addPost(content);
+      this.content = "";
+    },
   },
   created() {
     this.fetchPosts();
@@ -27,7 +31,7 @@ export default {
 <template>
   <div class="col-span-2 px-12">
     <div class="w-auto mb-5 mt-5 bg-white rounded-xl">
-      <form @submit.prevent="addPost(content)">
+      <form @submit.prevent="addpost(content)">
         <label
           for="message"
           class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"

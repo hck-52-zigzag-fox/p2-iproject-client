@@ -4,7 +4,7 @@ import HomePage from "../views/HomePage.vue";
 import RegisterPage from "../views/RegisterPage.vue";
 import ProfilUserPage from "../views/ProfilUserPage.vue";
 import AddProfilePage from "../views/AddProfilPage.vue";
-import EditProfilePage from "../views/EditProfilPage.vue";
+import GamesPage from "../views/GamesPage.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -35,9 +35,9 @@ const router = createRouter({
       component: AddProfilePage,
     },
     {
-      path: "/editProfile",
-      name: "editProfile",
-      component: EditProfilePage,
+      path: "/games",
+      name: "games",
+      component: GamesPage,
     },
   ],
 });

@@ -1,5 +1,6 @@
 <script>
 import { mapActions } from "pinia";
+import { GoogleLogin } from "vue3-google-login";
 import { useRzStore } from "../stores/counter";
 
 export default {
@@ -11,8 +12,12 @@ export default {
     };
   },
   methods: {
-    ...mapActions(useRzStore, ["loginToSite"]),
+    ...mapActions(useRzStore, ["loginToSite", "googleLogin"]),
+    callback(response) {
+      this.googleLogin(response);
+    },
   },
+  components: { GoogleLogin },
 };
 </script>
 <template>
@@ -44,6 +49,7 @@ export default {
           Login
         </button>
       </form>
+      <GoogleLogin :callback="callback" />
     </div>
   </div>
 </template>

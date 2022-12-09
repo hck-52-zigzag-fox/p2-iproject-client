@@ -65,7 +65,7 @@ export default {
           type="submit"
           class="bg-gray-500 w-full text-gray-100 py-2 rounded hover:bg-gray-600 transition-colors mb-4"
         >
-          Register
+          Save
         </button>
       </form>
     </div>

@@ -6,12 +6,12 @@ export default {
   name: "Navbar",
   data() {
     return {
-      username: localStorage.getItem("username"),
-      id: localStorage.getItem("id"),
+      // username: localStorage.getItem("username"),
+      // id: localStorage.getItem("id"),
     };
   },
   computed: {
-    ...mapState(useRzStore, ["checkLogin"]),
+    ...mapState(useRzStore, ["checkLogin", "id", "username"]),
   },
   methods: {
     ...mapActions(useRzStore, ["logout"]),
@@ -38,6 +38,12 @@ export default {
             >Home</RouterLink
           >
           <RouterLink
+            to="/games"
+            v-if="checkLogin"
+            class="py-4 px-3 text-gray-700 text-1xl font-bold hover:bg-gray-200"
+            >Games</RouterLink
+          >
+          <RouterLink
             to="/login"
             v-if="!checkLogin"
             class="py-4 px-3 text-gray-700 text-1xl font-bold hover:bg-gray-200"
@@ -49,17 +55,23 @@ export default {
             class="py-4 px-3 text-gray-700 text-1xl font-bold hover:bg-gray-200"
             >Register</RouterLink
           >
-          <a
-            @click.prevent="logout"
-            v-if="checkLogin"
-            class="py-4 px-3 text-gray-700 text-1xl font-bold hover:bg-gray-200"
-            >Logout</a
-          >
           <RouterLink
             :to="`/profiles/${id}`"
             v-if="checkLogin"
             class="py-4 px-3 text-gray-700 text-1xl font-bold hover:bg-gray-200"
             >{{ username }}</RouterLink
+          >
+          <RouterLink
+            to="/addProfile"
+            v-if="checkLogin"
+            class="py-4 px-3 text-gray-700 text-1xl font-bold hover:bg-gray-200"
+            >Add New Profile</RouterLink
+          >
+          <a
+            @click.prevent="logout"
+            v-if="checkLogin"
+            class="py-4 px-3 text-gray-700 text-1xl font-bold hover:bg-gray-200"
+            >Logout</a
           >
         </div>
       </div>
